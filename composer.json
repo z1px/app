@@ -1,0 +1,28 @@
+{
+    "name": "z1px/app",
+    "type": "library",
+    "description": "laravel6 admin",
+    "keywords": ["laravel6", "permission"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kevin",
+            "email": "936957321@qq.com",
+            "homepage": "https://github.com/z1px"
+        }
+    ],
+    "require": {
+        "php": "^7.2.0"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/z1px/auth"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Z1px\\App\\": "src"
+        }
+    }
+}
