@@ -21,7 +21,7 @@ class BeforeMiddleware
     public function handle($request, Closure $next)
     {
         // 执行一些任务
-//        dump("BeforeMiddleware");
+        dump("BeforeMiddleware");
 
         return $next($request);
     }

@@ -17,7 +17,10 @@ use Z1px\App\Http\Services\FilesService;
 class FilesController extends Controller
 {
 
-    private $model = FilesService::class;
+    protected function __construct()
+    {
+        $this->model = FilesService::class;
+    }
 
     /**
      * 文件读取

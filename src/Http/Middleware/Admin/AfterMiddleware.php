@@ -25,8 +25,9 @@ class AfterMiddleware
         $response = $next($request);
 
         // 执行一些任务
-        app(AdminsLoginService::class)->toAdd();
-        app(AdminsBehaviorService::class)->toAdd();
+        dump("AfterMiddleware");
+//        app(AdminsLoginService::class)->toAdd();
+//        app(AdminsBehaviorService::class)->toAdd();
 //        app(AdminsBehaviorService::class)->toAdd(['response' => $response->getContent()]);
 
         return $response;

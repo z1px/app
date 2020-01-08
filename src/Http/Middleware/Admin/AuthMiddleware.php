@@ -16,7 +16,7 @@ class AuthMiddleware
     public function handle($request, Closure $next)
     {
         // 执行一些任务
-//        dump("AdminAuthMiddleware");
+        dump("AdminAuthMiddleware");
 
         return $next($request);
     }

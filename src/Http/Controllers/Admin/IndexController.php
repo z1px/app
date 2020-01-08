@@ -16,12 +16,14 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return view('admin.index.index')
-            ->with('list_menu', app('menu_logic')->toList());
+        return view('admin.index');
     }
 
     public function login()
     {
-        return view('admin.index.login');
+        if(request()->ajax()) {
+            return $this->json(['message' => '登录成功']);
+        }
+        return $this->error();
     }
 }
