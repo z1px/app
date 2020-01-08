@@ -17,7 +17,7 @@ class Controller extends BaseController
      */
     protected function error()
     {
-        return response()->view('404', [], 404);
+        return error();
     }
 
     /**
@@ -26,15 +26,7 @@ class Controller extends BaseController
      */
     protected function json(array $result = [], int $status = 200, array $headers = [])
     {
-        $result = array_merge([
-            'code' => 1,
-            'message' => 'data normal',
-            'data' => [],
-            'timestamp' => time(),
-            'runtime' => microtime(true) - request()->server('REQUEST_TIME_FLOAT'),
-        ], $result);
-
-        return response()->json($result, $status, $headers);
+        return json($result, $status, $headers);
     }
 
     /**
@@ -43,17 +35,7 @@ class Controller extends BaseController
      */
     protected function jump(array $result = [], int $status = 200, array $headers = [], $view='jump')
     {
-        $result = array_merge([
-            'code' => 1,
-            'message' => 'data normal',
-            'data' => [],
-            'url' => 'javascript:history.back().reload();',
-            'wait' => 3,
-            'timestamp' => time(),
-            'runtime' => microtime(true) - request()->server('REQUEST_TIME_FLOAT'),
-        ], $result);
-
-        return response()->view($view, $result, $status, $headers);
+        return jump($view, $result, $status, $headers);
     }
 
 }

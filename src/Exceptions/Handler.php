@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
         // 接管异常，自定义异常界面
         if($exception){
             if($exception instanceof AuthorizationException){ // 权限验证异常
-                return jump([
+                return result([
                     'code' => $exception->getCode() ?: 0,
                     'message' => $exception->getMessage() ?: '请求异常'
                 ]);
@@ -80,14 +80,14 @@ class Handler extends ExceptionHandler
                         $message = $exception->getMessage() ?: '请求异常';
                     }
                 }
-                return jump([
+                return result([
                     'code' => $exception->getCode() ?: 0,
                     'message' => $message,
                     'data' => $data,
                     'url' => 'javascript:history.back();',
                 ]);
             } elseif ($exception instanceof Exception){ // 顶级错误
-                return jump([
+                return result([
                     'code' => $exception->getCode() ?: 0,
                     'message' => $exception->getMessage() ?: '请求异常',
                     'url' => 'javascript:history.back();',
