@@ -10,10 +10,13 @@
 namespace Z1px\App\Http\Controllers\Admin\Logs;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\TablesOperatedService;
 
-class TablesOperatedController extends AdminController
+class TablesOperatedController extends Controller
 {
+
+    private $model = TablesOperatedService::class;
 
     /**
      * 数据库表操作日志列表
@@ -24,34 +27,34 @@ class TablesOperatedController extends AdminController
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'table',
-                    'title' => app('tables_operated_service')->attributes('table'),
+                    'title' => app($this->model)->attributes('table'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'operate',
-                    'title' => app('tables_operated_service')->attributes('operate'),
+                    'title' => app($this->model)->attributes('operate'),
                     'type' => 'select',
                     'multiple' => 'multiple',
-                    'list' => app('tables_operated_service')->list_operate,
+                    'list' => app($this->model)->list_operate,
                 ],
                 [
                     'name' => 'user_type',
-                    'title' => app('tables_operated_service')->attributes('user_type'),
+                    'title' => app($this->model)->attributes('user_type'),
                     'type' => 'select',
-                    'list' => app('tables_operated_service')->list_user_type,
+                    'list' => app($this->model)->list_user_type,
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('tables_operated_service')->attributes('start_time'),
+                    'title' => app($this->model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('tables_operated_service')->attributes('end_time'),
+                    'title' => app($this->model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('tables_operated_service')->toList())
+            ->with('data', app($this->model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 
@@ -61,7 +64,7 @@ class TablesOperatedController extends AdminController
     public function info()
     {
         if(request()->ajax()) {
-            return $this->json(['data' => app('tables_operated_service')->toInfo()]);
+            return $this->json(['data' => app($this->model)->toInfo()]);
         }
         return $this->error();
     }

@@ -3,10 +3,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Z1px\App\Models\ConfigModel;
 
 class CreateConfigTables extends Migration
 {
+
+    private $config_model = ConfigModel::class;
+
     /**
      * Run the migrations.
      *
@@ -18,7 +21,7 @@ class CreateConfigTables extends Migration
         /**
          * 创建数据库表操作日志表
          */
-        Schema::create(app('config_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->config_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -36,7 +39,7 @@ class CreateConfigTables extends Migration
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('config_service')->getTable() . "` comment '通用配置表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->config_model)->getTable() . "` comment '通用配置表'"); // 表注释
     }
 
     /**
@@ -46,6 +49,6 @@ class CreateConfigTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(app('config_service')->getTable()); // 删除通用配置表
+        Schema::dropIfExists(app($this->config_model)->getTable()); // 删除通用配置表
     }
 }

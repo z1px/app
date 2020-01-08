@@ -3,10 +3,23 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Z1px\App\Models\Admins\AdminsModel;
+use Z1px\App\Models\Admins\AdminsPermissionsModel;
+use Z1px\App\Models\Admins\AdminsRolesModel;
+use Z1px\App\Models\Admins\PermissionsModel;
+use Z1px\App\Models\Admins\RolesModel;
+use Z1px\App\Models\Admins\RolesPermissionsModel;
 
 class CreateAdminsTables extends Migration
 {
+
+    private $admins_model = AdminsModel::class;
+    private $permissions_model = PermissionsModel::class;
+    private $roles_model = RolesModel::class;
+    private $roles_permissions_model = RolesPermissionsModel::class;
+    private $admins_roles_model = AdminsRolesModel::class;
+    private $admins_permissions_model = AdminsPermissionsModel::class;
+
     /**
      * Run the migrations.
      *
@@ -17,7 +30,7 @@ class CreateAdminsTables extends Migration
         /**
          * 创建后台管理员账号表
          */
-        Schema::create(app('admins_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->admins_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -41,12 +54,12 @@ class CreateAdminsTables extends Migration
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('admins_service')->getTable() . "` comment '后台管理员账号表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->admins_model)->getTable() . "` comment '后台管理员账号表'"); // 表注释
 
         /**
          * 创建权限表
          */
-        Schema::create(app('permissions_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->permissions_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -64,12 +77,12 @@ class CreateAdminsTables extends Migration
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('permissions_service')->getTable() . "` comment '权限表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->permissions_model)->getTable() . "` comment '权限表'"); // 表注释
 
         /**
          * 创建角色表
          */
-        Schema::create(app('roles_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->roles_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -81,12 +94,12 @@ class CreateAdminsTables extends Migration
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('roles_service')->getTable() . "` comment '角色表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->roles_model)->getTable() . "` comment '角色表'"); // 表注释
 
         /**
          * 创建角色-权限关系表
          */
-        Schema::create(app('roles_permissions_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->roles_permissions_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -101,12 +114,12 @@ class CreateAdminsTables extends Migration
             // 创建索引
             $table->unique(['role_id', 'permission_id']);
         });
-        app('db')->statement("ALTER TABLE `" . app('roles_permissions_service')->getTable() . "` comment '角色-权限关系表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->roles_permissions_model)->getTable() . "` comment '角色-权限关系表'"); // 表注释
 
         /**
          * 创建管理员-角色关系表
          */
-        Schema::create(app('admins_roles_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->admins_roles_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -121,12 +134,12 @@ class CreateAdminsTables extends Migration
             // 创建索引
             $table->unique(['admin_id', 'role_id']);
         });
-        app('db')->statement("ALTER TABLE `" . app('admins_roles_service')->getTable() . "` comment '管理员-角色关系表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->admins_roles_model)->getTable() . "` comment '管理员-角色关系表'"); // 表注释
 
         /**
          * 创建管理员-权限关系表
          */
-        Schema::create(app('admins_permissions_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->admins_permissions_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -141,7 +154,7 @@ class CreateAdminsTables extends Migration
             // 创建索引
             $table->unique(['admin_id', 'permission_id']);
         });
-        app('db')->statement("ALTER TABLE `" . app('admins_permissions_service')->getTable() . "` comment '管理员-权限关系表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->admins_permissions_model)->getTable() . "` comment '管理员-权限关系表'"); // 表注释
     }
 
     /**
@@ -152,12 +165,12 @@ class CreateAdminsTables extends Migration
     public function down()
     {
 //        Schema::disableForeignKeyConstraints(); // 关闭外键约束
-        Schema::dropIfExists(app('roles_permissions_service')->getTable()); // 删除角色-权限关系表
-        Schema::dropIfExists(app('admins_roles_service')->getTable()); // 删除管理员-角色关系表
-        Schema::dropIfExists(app('admins_permissions_service')->getTable()); // 删除管理员-权限关系表
-        Schema::dropIfExists(app('permissions_service')->getTable()); // 删除权限表
-        Schema::dropIfExists(app('roles_service')->getTable()); // 删除角色表
-        Schema::dropIfExists(app('admins_service')->getTable()); // 删除管理员表
+        Schema::dropIfExists(app($this->roles_permissions_model)->getTable()); // 删除角色-权限关系表
+        Schema::dropIfExists(app($this->admins_roles_model)->getTable()); // 删除管理员-角色关系表
+        Schema::dropIfExists(app($this->admins_permissions_model)->getTable()); // 删除管理员-权限关系表
+        Schema::dropIfExists(app($this->permissions_model)->getTable()); // 删除权限表
+        Schema::dropIfExists(app($this->roles_model)->getTable()); // 删除角色表
+        Schema::dropIfExists(app($this->admins_model)->getTable()); // 删除管理员表
 //        Schema::enableForeignKeyConstraints(); // 开启外键约束
     }
 }

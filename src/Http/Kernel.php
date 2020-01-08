@@ -43,7 +43,7 @@ class Kernel extends HttpKernel
         ],
 
         'admin' => [
-            \App\Http\Middleware\Admin\BeforeMiddleware::class,
+            \Z1px\App\Http\Middleware\Admin\BeforeMiddleware::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -51,7 +51,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\Admin\AfterMiddleware::class,
+            \Z1px\App\Http\Middleware\Admin\AfterMiddleware::class,
         ],
     ];
 
@@ -73,7 +73,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'admin.auth' => \App\Http\Middleware\Admin\AuthMiddleware::class,
+        'admin.auth' => \Z1px\App\Http\Middleware\Admin\AuthMiddleware::class,
     ];
 
     /**

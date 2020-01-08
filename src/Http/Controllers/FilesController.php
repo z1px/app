@@ -12,9 +12,13 @@ namespace Z1px\App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Z1px\App\Http\Services\FilesService;
 
 class FilesController extends Controller
 {
+
+    private $model = FilesService::class;
+
     /**
      * 文件读取
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
@@ -22,7 +26,7 @@ class FilesController extends Controller
      */
     public function file()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data)){
             return $this->error();
         }
@@ -35,7 +39,7 @@ class FilesController extends Controller
      */
     public function image()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data) || $data->file_type !== 1){
             return $this->error();
         }
@@ -69,7 +73,7 @@ class FilesController extends Controller
      */
     public function audio()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data) || $data->file_type !== 2){
             return $this->error();
         }
@@ -82,7 +86,7 @@ class FilesController extends Controller
      */
     public function video()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data) || $data->file_type !== 3){
             return $this->error();
         }
@@ -95,7 +99,7 @@ class FilesController extends Controller
      */
     public function text()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data) || $data->file_type !== 4){
             return $this->error();
         }
@@ -108,7 +112,7 @@ class FilesController extends Controller
      */
     public function application()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data) || $data->file_type !== 5){
             return $this->error();
         }
@@ -121,7 +125,7 @@ class FilesController extends Controller
      */
     public function archive()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data) || $data->file_type !== 6){
             return $this->error();
         }
@@ -134,7 +138,7 @@ class FilesController extends Controller
      */
     public function download()
     {
-        $data = app('files_service')->toInfo();
+        $data = app($this->model)->toInfo();
         if(empty($data)){
             return $this->error();
         }

@@ -10,10 +10,13 @@
 namespace Z1px\App\Http\Controllers\Admin\Admins;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\Admins\PermissionsService;
 
-class PermissionsController extends AdminController
+class PermissionsController extends Controller
 {
+
+    private $model = PermissionsService::class;
 
     /**
      * 权限列表
@@ -21,7 +24,7 @@ class PermissionsController extends AdminController
     public function index()
     {
         if(request()->ajax()){
-            return $this->json(['data' => app('permissions_service')->toListAll()]);
+            return $this->json(['data' => app($this->model)->toListAll()]);
         }
         return view('admin.admins.permissions.index')
             ->with('list_menu', app('menu_logic')->toList());
@@ -33,7 +36,7 @@ class PermissionsController extends AdminController
     public function getRouteActionByRouteName()
     {
         if(request()->ajax()) {
-            return $this->json(['data' => app('permissions_service')->getRouteActionByRouteName(request()->input('route_name'))]);
+            return $this->json(['data' => app($this->model)->getRouteActionByRouteName(request()->input('route_name'))]);
         }
         return $this->error();
     }
@@ -47,36 +50,36 @@ class PermissionsController extends AdminController
             $form = [
                 [
                     'name' => 'title',
-                    'title' => app('permissions_service')->attributes('title'),
+                    'title' => app($this->model)->attributes('title'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'route_name',
-                    'title' => app('permissions_service')->attributes('route_name'),
+                    'title' => app($this->model)->attributes('route_name'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'route_action',
-                    'title' => app('permissions_service')->attributes('route_action'),
+                    'title' => app($this->model)->attributes('route_action'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'icon',
-                    'title' => app('permissions_service')->attributes('icon'),
+                    'title' => app($this->model)->attributes('icon'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'show',
-                    'title' => app('permissions_service')->attributes('show'),
+                    'title' => app($this->model)->attributes('show'),
                     'type' => 'radio',
-                    'list' => app('permissions_service')->list_show,
+                    'list' => app($this->model)->list_show,
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('permissions_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'value' => 1,
                     'type' => 'radio',
-                    'list' => app('permissions_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ]
             ];
             return $this->json([
@@ -90,7 +93,7 @@ class PermissionsController extends AdminController
             ]);
         }
         if(request()->ajax()){
-            $result = app('permissions_service')->toAdd();
+            $result = app($this->model)->toAdd();
             if(1 === $result['code']){
                 $result['url'] = app('router')->has('admin.permissions.update') ? route('admin.permissions.update', ['id' => $result['data']['id']]) : url('permissions.update', ['id' => $result['data']['id']]);
             }
@@ -105,49 +108,49 @@ class PermissionsController extends AdminController
     public function update()
     {
         if(request()->has('_form')){
-            $data = app('permissions_service')->toInfo();
+            $data = app($this->model)->toInfo();
             $form = [
                 [
                     'name' => 'title',
-                    'title' => app('permissions_service')->attributes('title'),
+                    'title' => app($this->model)->attributes('title'),
                     'value' => $data->title,
                     'type' => 'text',
                 ],
                 [
                     'name' => 'route_name',
-                    'title' => app('permissions_service')->attributes('route_name'),
+                    'title' => app($this->model)->attributes('route_name'),
                     'value' => $data->route_name,
                     'type' => 'text',
                 ],
                 [
                     'name' => 'route_action',
-                    'title' => app('permissions_service')->attributes('route_action'),
+                    'title' => app($this->model)->attributes('route_action'),
                     'value' => $data->route_action,
                     'type' => 'text',
                 ],
                 [
                     'name' => 'icon',
-                    'title' => app('permissions_service')->attributes('icon'),
+                    'title' => app($this->model)->attributes('icon'),
                     'value' => $data->icon,
                     'type' => 'text',
                 ],
                 [
                     'name' => 'show',
-                    'title' => app('permissions_service')->attributes('show'),
+                    'title' => app($this->model)->attributes('show'),
                     'value' => $data->show,
                     'type' => 'radio',
-                    'list' => app('permissions_service')->list_show,
+                    'list' => app($this->model)->list_show,
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('permissions_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'value' => $data->status,
                     'type' => 'radio',
-                    'list' => app('permissions_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ],
                 [
                     'name' => 'id',
-                    'title' => app('permissions_service')->attributes('id'),
+                    'title' => app($this->model)->attributes('id'),
                     'value' => $data->id,
                     'type' => 'hidden',
                 ],
@@ -165,7 +168,7 @@ class PermissionsController extends AdminController
             ]);
         }
         if(request()->ajax()){
-            return $this->json(app('permissions_service')->toUpdate());
+            return $this->json(app($this->model)->toUpdate());
         }
         return $this->error();
     }
@@ -176,7 +179,7 @@ class PermissionsController extends AdminController
     public function delete()
     {
         if(request()->ajax()) {
-            return $this->json(app('permissions_service')->toDelete());
+            return $this->json(app($this->model)->toDelete());
         }
         return $this->error();
     }
@@ -187,7 +190,7 @@ class PermissionsController extends AdminController
     public function drop()
     {
         if(request()->ajax()) {
-            return $this->json(app('permissions_service')->toDrop());
+            return $this->json(app($this->model)->toDrop());
         }
         return $this->error();
     }

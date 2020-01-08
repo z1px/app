@@ -10,10 +10,13 @@
 namespace Z1px\App\Http\Controllers\Admin\Admins;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\Admins\RolesService;
 
-class RolesController extends AdminController
+class RolesController extends Controller
 {
+
+    private $model = RolesService::class;
 
     /**
      * 角色列表
@@ -24,18 +27,18 @@ class RolesController extends AdminController
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'title',
-                    'title' => app('roles_service')->attributes('title'),
+                    'title' => app($this->model)->attributes('title'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('roles_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'type' => 'select',
-                    'list' => app('roles_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ]
             ]))
             ->with('table_form', $this->buildTable(
-                app('roles_service')->toList(),
+                app($this->model)->toList(),
                 [
                     'id' => 'ID',
                     'title' => '角色名称',
@@ -67,15 +70,15 @@ class RolesController extends AdminController
             $form = [
                 [
                     'name' => 'title',
-                    'title' => app('roles_service')->attributes('title'),
+                    'title' => app($this->model)->attributes('title'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('roles_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'value' => 1,
                     'type' => 'radio',
-                    'list' => app('roles_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ]
             ];
             return $this->json([
@@ -87,7 +90,7 @@ class RolesController extends AdminController
             ]);
         }
         if(request()->ajax()){
-            $result = app('roles_service')->toAdd();
+            $result = app($this->model)->toAdd();
             if(1 === $result['code']){
                 $result['url'] = app('router')->has('admin.roles.update') ? route('admin.roles.update', ['id' => $result['data']['id']]) : url('roles.update', ['id' => $result['data']['id']]);
             }
@@ -96,15 +99,15 @@ class RolesController extends AdminController
         $form = [
             [
                 'name' => 'title',
-                'title' => app('roles_service')->attributes('title'),
+                'title' => app($this->model)->attributes('title'),
                 'type' => 'text',
             ],
             [
                 'name' => 'status',
-                'title' => app('roles_service')->attributes('status'),
+                'title' => app($this->model)->attributes('status'),
                 'value' => 1,
                 'type' => 'radio',
-                'list' => app('roles_service')->list_status,
+                'list' => app($this->model)->list_status,
             ],
             ['type' => 'line'],
             '<div class="form-group">' .
@@ -125,24 +128,24 @@ class RolesController extends AdminController
     public function update()
     {
         if(request()->has('_form')){
-            $data = app('roles_service')->toInfo();
+            $data = app($this->model)->toInfo();
             $form = [
                 [
                     'name' => 'title',
-                    'title' => app('roles_service')->attributes('title'),
+                    'title' => app($this->model)->attributes('title'),
                     'value' => $data->title,
                     'type' => 'text',
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('roles_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'value' => $data->status,
                     'type' => 'radio',
-                    'list' => app('roles_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ],
                 [
                     'name' => 'id',
-                    'title' => app('roles_service')->attributes('id'),
+                    'title' => app($this->model)->attributes('id'),
                     'value' => $data->id,
                     'type' => 'hidden',
                 ],
@@ -158,22 +161,22 @@ class RolesController extends AdminController
             ]);
         }
         if(request()->ajax()){
-            return $this->json(app('roles_service')->toUpdate());
+            return $this->json(app($this->model)->toUpdate());
         }
-        $data = app('roles_service')->toInfo();
+        $data = app($this->model)->toInfo();
         $form = [
             [
                 'name' => 'title',
-                'title' => app('roles_service')->attributes('title'),
+                'title' => app($this->model)->attributes('title'),
                 'value' => $data->title,
                 'type' => 'text',
             ],
             [
                 'name' => 'status',
-                'title' => app('roles_service')->attributes('status'),
+                'title' => app($this->model)->attributes('status'),
                 'value' => $data->status,
                 'type' => 'radio',
-                'list' => app('roles_service')->list_status,
+                'list' => app($this->model)->list_status,
             ],
             ['type' => 'line'],
             '<div class="form-group">' .
@@ -184,7 +187,7 @@ class RolesController extends AdminController
             '</div>',
             [
                 'name' => 'id',
-                'title' => app('roles_service')->attributes('id'),
+                'title' => app($this->model)->attributes('id'),
                 'value' => $data->id,
                 'type' => 'hidden',
             ],
@@ -200,7 +203,7 @@ class RolesController extends AdminController
     public function delete()
     {
         if(request()->ajax()) {
-            return $this->json(app('roles_service')->toDelete());
+            return $this->json(app($this->model)->toDelete());
         }
         return $this->error();
     }

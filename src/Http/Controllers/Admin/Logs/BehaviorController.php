@@ -10,10 +10,15 @@
 namespace Z1px\App\Http\Controllers\Admin\Logs;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\Admins\AdminsBehaviorService;
+use Z1px\App\Http\Services\Users\UsersBehaviorService;
 
-class BehaviorController extends AdminController
+class BehaviorController extends Controller
 {
+    private $admins_behavior_model = AdminsBehaviorService::class;
+    private $users_behavior_model = UsersBehaviorService::class;
+
     /**
      * 管理员日志列表
      */
@@ -23,28 +28,28 @@ class BehaviorController extends AdminController
             request()->offsetSet('size', 10);
         }
         if(request()->ajax()) {
-            $data = app('admins_behavior_service')->toList();
+            $data = app($this->admins_behavior_model)->toList();
             return $this->json(['data' => $data, 'pager' => $data->appends(request()->input())->onEachSide(1)->links('pager')->render()]);
         }
         return view('admin.logs.behavior.admins')
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'title',
-                    'title' => app('admins_behavior_service')->attributes('title'),
+                    'title' => app($this->admins_behavior_model)->attributes('title'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('admins_behavior_service')->attributes('start_time'),
+                    'title' => app($this->admins_behavior_model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('admins_behavior_service')->attributes('end_time'),
+                    'title' => app($this->admins_behavior_model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('admins_behavior_service')->toList())
+            ->with('data', app($this->admins_behavior_model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 
@@ -57,28 +62,28 @@ class BehaviorController extends AdminController
             request()->offsetSet('size', 10);
         }
         if(request()->ajax()) {
-            $data = app('users_behavior_service')->toList();
+            $data = app($this->users_behavior_model)->toList();
             return $this->json(['data' => $data, 'pager' => $data->appends(request()->input())->onEachSide(1)->links('pager')->render()]);
         }
         return view('admin.logs.behavior.users')
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'title',
-                    'title' => app('users_behavior_service')->attributes('title'),
+                    'title' => app($this->users_behavior_model)->attributes('title'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('users_behavior_service')->attributes('start_time'),
+                    'title' => app($this->users_behavior_model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('users_behavior_service')->attributes('end_time'),
+                    'title' => app($this->users_behavior_model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('users_behavior_service')->toList())
+            ->with('data', app($this->users_behavior_model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 }

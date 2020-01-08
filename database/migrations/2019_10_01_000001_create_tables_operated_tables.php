@@ -3,10 +3,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Z1px\App\Models\TablesOperatedModel;
 
 class CreateTablesOperatedTables extends Migration
 {
+
+    private $tables_operated_model = TablesOperatedModel::class;
+
     /**
      * Run the migrations.
      *
@@ -18,7 +21,7 @@ class CreateTablesOperatedTables extends Migration
         /**
          * 创建数据库表操作日志表
          */
-        Schema::create(app('tables_operated_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->tables_operated_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -51,7 +54,7 @@ class CreateTablesOperatedTables extends Migration
 
             $table->index(['user_type', 'user_id']);
         });
-        app('db')->statement("ALTER TABLE `" . app('tables_operated_service')->getTable() . "` comment '数据库表操作日志表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->tables_operated_model)->getTable() . "` comment '数据库表操作日志表'"); // 表注释
     }
 
     /**
@@ -61,6 +64,6 @@ class CreateTablesOperatedTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(app('tables_operated_service')->getTable()); // 删除数据库表操作日志表
+        Schema::dropIfExists(app($this->tables_operated_model)->getTable()); // 删除数据库表操作日志表
     }
 }

@@ -10,9 +10,9 @@
 namespace Z1px\App\Http\Controllers\Admin;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
 
-class IndexController extends AdminController
+class IndexController extends Controller
 {
     public function index()
     {

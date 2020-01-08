@@ -10,10 +10,16 @@
 namespace Z1px\App\Http\Controllers\Admin\Logs;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\Admins\AdminsLoginService;
+use Z1px\App\Http\Services\Users\UsersLoginService;
 
-class LoginController extends AdminController
+class LoginController extends Controller
 {
+
+    private $admins_login_model = AdminsLoginService::class;
+    private $users_login_model = UsersLoginService::class;
+
     /**
      * 管理员日志列表
      */
@@ -23,28 +29,28 @@ class LoginController extends AdminController
             request()->offsetSet('size', 10);
         }
         if(request()->ajax()) {
-            $data = app('admins_login_service')->toList();
+            $data = app($this->admins_login_model)->toList();
             return $this->json(['data' => $data, 'pager' => $data->appends(request()->input())->onEachSide(1)->links('pager')->render()]);
         }
         return view('admin.logs.login.admins')
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'username',
-                    'title' => app('admins_login_service')->attributes('username'),
+                    'title' => app($this->admins_login_model)->attributes('username'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('admins_login_service')->attributes('start_time'),
+                    'title' => app($this->admins_login_model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('admins_login_service')->attributes('end_time'),
+                    'title' => app($this->admins_login_model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('admins_login_service')->toList())
+            ->with('data', app($this->admins_login_model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 
@@ -57,28 +63,28 @@ class LoginController extends AdminController
             request()->offsetSet('size', 10);
         }
         if(request()->ajax()) {
-            $data = app('users_login_service')->toList();
+            $data = app($this->users_login_model)->toList();
             return $this->json(['data' => $data, 'pager' => $data->appends(request()->input())->onEachSide(1)->links('pager')->render()]);
         }
         return view('admin.logs.login.users')
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'username',
-                    'title' => app('users_login_service')->attributes('username'),
+                    'title' => app($this->users_login_model)->attributes('username'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('users_login_service')->attributes('start_time'),
+                    'title' => app($this->users_login_model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('users_login_service')->attributes('end_time'),
+                    'title' => app($this->users_login_model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('users_login_service')->toList())
+            ->with('data', app($this->users_login_model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 }

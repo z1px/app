@@ -10,10 +10,13 @@
 namespace Z1px\App\Http\Controllers\Admin\Users;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\Users\UsersService;
 
-class UsersController extends AdminController
+class UsersController extends Controller
 {
+
+    private $model = UsersService::class;
 
     /**
      * 账号列表
@@ -24,28 +27,28 @@ class UsersController extends AdminController
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'username',
-                    'title' => app('users_service')->attributes('username'),
+                    'title' => app($this->model)->attributes('username'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('users_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'type' => 'select',
-                    'list' => app('users_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('users_service')->attributes('start_time'),
+                    'title' => app($this->model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('users_service')->attributes('end_time'),
+                    'title' => app($this->model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
             ->with('table_form', $this->buildTable(
-                app('users_service')->toList(),
+                app($this->model)->toList(),
                 [
                     'id' => 'ID',
                     'avatar' => '头像',
@@ -80,7 +83,7 @@ class UsersController extends AdminController
     public function add()
     {
         if(request()->ajax()){
-            $result = app('users_service')->toAdd();
+            $result = app($this->model)->toAdd();
             if(1 === $result['code']){
                 $result['url'] = app('router')->has('admin.users.update') ? route('admin.users.update', ['id' => $result['data']['id']]) : url('users.update', ['id' => $result['data']['id']]);
             }
@@ -89,32 +92,32 @@ class UsersController extends AdminController
         $form = [
             [
                 'name' => 'username',
-                'title' => app('users_service')->attributes('username'),
+                'title' => app($this->model)->attributes('username'),
                 'type' => 'text',
             ],
             [
                 'name' => 'nickname',
-                'title' => app('users_service')->attributes('nickname'),
+                'title' => app($this->model)->attributes('nickname'),
                 'type' => 'text',
             ],
             [
                 'name' => 'avatar',
-                'title' => app('users_service')->attributes('avatar'),
+                'title' => app($this->model)->attributes('avatar'),
                 'type' => 'file_image',
             ],
             [
                 'name' => 'mobile',
-                'title' => app('users_service')->attributes('mobile'),
+                'title' => app($this->model)->attributes('mobile'),
                 'type' => 'text',
             ],
             [
                 'name' => 'email',
-                'title' => app('users_service')->attributes('email'),
+                'title' => app($this->model)->attributes('email'),
                 'type' => 'text',
             ],
             [
                 'name' => 'password',
-                'title' => app('users_service')->attributes('password'),
+                'title' => app($this->model)->attributes('password'),
                 'value' => '',
                 'type' => 'password',
             ],
@@ -126,10 +129,10 @@ class UsersController extends AdminController
             ],
             [
                 'name' => 'status',
-                'title' => app('users_service')->attributes('status'),
+                'title' => app($this->model)->attributes('status'),
                 'value' => 1,
                 'type' => 'radio',
-                'list' => app('users_service')->list_status,
+                'list' => app($this->model)->list_status,
             ],
         ];
         return view('admin.users.users.add')
@@ -143,43 +146,43 @@ class UsersController extends AdminController
     public function update()
     {
         if(request()->ajax()){
-            return $this->json(app('users_service')->toUpdate());
+            return $this->json(app($this->model)->toUpdate());
         }
-        $data = app('users_service')->toInfo();
+        $data = app($this->model)->toInfo();
         $form = [
             [
                 'name' => 'username',
-                'title' => app('users_service')->attributes('username'),
+                'title' => app($this->model)->attributes('username'),
                 'value' => $data->username,
                 'type' => 'text',
             ],
             [
                 'name' => 'nickname',
-                'title' => app('users_service')->attributes('nickname'),
+                'title' => app($this->model)->attributes('nickname'),
                 'value' => $data->nickname,
                 'type' => 'text',
             ],
             [
                 'name' => 'avatar',
-                'title' => app('users_service')->attributes('avatar'),
+                'title' => app($this->model)->attributes('avatar'),
                 'value' =>  $data->avatar ?? '',
                 'type' => 'file_image',
             ],
             [
                 'name' => 'mobile',
-                'title' => app('users_service')->attributes('mobile'),
+                'title' => app($this->model)->attributes('mobile'),
                 'value' => $data->mobile,
                 'type' => 'text',
             ],
             [
                 'name' => 'email',
-                'title' => app('users_service')->attributes('email'),
+                'title' => app($this->model)->attributes('email'),
                 'value' => $data->email,
                 'type' => 'text',
             ],
             [
                 'name' => 'password',
-                'title' => app('users_service')->attributes('password'),
+                'title' => app($this->model)->attributes('password'),
                 'value' => '',
                 'type' => 'password',
             ],
@@ -191,14 +194,14 @@ class UsersController extends AdminController
             ],
             [
                 'name' => 'status',
-                'title' => app('users_service')->attributes('status'),
+                'title' => app($this->model)->attributes('status'),
                 'value' => $data->status,
                 'type' => 'radio',
-                'list' => app('users_service')->list_status,
+                'list' => app($this->model)->list_status,
             ],
             [
                 'name' => 'id',
-                'title' => app('users_service')->attributes('id'),
+                'title' => app($this->model)->attributes('id'),
                 'value' => $data->id,
                 'type' => 'hidden',
             ]
@@ -214,7 +217,7 @@ class UsersController extends AdminController
     public function delete()
     {
         if(request()->ajax()) {
-            return $this->json(app('users_service')->toDelete());
+            return $this->json(app($this->model)->toDelete());
         }
         return $this->error();
     }
@@ -225,7 +228,7 @@ class UsersController extends AdminController
     public function restore()
     {
         if(request()->ajax()) {
-            return $this->json(app('users_service')->toRestore());
+            return $this->json(app($this->model)->toRestore());
         }
         return $this->error();
     }
@@ -236,7 +239,7 @@ class UsersController extends AdminController
     public function export()
     {
         if(request()->ajax()) {
-            return $this->json(app('users_service')->toList());
+            return $this->json(app($this->model)->toList());
         }
         return $this->error();
     }

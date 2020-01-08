@@ -3,10 +3,16 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Z1px\App\Models\Users\UsersModel;
+use Z1px\App\Models\Users\UsersPassportsModel;
 
 
 class CreateUsersTables extends Migration
 {
+
+    private $users_model = UsersModel::class;
+    private $users_passports_model = UsersPassportsModel::class;
+
     /**
      * Run the migrations.
      *
@@ -17,7 +23,7 @@ class CreateUsersTables extends Migration
         /**
          * 创建用户表
          */
-        Schema::create(app('users_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->users_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -40,12 +46,12 @@ class CreateUsersTables extends Migration
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('users_service')->getTable() . "` comment '用户表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->users_model)->getTable() . "` comment '用户表'"); // 表注释
 
         /**
          * 创建用户认证表
          */
-        Schema::create(app('users_passports_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->users_passports_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -68,7 +74,7 @@ class CreateUsersTables extends Migration
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('users_passports_service')->getTable() . "` comment '创建用户认证表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->users_passports_model)->getTable() . "` comment '创建用户认证表'"); // 表注释
     }
 
     /**
@@ -79,8 +85,8 @@ class CreateUsersTables extends Migration
     public function down()
     {
 //        Schema::disableForeignKeyConstraints(); // 关闭外键约束
-        Schema::dropIfExists(app('users_passports_service')->getTable()); // 删除用户认证表
-        Schema::dropIfExists(app('users_service')->getTable()); // 删除用户表
+        Schema::dropIfExists(app($this->users_passports_model)->getTable()); // 删除用户认证表
+        Schema::dropIfExists(app($this->users_model)->getTable()); // 删除用户表
 //        Schema::enableForeignKeyConstraints(); // 开启外键约束
     }
 }

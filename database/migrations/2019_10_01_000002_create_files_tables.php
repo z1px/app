@@ -3,10 +3,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Z1px\App\Models\FilesModel;
 
 class CreateFilesTables extends Migration
 {
+
+    private $files_model = FilesModel::class;
+
     /**
      * Run the migrations.
      *
@@ -18,7 +21,7 @@ class CreateFilesTables extends Migration
         /**
          * 创建文件资源管理表
          */
-        Schema::create(app('files_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->files_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -57,7 +60,7 @@ class CreateFilesTables extends Migration
 
             $table->index(['user_type', 'user_id']);
         });
-        app('db')->statement("ALTER TABLE `" . app('files_service')->getTable() . "` comment '文件资源管理表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->files_model)->getTable() . "` comment '文件资源管理表'"); // 表注释
     }
 
     /**
@@ -67,6 +70,6 @@ class CreateFilesTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(app('files_service')->getTable()); // 删除文件资源管理表
+        Schema::dropIfExists(app($this->files_model)->getTable()); // 删除文件资源管理表
     }
 }

@@ -3,10 +3,16 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Z1px\App\Models\Users\UsersBehaviorModel;
+use Z1px\App\Models\Users\UsersLoginModel;
 
 
 class CreateUsersLogTables extends Migration
 {
+
+    private $users_login_model = UsersLoginModel::class;
+    private $users_behavior_model = UsersBehaviorModel::class;
+
     /**
      * Run the migrations.
      *
@@ -17,7 +23,7 @@ class CreateUsersLogTables extends Migration
         /**
          * 创建用户登录日志表
          */
-        Schema::create(app('users_login_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->users_login_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -40,12 +46,12 @@ class CreateUsersLogTables extends Migration
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('users_login_service')->getTable() . "` comment '用户登录日志表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->users_login_model)->getTable() . "` comment '用户登录日志表'"); // 表注释
 
         /**
          * 创建用户行为日志表
          */
-        Schema::create(app('users_behavior_service')->getTable(), function (Blueprint $table) {
+        Schema::create(app($this->users_behavior_model)->getTable(), function (Blueprint $table) {
 
             $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
             $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
@@ -69,7 +75,7 @@ class CreateUsersLogTables extends Migration
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });
-        app('db')->statement("ALTER TABLE `" . app('users_behavior_service')->getTable() . "` comment '用户行为日志表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->users_behavior_model)->getTable() . "` comment '用户行为日志表'"); // 表注释
     }
 
     /**
@@ -79,7 +85,7 @@ class CreateUsersLogTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(app('users_login_service')->getTable()); // 删除用户登录日志表
-        Schema::dropIfExists(app('users_behavior_service')->getTable()); // 删除用户行为日志表
+        Schema::dropIfExists(app($this->users_login_model)->getTable()); // 删除用户登录日志表
+        Schema::dropIfExists(app($this->users_behavior_model)->getTable()); // 删除用户行为日志表
     }
 }

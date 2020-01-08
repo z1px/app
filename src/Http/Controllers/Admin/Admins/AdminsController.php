@@ -10,10 +10,17 @@
 namespace Z1px\App\Http\Controllers\Admin\Admins;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\Admins\AdminsRolesService;
+use Z1px\App\Http\Services\Admins\AdminsService;
+use Z1px\App\Http\Services\Admins\RolesService;
 
-class AdminsController extends AdminController
+class AdminsController extends Controller
 {
+
+    private $model = AdminsService::class;
+    private $roles_model = RolesService::class;
+    private $admins_roles_model = AdminsRolesService::class;
 
     /**
      * 账号列表
@@ -24,27 +31,27 @@ class AdminsController extends AdminController
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'username',
-                    'title' => app('admins_service')->attributes('username'),
+                    'title' => app($this->model)->attributes('username'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'status',
-                    'title' => app('admins_service')->attributes('status'),
+                    'title' => app($this->model)->attributes('status'),
                     'type' => 'select',
-                    'list' => app('admins_service')->list_status,
+                    'list' => app($this->model)->list_status,
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('admins_service')->attributes('start_time'),
+                    'title' => app($this->model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('admins_service')->attributes('end_time'),
+                    'title' => app($this->model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('admins_service')->toList())
+            ->with('data', app($this->model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 
@@ -54,7 +61,7 @@ class AdminsController extends AdminController
     public function add()
     {
         if(request()->ajax()){
-            $result = app('admins_service')->toAdd();
+            $result = app($this->model)->toAdd();
             if(1 === $result['code']){
                 $result['url'] = app('router')->has('admin.admins.update') ? route('admin.admins.update', ['id' => $result['data']['id']]) : url('admins.update', ['id' => $result['data']['id']]);
             }
@@ -63,32 +70,32 @@ class AdminsController extends AdminController
         $form = [
             [
                 'name' => 'username',
-                'title' => app('admins_service')->attributes('username'),
+                'title' => app($this->model)->attributes('username'),
                 'type' => 'text',
             ],
             [
                 'name' => 'nickname',
-                'title' => app('admins_service')->attributes('nickname'),
+                'title' => app($this->model)->attributes('nickname'),
                 'type' => 'text',
             ],
             [
                 'name' => 'avatar',
-                'title' => app('admins_service')->attributes('avatar'),
+                'title' => app($this->model)->attributes('avatar'),
                 'type' => 'file_image',
             ],
             [
                 'name' => 'mobile',
-                'title' => app('admins_service')->attributes('mobile'),
+                'title' => app($this->model)->attributes('mobile'),
                 'type' => 'text',
             ],
             [
                 'name' => 'email',
-                'title' => app('admins_service')->attributes('email'),
+                'title' => app($this->model)->attributes('email'),
                 'type' => 'text',
             ],
             [
                 'name' => 'password',
-                'title' => app('admins_service')->attributes('password'),
+                'title' => app($this->model)->attributes('password'),
                 'value' => '',
                 'type' => 'password',
             ],
@@ -100,17 +107,17 @@ class AdminsController extends AdminController
             ],
             [
                 'name' => 'status',
-                'title' => app('admins_service')->attributes('status'),
+                'title' => app($this->model)->attributes('status'),
                 'value' => 1,
                 'type' => 'radio',
-                'list' => app('admins_service')->list_status,
+                'list' => app($this->model)->list_status,
             ],
             ['type' => 'line'],
             [
                 'name' => 'role_id',
-                'title' => app('admins_service')->attributes('role_id'),
+                'title' => app($this->model)->attributes('role_id'),
                 'type' => 'checkbox',
-                'list' => app('roles_service')->toListAll(),
+                'list' => app($this->roles_model)->toListAll(),
             ],
         ];
         return view('admin.admins.admins.add')
@@ -124,43 +131,43 @@ class AdminsController extends AdminController
     public function update()
     {
         if(request()->ajax()){
-            return $this->json(app('admins_service')->toUpdate());
+            return $this->json(app($this->model)->toUpdate());
         }
-        $data = app('admins_service')->toInfo();
+        $data = app($this->model)->toInfo();
         $form = [
             [
                 'name' => 'username',
-                'title' => app('admins_service')->attributes('username'),
+                'title' => app($this->model)->attributes('username'),
                 'value' => $data->username,
                 'type' => 'text',
             ],
             [
                 'name' => 'nickname',
-                'title' => app('admins_service')->attributes('nickname'),
+                'title' => app($this->model)->attributes('nickname'),
                 'value' => $data->nickname,
                 'type' => 'text',
             ],
             [
                 'name' => 'avatar',
-                'title' => app('admins_service')->attributes('avatar'),
+                'title' => app($this->model)->attributes('avatar'),
                 'value' =>  $data->avatar ?? '',
                 'type' => 'file_image',
             ],
             [
                 'name' => 'mobile',
-                'title' => app('admins_service')->attributes('mobile'),
+                'title' => app($this->model)->attributes('mobile'),
                 'value' => $data->mobile,
                 'type' => 'text',
             ],
             [
                 'name' => 'email',
-                'title' => app('admins_service')->attributes('email'),
+                'title' => app($this->model)->attributes('email'),
                 'value' => $data->email,
                 'type' => 'text',
             ],
             [
                 'name' => 'password',
-                'title' => app('admins_service')->attributes('password'),
+                'title' => app($this->model)->attributes('password'),
                 'value' => '',
                 'type' => 'password',
             ],
@@ -172,22 +179,22 @@ class AdminsController extends AdminController
             ],
             [
                 'name' => 'status',
-                'title' => app('admins_service')->attributes('status'),
+                'title' => app($this->model)->attributes('status'),
                 'value' => $data->status,
                 'type' => 'radio',
-                'list' => app('admins_service')->list_status,
+                'list' => app($this->model)->list_status,
             ],
             ['type' => 'line'],
             [
                 'name' => 'role_id',
-                'title' => app('admins_service')->attributes('role_id'),
-                'value' => app('admins_roles_service')->where('admin_id', $data->id)->pluck('role_id')->toArray(),
+                'title' => app($this->model)->attributes('role_id'),
+                'value' => app($this->admins_roles_model)->where('admin_id', $data->id)->pluck('role_id')->toArray(),
                 'type' => 'checkbox',
-                'list' => app('roles_service')->toListAll(),
+                'list' => app($this->roles_model)->toListAll(),
             ],
             [
                 'name' => 'id',
-                'title' => app('admins_service')->attributes('id'),
+                'title' => app($this->model)->attributes('id'),
                 'value' => $data->id,
                 'type' => 'hidden',
             ]
@@ -203,7 +210,7 @@ class AdminsController extends AdminController
     public function delete()
     {
         if(request()->ajax()) {
-            return $this->json(app('admins_service')->toDelete());
+            return $this->json(app($this->model)->toDelete());
         }
         return $this->error();
     }
@@ -214,7 +221,7 @@ class AdminsController extends AdminController
     public function restore()
     {
         if(request()->ajax()) {
-            return $this->json(app('admins_service')->toRestore());
+            return $this->json(app($this->model)->toRestore());
         }
         return $this->error();
     }
@@ -225,7 +232,7 @@ class AdminsController extends AdminController
     public function export()
     {
         if(request()->ajax()) {
-            return $this->json(app('admins_service')->toList());
+            return $this->json(app($this->model)->toList());
         }
         return $this->error();
     }

@@ -10,10 +10,13 @@
 namespace Z1px\App\Http\Controllers\Admin;
 
 
-use Z1px\App\Http\Controllers\AdminController;
+use Z1px\App\Http\Controllers\Controller;
+use Z1px\App\Http\Services\FilesService;
 
-class FilesController extends AdminController
+class FilesController extends Controller
 {
+
+    private $model = FilesService::class;
 
     /**
      * 文件资源列表
@@ -24,33 +27,33 @@ class FilesController extends AdminController
             ->with('search_form', $this->buildSearchForm([
                 [
                     'name' => 'table',
-                    'title' => app('files_service')->attributes('table'),
+                    'title' => app($this->model)->attributes('table'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'file_type',
-                    'title' => app('files_service')->attributes('file_type'),
+                    'title' => app($this->model)->attributes('file_type'),
                     'type' => 'select',
-                    'list' => app('files_service')->list_file_type,
+                    'list' => app($this->model)->list_file_type,
                 ],
                 [
                     'name' => 'visibility',
-                    'title' => app('files_service')->attributes('visibility'),
+                    'title' => app($this->model)->attributes('visibility'),
                     'type' => 'select',
-                    'list' => app('files_service')->list_visibility,
+                    'list' => app($this->model)->list_visibility,
                 ],
                 [
                     'name' => 'start_time',
-                    'title' => app('files_service')->attributes('start_time'),
+                    'title' => app($this->model)->attributes('start_time'),
                     'type' => 'text',
                 ],
                 [
                     'name' => 'end_time',
-                    'title' => app('files_service')->attributes('end_time'),
+                    'title' => app($this->model)->attributes('end_time'),
                     'type' => 'text',
                 ]
             ]))
-            ->with('data', app('files_service')->toList())
+            ->with('data', app($this->model)->toList())
             ->with('list_menu', app('menu_logic')->toList());
     }
 
@@ -60,7 +63,7 @@ class FilesController extends AdminController
     public function visible()
     {
         if(request()->ajax()) {
-            return $this->json(app('files_service')->toVisible());
+            return $this->json(app($this->model)->toVisible());
         }
         return $this->error();
     }
@@ -71,7 +74,7 @@ class FilesController extends AdminController
     public function invisible()
     {
         if(request()->ajax()) {
-            return $this->json(app('files_service')->toInvisible());
+            return $this->json(app($this->model)->toInvisible());
         }
         return $this->error();
     }
@@ -82,7 +85,7 @@ class FilesController extends AdminController
     public function delete()
     {
         if(request()->ajax()) {
-            return $this->json(app('files_service')->toDelete());
+            return $this->json(app($this->model)->toDelete());
         }
         return $this->error();
     }
