@@ -3,7 +3,6 @@
 namespace Z1px\App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -17,6 +16,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
     protected $adminNamespace = 'App\Http\Controllers\Admin';//管理后台
+
+    /**
+     * The path to the "home" route for your application.
+     *
+     * @var string
+     */
+    public const HOME = '/home';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -37,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $list = explode('.', Request::instance()->getHost());
+        $list = explode('.', request()->getHost());
         switch ($list[0]){
             case "api": // API接口
                 $this->mapApiRoutes();
@@ -54,19 +60,13 @@ class RouteServiceProvider extends ServiceProvider
         unset($list);
 
         // 通用路由
-        Route::namespace($this->namespace)->group(base_path('routes/route.php'));
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/route.php'));
 
         // 回退路由
         $this->fallback(function () {
-            if(request()->ajax()){
-                return response()->json([
-                    'code' => 0,
-                    'msg' => '页面不存在',
-                    'data' => [],
-                ], 404);
-            }else{
-                return response()->view('404', [], 404);
-            }
+            return error();
         });
     }
 
@@ -80,8 +80,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -94,9 +94,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 
     /**
