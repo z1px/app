@@ -197,6 +197,14 @@ class AdminsModel extends Model
             case 'delete':
                 $rules['id'] = "required|integer|not_in:1";
                 break;
+            case 'login':
+                $rules['username'] = "required";
+                $rules['password'] = "required";
+                break;
+            case 'loginInfo':
+            case 'logout':
+                $rules['access_token'] = "required";
+                break;
         }
         return $rules;
     }

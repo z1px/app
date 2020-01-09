@@ -20,7 +20,7 @@ class Controller extends BaseController
      */
     protected function error()
     {
-        return $this->error();
+        return error();
     }
 
     /**
@@ -32,7 +32,7 @@ class Controller extends BaseController
         isset($result['code']) || $result['code'] = 1;
         isset($result['message']) || $result['message'] = 'data normal!';
 
-        return $this->json($result, $status, $headers);
+        return json($result, $status, $headers);
     }
 
     /**
