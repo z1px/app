@@ -14,6 +14,7 @@ use Z1px\App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
+
     public function index()
     {
         return view('admin.index');
@@ -26,4 +27,5 @@ class IndexController extends Controller
         }
         return $this->error();
     }
+
 }
