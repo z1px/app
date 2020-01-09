@@ -16,7 +16,7 @@ use Z1px\App\Http\Services\FilesService;
 class FilesController extends Controller
 {
 
-    protected function __construct()
+    public function __construct()
     {
         $this->model = FilesService::class;
     }

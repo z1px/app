@@ -16,7 +16,7 @@ use Z1px\App\Http\Services\Admins\RolesService;
 class RolesController extends Controller
 {
 
-    protected function __construct()
+    public function __construct()
     {
         $this->model = RolesService::class;
     }

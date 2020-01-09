@@ -16,7 +16,7 @@ use Z1px\App\Http\Services\Admins\PermissionsService;
 class PermissionsController extends Controller
 {
 
-    protected function __construct()
+    public function __construct()
     {
         $this->model = PermissionsService::class;
     }

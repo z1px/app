@@ -16,7 +16,7 @@ use Z1px\App\Http\Services\TablesOperatedService;
 class TablesOperatedController extends Controller
 {
 
-    protected function __construct()
+    public function __construct()
     {
         $this->model = TablesOperatedService::class;
     }

@@ -16,7 +16,7 @@ use Z1px\App\Http\Services\Users\UsersService;
 class UsersController extends Controller
 {
 
-    protected function __construct()
+    public function __construct()
     {
         $this->model = UsersService::class;
     }
