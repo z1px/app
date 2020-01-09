@@ -28,9 +28,9 @@ class AdminsLogic
         $params = request()->input();
 
         // 参数合法性验证
-        validator($params, $this->model->rules('login'), $this->model->messages(), $this->model->attributes())->validate();
+        validator($params, app($this->model)->rules('login'), app($this->model)->messages(), app($this->model)->attributes())->validate();
 
-        $data = $this->model->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_failure', 'password', 'access_token']);
+        $data = app($this->model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_failure', 'password', 'access_token']);
 
         if(Verify::mobile($params['username'])){
             $data = $data->where('mobile', $params['username']);
@@ -101,9 +101,9 @@ class AdminsLogic
         $params = request()->input();
 
         // 参数合法性验证
-        validator($params, $this->model->rules('loginInfo'), $this->model->messages(), $this->model->attributes())->validate();
+        validator($params, app($this->model)->rules('loginInfo'), app($this->model)->messages(), app($this->model)->attributes())->validate();
 
-        $data = $this->model->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
+        $data = app($this->model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
             ->where('access_token', $params['access_token'])
             ->first();
 
@@ -140,9 +140,9 @@ class AdminsLogic
         $params = request()->input();
 
         // 参数合法性验证
-        validator($params, $this->model->rules('logout'), $this->model->messages(), $this->model->attributes())->validate();
+        validator($params, app($this->model)->rules('logout'), app($this->model)->messages(), app($this->model)->attributes())->validate();
 
-        $data = $this->model->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
+        $data = app($this->model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
             ->where('access_token', $params['access_token'])
             ->first();
 
