@@ -28,6 +28,14 @@ class FilesModel extends Model
         'admin_id'];
 
     /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['file_type_name', 'visibility_name', 'table_comment', 'size_format', 'user_type_name',
+        'base64', 'image'];
+
+    /**
      * 文件类型列表
      * @var array
      */

@@ -40,6 +40,13 @@ class AdminsModel extends Model
         'access_token', 'status', 'login_failure', 'login_at'];
 
     /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['status_name', 'avatar'];
+
+    /**
      * 数组中的属性会被隐藏。
      *
      * @var array

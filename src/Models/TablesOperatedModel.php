@@ -28,6 +28,13 @@ class TablesOperatedModel extends Model
         'route_action', 'url', 'method', 'ip', 'area', 'user_agent', 'device', 'user_type', 'user_id', 'admin_id'];
 
     /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['table_comment', 'operate_name', 'user_type_name', 'class'];
+
+    /**
      * 这个属性应该被转换为原生类型.
      *
      * @var array

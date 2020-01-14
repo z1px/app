@@ -26,6 +26,13 @@ class ConfigModel extends Model
     protected $fillable = ['title', 'key', 'value', 'brief', 'input', 'values', 'type', 'status'];
 
     /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['status_name', 'input_name', 'type_name'];
+
+    /**
      * 表单操作类型
      * @var array
      */

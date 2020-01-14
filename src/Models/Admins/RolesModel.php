@@ -24,6 +24,13 @@ class RolesModel extends Model
     protected $fillable = ['title', 'status'];
 
     /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['status_name'];
+
+    /**
      * 状态列表
      * @var array
      */

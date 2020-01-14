@@ -24,6 +24,13 @@ class PermissionsModel extends Model
     protected $fillable = ['title', 'route_name', 'route_action', 'icon', 'sort', 'type', 'show', 'status', 'pid'];
 
     /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['status_name', 'show_name'];
+
+    /**
      * 展示列表
      * @var array
      */
