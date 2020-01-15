@@ -165,7 +165,7 @@ class UsersModel extends Model
                 $rules['email'] = "nullable|email:spoof|unique:{$this->getTable()},email";
                 $rules['file_id'] = "nullable|integer";
                 $rules['password'] = "required|between:6,20";
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':
                 $rules['username'] = [
@@ -188,7 +188,7 @@ class UsersModel extends Model
                 ];
                 $rules['file_id'] = "nullable|integer";
                 $rules['password'] = "nullable|between:6,20";
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'delete':
                 $rules['id'] = "required|integer";

@@ -82,14 +82,14 @@ class RolesModel extends Model
         switch ($scene){
             case 'add':
                 $rules['title'] = "required|between:2,20|unique:{$this->getTable()},title";
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':
                 $rules['title'] = [
                     "between:2,20",
                     Rule::unique($this->getTable(), 'title')->ignore(request()->input('id'))
                 ];
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
         }
         return $rules;

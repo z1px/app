@@ -101,9 +101,9 @@ class ConfigModel extends Model
                 ];
                 $rules['value'] = "between:0,120";
                 $rules['brief'] = "between:0,200";
-                $rules['input'] = "required|in:" . implode(',', $this->list_input);
-                $rules['type'] = "required|integer|in:" . implode(',', $this->list_type);
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['input'] = "required|in:" . implode(',', array_keys($this->list_input));
+                $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':
                 $rules['title'] = "required|between:2,30|unique:{$this->getTable()},title";
@@ -115,9 +115,9 @@ class ConfigModel extends Model
                 ];
                 $rules['value'] = "between:0,120";
                 $rules['brief'] = "between:0,200";
-                $rules['input'] = "required|in:" . implode(',', $this->list_input);
-                $rules['type'] = "required|integer|in:" . implode(',', $this->list_type);
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['input'] = "required|in:" . implode(',', array_keys($this->list_input));
+                $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
         }
         return $rules;

@@ -126,7 +126,7 @@ class PermissionsModel extends Model
                 $rules['sort'] = "integer";
                 $rules['type'] = "integer";
                 $rules['show'] = "integer";
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':
                 $rules['title'] = [
@@ -144,7 +144,7 @@ class PermissionsModel extends Model
                 $rules['sort'] = "integer";
                 $rules['type'] = "integer";
                 $rules['show'] = "integer";
-                $rules['status'] = "in:" . implode(',', $this->list_status);
+                $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'drop':
                 $rules['id'] = "required|integer";
