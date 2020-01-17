@@ -128,7 +128,7 @@ class FilesModel extends Model
 
     public function getImageAttribute()
     {
-        if(1 === $this->attributes['type']){
+        if(1 === $this->attributes['file_type']){
             $value = $this->file_to_image($this->attributes['id']);
         }else{
             $value = '';
