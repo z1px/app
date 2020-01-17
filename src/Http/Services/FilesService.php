@@ -53,7 +53,16 @@ class FilesService extends FilesModel
      */
     public function upload()
     {
-        $file = request()->file('image');
+        $files = request()->file();
+        if(0 === count($files) || !is_array($files)){
+            return [
+                'code' => 0,
+                'message' => '没有文件上传'
+            ];
+        }
+        $file = reset($files);
+        unset($files);
+
         if(!$file->isValid()){
             return [
                 'code' => 0,
@@ -69,7 +78,7 @@ class FilesService extends FilesModel
                 'message' => '文件上传配置错误'
             ];
         }
-        $path = 'images'; // 存储路径
+        $path = $this->list_file_path[$this->getFileType($file->extension())] ?? 'files'; // 存储路径
         $visibility='public'; // 文件可见性，public可见，private不可见
 
         $data = [
@@ -129,12 +138,13 @@ class FilesService extends FilesModel
                 'message' => '文件上传配置错误'
             ];
         }
-        $path = 'images'; // 存储路径
-        $visibility='public'; // 文件可见性，public可见，private不可见
 
         $tmp = tempnam(sys_get_temp_dir(), 'img_');
         file_put_contents($tmp, base64_decode($match[5]));
         $file = new File($tmp);
+        $path = $this->list_file_path[$this->getFileType($file->extension())] ?? 'files'; // 存储路径
+        $visibility='public'; // 文件可见性，public可见，private不可见
+
         $data = [
             'original_name' => basename("{$tmp}.{$match[2]}"), // 文件原始名称
             'disk' => $options['disk'] ?? '', // 文件存储磁盘名称

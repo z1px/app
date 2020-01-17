@@ -37,14 +37,15 @@ class FilesModel extends Model
      * 文件类型列表
      * @var array
      */
-//    public $list_file_type = [
-//        1 => 'image', // 图片文件类型
-//        2 => 'audio', // 音频文件类型
-//        3 => 'video', // 视频文件类型
-//        4 => 'text', // 文本文件类型
-//        5 => 'application', // 应用文件类型
-//        6 => 'archive', // 归档文件类型
-//    ];
+    public $list_file_path = [
+        1 => 'image', // 图片文件类型
+        2 => 'audio', // 音频文件类型
+        3 => 'video', // 视频文件类型
+        4 => 'text', // 文本文件类型
+        5 => 'application', // 应用文件类型
+        6 => 'archive', // 归档文件类型
+    ];
+
     public $list_file_type = [
         1 => '图片', // 图片文件类型
         2 => '音频', // 音频文件类型
