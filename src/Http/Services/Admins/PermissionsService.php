@@ -85,7 +85,7 @@ class PermissionsService extends PermissionsModel
             return [
                 'code' => 1,
                 'message' => '移动成功',
-                'data' => $data->getAttributes()
+                'data' => $data
             ];
         }else{
             return [
