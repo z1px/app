@@ -28,9 +28,6 @@ class CreateFilesTables extends Migration
             $table->collation = 'utf8mb4_unicode_ci'; // 指定表的默认排序格式 (MySQL).
 
             $table->bigIncrements('id')->comment('ID');
-            $table->string('model', 100)->comment('关联表模型');
-            $table->string('table', 50)->index()->comment('关联表名称');
-            $table->unsignedBigInteger('tid')->default(0)->comment('关联表ID');
             $table->string('original_name', 50)->comment('文件原始名称');
             $table->string('disk', 20)->comment('文件存储磁盘名称');
             $table->string('visibility', 20)->comment('文件可见性，public可见，private不可见');
@@ -41,12 +38,6 @@ class CreateFilesTables extends Migration
             $table->string('mime', 20)->comment('文件MIME类型');
             $table->string('md5', 32)->comment('文件MD5校验');
             $table->string('sha1', 40)->comment('文件SHA-1校验');
-            $table->string('route_name', 50)->nullable()->comment('路由名称');
-            $table->string('route_action', 100)->nullable()->comment('路由方法');
-            $table->string('url', 200)->nullable()->comment('请求地址');
-            $table->string('method', 20)->nullable()->comment('请求类型');
-            $table->ipAddress('ip')->nullable()->comment('请求IP');
-            $table->string('area', 50)->nullable()->comment('IP区域');
             $table->unsignedBigInteger('user_type')->default(0)->comment('用户类型：1-管理员，2-平台用户');
             $table->unsignedBigInteger('user_id')->default(0)->comment('文件创建者用户ID');
             $table->unsignedBigInteger('admin_id')->index()->default(0)->comment('后台操作管理员ID');
