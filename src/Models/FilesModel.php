@@ -23,17 +23,15 @@ class FilesModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['model', 'table', 'tid', 'original_name', 'disk', 'visibility', 'path_name', 'file_type', 'extension',
-        'mime', 'md5', 'sha1', 'route_name', 'route_action', 'url', 'method', 'ip', 'area', 'user_type', 'user_id',
-        'admin_id'];
+    protected $fillable = ['original_name', 'disk', 'visibility', 'path_name', 'file_type', 'extension', 'mime', 'md5',
+        'sha1', 'user_type', 'user_id', 'admin_id'];
 
     /**
      * 追加到模型数组表单的访问器。
      *
      * @var array
      */
-    protected $appends = ['file_type_name', 'visibility_name', 'table_comment', 'size_format', 'user_type_name',
-        'base64', 'image'];
+    protected $appends = ['file_type_name', 'visibility_name', 'size_format', 'user_type_name', 'base64', 'image'];
 
     /**
      * 文件类型列表
@@ -86,18 +84,6 @@ class FilesModel extends Model
     public function getVisibilityNameAttribute()
     {
         return $this->list_visibility[$this->attributes['visibility']] ?? '未知';
-    }
-
-    public function getTableCommentAttribute()
-    {
-        try{
-            $options = app('db')->getDoctrineSchemaManager()->listTableDetails($this->attributes['table'])->getOptions();
-            $value = $options['comment'];
-            unset($options);
-        }catch (\Exception $exception){
-            $value = '';
-        }
-        return $value;
     }
 
     public function getSizeFormatAttribute()
@@ -179,9 +165,6 @@ class FilesModel extends Model
     public function attributes($key=null)
     {
         $attributes = array_merge(parent::attributes(), [
-            'model' => '关联表模型',
-            'table' => '关联表名称',
-            'tid' => '关联表ID',
             'original_name' => '文件原始名称',
             'disk' => '文件存储磁盘名称',
             'visibility' => '文件可见性',

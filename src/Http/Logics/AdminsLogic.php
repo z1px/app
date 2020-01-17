@@ -11,6 +11,7 @@ namespace Z1px\App\Http\Logics;
 
 
 use Illuminate\Support\Facades\Hash;
+use Z1px\App\Http\Services\Admins\AdminsLoginService;
 use Z1px\App\Models\Admins\AdminsModel;
 use Z1px\Tool\Verify;
 
@@ -75,6 +76,8 @@ class AdminsLogic
             ];
         }
 
+        app(AdminsLoginService::class)->toAdd([], $data->toArray());
+
         return [
             'code' => 1,
             'message' => '登录成功',
@@ -98,14 +101,7 @@ class AdminsLogic
      */
     public function info()
     {
-        $params = request()->input();
-
-        // 参数合法性验证
-        validator($params, app($this->model)->rules('loginInfo'), app($this->model)->messages(), app($this->model)->attributes())->validate();
-
-        $data = app($this->model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
-            ->where('access_token', $params['access_token'])
-            ->first();
+        $data = request()->login;
 
         if(empty($data)){
             return [
@@ -137,14 +133,7 @@ class AdminsLogic
      */
     public function logout()
     {
-        $params = request()->input();
-
-        // 参数合法性验证
-        validator($params, app($this->model)->rules('logout'), app($this->model)->messages(), app($this->model)->attributes())->validate();
-
-        $data = app($this->model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
-            ->where('access_token', $params['access_token'])
-            ->first();
+        $data = request()->login;
 
         if(empty($data)){
             return [

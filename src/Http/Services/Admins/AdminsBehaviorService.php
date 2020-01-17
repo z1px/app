@@ -23,7 +23,7 @@ class AdminsBehaviorService extends AdminsBehaviorModel
     protected function toAddParams(array $params, array $data = [])
     {
         $params = array_merge($params, [
-            'admin_id' => 0, // 管理员ID
+            'admin_id' => request()->login ? request()->login->id : 0, // 管理员ID
             'title' => '', // 行为名称
             'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
             'route_action' => request()->route() ? request()->route()->getActionName() : '', // 路由方法

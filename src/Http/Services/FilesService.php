@@ -25,180 +25,134 @@ class FilesService extends FilesModel
     use ToInfo, ToUpdate, ToDelete, ToList;
 
     /**
-     * 新增数据
-     * @param $model table表模型
-     * @param $input_name file表单name
-     * @param $path 存储路径
-     * @param $visibility 文件可见性，public可见，private不可见
-     * @param string $options 文件存储磁盘名称，public或local
+     * 文件上传
      * @return array
      */
-    public function toAdd(object $model, $input_name, $path, $visibility='public', $options = 'local')
+    public function upload()
     {
-        $file = request()->file($input_name);
-        $data = [];
+        $file = request()->file('image');
+        if(!$file->isValid()){
+            return [
+                'code' => 0,
+                'message' => $file->getError()
+            ];
+        }
+
         $filesystems = config('filesystems', []);
-        if(is_string($options)){
-            $options = ['disk' => $options];
-        }else if(is_array($options)){
-            if(!isset($options['disk']) || empty($options['disk']))
-                $options['disk'] = $filesystems['default'] ?? 'local';
-        }else{
-            $options = ['disk' => $filesystems['default'] ?? 'local'];
+        $options = ['disk' => $filesystems['default'] ?? 'local'];
+        if(!isset($filesystems['disks'][$options['disk']])){
+            return [
+                'code' => 0,
+                'message' => '文件上传配置错误'
+            ];
         }
-        if(isset($filesystems['disks'][$options['disk']])){
-            $func_data = function ($file) use ($model, $path, $visibility, $options){
-                $data = [
-                    'model' => $model->getMorphClass(), // 关联表模型
-                    'table' => $model->getTable(), // 关联表名称
-                    'tid' => $model->id ?? 0, // 关联表ID
-                    'original_name' => $file->getClientOriginalName(), // 文件原始名称
-                    'disk' => $options['disk'] ?? '', // 文件存储磁盘名称
-                    'visibility' => $visibility, // 文件可见性，public可见，private不可见
-                    'path_name' => $file->store($path, $options), // 文件路径
-                    'size' => $file->getSize(), // 文件大小，单位字节b
-                    'file_type' => $this->getFileType($file->extension()), // 文件类型：1-图片文件类型，2-音频文件类型，3-视频文件类型，4-文本文件类型，5-应用文件类型，6-归档文件类型
-                    'extension' => strtolower($file->extension()), // 文件扩展名
-                    'mime' => $file->getMimeType(), // 文件MIME类型
-                    'md5' => '', // 文件MD5校验
-                    'sha1' => '', // 文件SHA-1校验
-                    'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
-                    'route_action' => request()->route() ? request()->route()->getActionName() : '', // 路由方法
-                    'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
-                    'method' => request()->getRealMethod(), // 请求类型
-                    'ip' => request()->getClientIp(), // 请求IP
-                    'area' => IP::format(request()->getClientIp()), // IP区域
-                    'user_type' => 0, // 用户类型
-                    'user_id' => 0, // 文件创建者用户ID
-                ];
-                if(Storage::disk($data['disk'])->exists($data['path_name'])){
-                    if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
-                        Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);
-                    }
-                    $root = config("filesystems.disks.{$data['disk']}.root", '') . '/';
-                    if(is_file($root . $data['path_name'])){
-                        $data['md5'] = md5_file($root . $data['path_name']);
-                        $data['sha1'] = sha1_file($root . $data['path_name']);
-                    }
-                    unset($root);
-                }
-                return $data;
-            };
-            switch (gettype($file)){
-                case 'object':
-                    if($file->isValid()){
-                        $data = $func_data($file);
-                        $data['id'] = $this->insertGetId($data);
-                    }
-                    break;
-                case 'array':
-                    foreach ($file as $key=>$value){
-                        is_object($value) || $value = reset($value);
-                        if($value->isValid()){
-                            $value = $func_data($value);
-                            $value['id'] = $this->insertGetId($value);
-                            $value['_key'] = $key;
-                            $data[] = $value;
-                        }
-                    }
-                    break;
-                case 'NULL':
+        $path = 'images'; // 存储路径
+        $visibility='public'; // 文件可见性，public可见，private不可见
+
+        $data = [
+            'original_name' => $file->getClientOriginalName(), // 文件原始名称
+            'disk' => $options['disk'] ?? '', // 文件存储磁盘名称
+            'visibility' => $visibility, // 文件可见性，public可见，private不可见
+            'path_name' => $file->store($path, $options), // 文件路径
+            'size' => $file->getSize(), // 文件大小，单位字节b
+            'file_type' => $this->getFileType($file->extension()), // 文件类型：1-图片文件类型，2-音频文件类型，3-视频文件类型，4-文本文件类型，5-应用文件类型，6-归档文件类型
+            'extension' => strtolower($file->extension()), // 文件扩展名
+            'mime' => $file->getMimeType(), // 文件MIME类型
+            'md5' => '', // 文件MD5校验
+            'sha1' => '', // 文件SHA-1校验
+            'user_type' => 1, // 用户类型
+            'user_id' => request()->login->id, // 文件创建者用户ID
+        ];
+        if(Storage::disk($data['disk'])->exists($data['path_name'])){
+            if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
+                Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);
             }
+            $root = config("filesystems.disks.{$data['disk']}.root", '') . '/';
+            if(is_file($root . $data['path_name'])){
+                $data['md5'] = md5_file($root . $data['path_name']);
+                $data['sha1'] = sha1_file($root . $data['path_name']);
+            }
+            unset($root);
         }
-        return $data;
+        $data['id'] = $this->insertGetId($data);
+        $data['url'] = $this->file_to_image($data['id']);
+
+        return [
+            'code' => 1,
+            'message' => 'upload success',
+            'data' => $data
+        ];
     }
 
     /**
-     * 新增数据
-     * @param $model table表模型
-     * @param $content 图片内容
-     * @param $path 存储路径
-     * @param $visibility 文件可见性，public可见，private不可见
-     * @param string $options 文件存储磁盘名称，public或local
+     * base64文件存储
      * @return array
      */
-    public function toAddBase64(object $model, $content, $path, $visibility='public', $options = 'local')
+    public function uploadBase64()
     {
-        $data = [];
-        preg_match("/data:([a-z]+\/([a-z0-9-+.]+)(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*)/i", $content, $match);
+        $data = request()->input('file');
+        if(empty($data)){
+            return [
+                'code' => 0,
+                'message' => '文件内容不存在'
+            ];
+        }
+        preg_match("/data:([a-z]+\/([a-z0-9-+.]+)(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*)/i", $data, $match);
         if(empty($match) || !isset($match[5]) || empty($match[5])){
-            return $data;
+            return [
+                'code' => 0,
+                'message' => '文件格式错误'
+            ];
         }
         $filesystems = config('filesystems', []);
-        if(is_string($options)){
-            $options = ['disk' => $options];
-        }else if(is_array($options)){
-            if(!isset($options['disk']) || empty($options['disk']))
-                $options['disk'] = $filesystems['default'] ?? 'local';
-        }else{
-            $options = ['disk' => $filesystems['default'] ?? 'local'];
-        }
-        if(isset($filesystems['disks'][$options['disk']])){
-            $tmp = tempnam(sys_get_temp_dir(), 'img_');
-            file_put_contents($tmp, base64_decode($match[5]));
-            $file = new File($tmp);
-            $data = [
-                'model' => $model->getMorphClass(), // 关联表模型
-                'table' => $model->getTable(), // 关联表名称
-                'tid' => $model->id ?? 0, // 关联表ID
-                'original_name' => basename("{$tmp}.{$match[2]}"), // 文件原始名称
-                'disk' => $options['disk'] ?? '', // 文件存储磁盘名称
-                'visibility' => $visibility, // 文件可见性，public可见，private不可见
-                'path_name' => Storage::putFile($path, $file, $options), // 文件路径
-                'size' => $file->getSize(), // 文件大小，单位字节b
-                'file_type' => $this->getFileType($file->extension()), // 文件类型：1-图片文件类型，2-音频文件类型，3-视频文件类型，4-文本文件类型，5-应用文件类型，6-归档文件类型
-                'extension' => strtolower($file->extension()), // 文件扩展名
-                'mime' => $file->getMimeType(), // 文件MIME类型
-                'md5' => '', // 文件MD5校验
-                'sha1' => '', // 文件SHA-1校验
-                'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
-                'route_action' => request()->route() ? request()->route()->getActionName() : '', // 路由方法
-                'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
-                'method' => request()->getRealMethod(), // 请求类型
-                'ip' => request()->getClientIp(), // 请求IP
-                'area' => IP::format(request()->getClientIp()), // IP区域
-                'user_type' => 0, // 用户类型
-                'user_id' => 0, // 文件创建者用户ID
+        $options = ['disk' => $filesystems['default'] ?? 'local'];
+        if(!isset($filesystems['disks'][$options['disk']])){
+            return [
+                'code' => 0,
+                'message' => '文件上传配置错误'
             ];
-            if(Storage::disk($data['disk'])->exists($data['path_name'])){
-                if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
-                    Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);
-                }
-                $root = config("filesystems.disks.{$data['disk']}.root", '') . '/';
-                if(is_file($root . $data['path_name'])){
-                    $data['md5'] = md5_file($root . $data['path_name']);
-                    $data['sha1'] = sha1_file($root . $data['path_name']);
-                }
-                unset($root);
-            }
-            $data['id'] = $this->insertGetId($data);
-            unset($match, $file);
-            unlink($tmp);
         }
-        return $data;
-    }
+        $path = 'images'; // 存储路径
+        $visibility='public'; // 文件可见性，public可见，private不可见
 
-    /**
-     * 更新数据前修改参数
-     *
-     * @return array
-     */
-    public function toUpdateParams(array $params, $id=null, $tid=null)
-    {
-        if(!is_null($id) && !is_null($tid)){
-            $params = [
-                'id' => $id,
-                'tid' => $tid,
-            ];
-        }else{
-            if(!is_null($id)){
-                $params['id'] = $id;
+        $tmp = tempnam(sys_get_temp_dir(), 'img_');
+        file_put_contents($tmp, base64_decode($match[5]));
+        $file = new File($tmp);
+        $data = [
+            'original_name' => basename("{$tmp}.{$match[2]}"), // 文件原始名称
+            'disk' => $options['disk'] ?? '', // 文件存储磁盘名称
+            'visibility' => $visibility, // 文件可见性，public可见，private不可见
+            'path_name' => Storage::putFile($path, $file, $options), // 文件路径
+            'size' => $file->getSize(), // 文件大小，单位字节b
+            'file_type' => $this->getFileType($file->extension()), // 文件类型：1-图片文件类型，2-音频文件类型，3-视频文件类型，4-文本文件类型，5-应用文件类型，6-归档文件类型
+            'extension' => strtolower($file->extension()), // 文件扩展名
+            'mime' => $file->getMimeType(), // 文件MIME类型
+            'md5' => '', // 文件MD5校验
+            'sha1' => '', // 文件SHA-1校验
+            'user_type' => 1, // 用户类型
+            'user_id' => request()->login->id, // 文件创建者用户ID
+        ];
+        if(Storage::disk($data['disk'])->exists($data['path_name'])){
+            if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
+                Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);
             }
-            if(!is_null($tid)){
-                $params['tid'] = $tid;
+            $root = config("filesystems.disks.{$data['disk']}.root", '') . '/';
+            if(is_file($root . $data['path_name'])){
+                $data['md5'] = md5_file($root . $data['path_name']);
+                $data['sha1'] = sha1_file($root . $data['path_name']);
             }
+            unset($root);
         }
-        return $params;
+        $data['id'] = $this->insertGetId($data);
+        $data['url'] = $this->file_to_image($data['id']);
+        unset($match, $file);
+        unlink($tmp);
+
+        return [
+            'code' => 1,
+            'message' => 'upload success',
+            'data' => $data
+        ];
     }
 
     /**

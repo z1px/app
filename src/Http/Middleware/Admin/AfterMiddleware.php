@@ -3,7 +3,6 @@
 namespace Z1px\App\Http\Middleware\Admin;
 
 use Z1px\App\Http\Services\Admins\AdminsBehaviorService;
-use Z1px\App\Http\Services\Admins\AdminsLoginService;
 use Closure;
 
 /**
@@ -26,9 +25,8 @@ class AfterMiddleware
 
         // 执行一些任务
 //        dump("AfterMiddleware");
-//        app(AdminsLoginService::class)->toAdd();
-//        app(AdminsBehaviorService::class)->toAdd();
-//        app(AdminsBehaviorService::class)->toAdd(['response' => $response->getContent()]);
+
+        app(AdminsBehaviorService::class)->toAdd(['response' => $response->getContent()]);
 
         return $response;
     }
