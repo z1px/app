@@ -11,6 +11,7 @@ namespace Z1px\App\Http\Services;
 
 
 use Z1px\App\Models\FilesModel;
+use Z1px\App\Traits\Eloquent\ToAdd;
 use Z1px\App\Traits\Eloquent\ToDelete;
 use Z1px\App\Traits\Eloquent\ToInfo;
 use Z1px\App\Traits\Eloquent\ToList;
@@ -22,7 +23,29 @@ use Z1px\Tool\IP;
 class FilesService extends FilesModel
 {
 
-    use ToInfo, ToUpdate, ToDelete, ToList;
+    use ToAdd, ToInfo, ToUpdate, ToDelete, ToList;
+
+    /**
+     * 添加前修改参数
+     * @param $params
+     * @param array $data
+     * @return array
+     */
+    protected function toAddParams(array $params, array $data = [])
+    {
+        $params = array_merge($params, $data);
+        return $params;
+    }
+
+    /**
+     * 添加后修改数据
+     * @return $this
+     */
+    protected function toAdded()
+    {
+        $this->url = $this->file_to_image($this->id);
+        return $this;
+    }
 
     /**
      * 文件上传
@@ -74,14 +97,8 @@ class FilesService extends FilesModel
             }
             unset($root);
         }
-        $data['id'] = $this->insertGetId($data);
-        $data['url'] = $this->file_to_image($data['id']);
 
-        return [
-            'code' => 1,
-            'message' => 'upload success',
-            'data' => $data
-        ];
+        return $this->toAdd($data);
     }
 
     /**
@@ -148,11 +165,7 @@ class FilesService extends FilesModel
         unset($match, $file);
         unlink($tmp);
 
-        return [
-            'code' => 1,
-            'message' => 'upload success',
-            'data' => $data
-        ];
+        return $this->toAdd($data);
     }
 
     /**
