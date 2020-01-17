@@ -67,7 +67,7 @@ trait ToRestore
                 return [
                     'code' => 1,
                     'message' => '恢复成功',
-                    'data' => $data->getAttributes()
+                    'data' => $data
                 ];
             }else{
                 return [

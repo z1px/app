@@ -74,7 +74,7 @@ trait ToUpdate
             return [
                 'code' => 1,
                 'message' => '修改成功',
-                'data' => $data->getAttributes()
+                'data' => $data
             ];
         }else{
             return [

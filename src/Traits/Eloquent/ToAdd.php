@@ -59,7 +59,7 @@ trait ToAdd
             return [
                 'code' => 1,
                 'message' => '新增成功',
-                'data' => $this->getAttributes()
+                'data' => $this
             ];
         }else{
             return [
