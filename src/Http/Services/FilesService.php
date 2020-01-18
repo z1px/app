@@ -38,16 +38,6 @@ class FilesService extends FilesModel
     }
 
     /**
-     * 添加后修改数据
-     * @return $this
-     */
-    protected function toAdded()
-    {
-        $this->url = $this->file_to_image($this->id);
-        return $this;
-    }
-
-    /**
      * 文件上传
      * @return array
      */

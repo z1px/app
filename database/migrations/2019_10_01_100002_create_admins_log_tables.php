@@ -66,7 +66,7 @@ class CreateAdminsLogTables extends Migration
             $table->string('method', 20)->nullable()->comment('请求类型');
             $table->json('header')->nullable()->comment('请求头');
             $table->json('request')->nullable()->comment('请求参数');
-            $table->text('response')->nullable()->comment('响应结果');
+            $table->longText('response')->nullable()->comment('响应结果');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->text('user_agent')->nullable()->comment('浏览器信息');
