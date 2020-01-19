@@ -135,7 +135,7 @@ class AdminsLogic
     public function update()
     {
         request()->offsetSet('id', request()->login->id);
-        return app(AdminsService::class)->toAdd();
+        return app(AdminsService::class)->toUpdate();
     }
 
     /**
