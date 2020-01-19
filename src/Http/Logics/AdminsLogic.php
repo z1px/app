@@ -12,6 +12,7 @@ namespace Z1px\App\Http\Logics;
 
 use Illuminate\Support\Facades\Hash;
 use Z1px\App\Http\Services\Admins\AdminsLoginService;
+use Z1px\App\Http\Services\Admins\AdminsService;
 use Z1px\App\Models\Admins\AdminsModel;
 use Z1px\Tool\Verify;
 
@@ -125,6 +126,16 @@ class AdminsLogic
                 'access_token' => $data->access_token,
             ],
         ];
+    }
+
+    /**
+     * 修改登录信息
+     * @return array
+     */
+    public function update()
+    {
+        request()->offsetSet('id', request()->login->id);
+        return app(AdminsService::class)->toAdd();
     }
 
     /**
