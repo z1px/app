@@ -22,7 +22,7 @@ class AuthMiddleware
         $access_token = request()->header('x-token');
         if(empty($access_token)){
             return result([
-                'code' => 0,
+                'code' => -1,
                 'message' => '未登录！',
             ]);
         }
@@ -33,7 +33,7 @@ class AuthMiddleware
 
         if(empty($data)){
             return result([
-                'code' => 0,
+                'code' => -1,
                 'message' => '登录已过期或未登录'
             ]);
         }

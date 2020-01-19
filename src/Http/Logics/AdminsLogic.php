@@ -106,7 +106,7 @@ class AdminsLogic
 
         if(empty($data)){
             return [
-                'code' => 0,
+                'code' => -1,
                 'message' => '登录已过期或未登录'
             ];
         }
@@ -138,7 +138,25 @@ class AdminsLogic
         if(request()->offsetExists('username')){
             request()->offsetUnset('username');
         }
-        return app(AdminsService::class)->toUpdate();
+        if(!request()->input('old_password')){
+            return [
+                'code' => 0,
+                'message' => '请输入旧密码'
+            ];
+        }
+
+        $result = app(AdminsService::class)->toUpdate();
+
+        if(1 === $result['code']){
+            if(request()->input('password')){
+                $result = [
+                    'code' => -1,
+                    'message' => '修改成功，请重新登录'
+                ];
+            }
+        }
+
+        return $result;
     }
 
     /**
