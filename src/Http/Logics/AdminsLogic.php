@@ -135,6 +135,9 @@ class AdminsLogic
     public function update()
     {
         request()->offsetSet('id', request()->login->id);
+        if(request()->offsetExists('username')){
+            request()->offsetUnset('username');
+        }
         return app(AdminsService::class)->toUpdate();
     }
 
