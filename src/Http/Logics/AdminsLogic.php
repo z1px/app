@@ -138,7 +138,7 @@ class AdminsLogic
         if(request()->offsetExists('username')){
             request()->offsetUnset('username');
         }
-        if(!request()->input('old_password')){
+        if(request()->input('password') && !request()->input('old_password')){
             return [
                 'code' => 0,
                 'message' => '请输入旧密码'
