@@ -97,7 +97,14 @@ class FilesService extends FilesModel
             unset($root);
         }
 
-        return $this->toAdd($data);
+        $result = $this->toAdd($data);
+        if(1 === $result['code']){
+            $result['message'] = '上传成功';
+        }else{
+            $result['message'] = '上传失败';
+        }
+
+        return $result;
     }
 
     /**
@@ -165,7 +172,14 @@ class FilesService extends FilesModel
         unset($match, $file);
         unlink($tmp);
 
-        return $this->toAdd($data);
+        $result = $this->toAdd($data);
+        if(1 === $result['code']){
+            $result['message'] = '上传成功';
+        }else{
+            $result['message'] = '上传失败';
+        }
+
+        return $result;
     }
 
     /**
