@@ -55,7 +55,7 @@ trait ToListAll
         $data = $this->toWhere($data, $params);
         unset($params);
 
-        $data = $data->orderBy('id', 'desc')->get();
+        $data = $data->orderBy('id', 'asc')->get();
 
         // 查询后执行
         if(method_exists(static::class, 'toListAlled')){
