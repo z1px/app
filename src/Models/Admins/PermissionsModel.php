@@ -28,7 +28,7 @@ class PermissionsModel extends Model
      *
      * @var array
      */
-    protected $appends = ['status_name'];
+    protected $appends = ['status_name', 'pname'];
 
     /**
      * 状态列表
@@ -48,6 +48,20 @@ class PermissionsModel extends Model
     public function getStatusNameAttribute()
     {
         return $this->list_status[$this->attributes['status']] ?? null;
+    }
+
+    public function getPnameAttribute()
+    {
+        return $this->parent->title;
+    }
+
+    /**
+     * 模型关联，一对多（反向）
+     * 管理员
+     */
+    public function parent()
+    {
+        return $this->belongsTo(app(PermissionsModel::class), 'pid');
     }
 
     /**
