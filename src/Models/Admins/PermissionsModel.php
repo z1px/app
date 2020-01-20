@@ -21,23 +21,14 @@ class PermissionsModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'route_name', 'route_action', 'icon', 'sort', 'type', 'show', 'status', 'pid'];
+    protected $fillable = ['title', 'route_name', 'status', 'pid'];
 
     /**
      * 追加到模型数组表单的访问器。
      *
      * @var array
      */
-    protected $appends = ['status_name', 'show_name'];
-
-    /**
-     * 展示列表
-     * @var array
-     */
-    public $list_show = [
-        1 => '展示',
-        2 => '隐藏'
-    ];
+    protected $appends = ['status_name'];
 
     /**
      * 状态列表
@@ -57,35 +48,6 @@ class PermissionsModel extends Model
     public function getStatusNameAttribute()
     {
         return $this->list_status[$this->attributes['status']] ?? null;
-    }
-
-    public function getShowNameAttribute()
-    {
-        return $this->list_show[$this->attributes['show']] ?? null;
-    }
-
-    /**
-     * 定义一个修改器
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function setRouteActionAttribute($value)
-    {
-        $this->attributes['route_action'] = $value;
-        if(empty($value)){
-            $this->attributes['route_action'] = $this->getRouteActionByRouteName($this->attributes['route_name']) ?: $value;
-        }
-    }
-
-    public function setIconAttribute($value){
-        $this->attributes['icon'] = $value;
-        if(false !== strpos($value, 'fa-') && false === strpos($value, 'fa ')){
-            $this->attributes['icon'] = "fa {$value}";
-        }
-        if(false !== strpos($value, 'glyphicon-') && false === strpos($value, 'glyphicon ')){
-            $this->attributes['icon'] = "glyphicon {$value}";
-        }
     }
 
     /**
@@ -121,11 +83,6 @@ class PermissionsModel extends Model
             case 'add':
                 $rules['title'] = "required|between:2,30|unique:{$this->getTable()},title";
                 $rules['route_name'] = "required|unique:{$this->getTable()},route_name";
-                $rules['route_action'] = "required|nullable|unique:{$this->getTable()},route_action";
-                $rules['icon'] = "between:0,60";
-                $rules['sort'] = "integer";
-                $rules['type'] = "integer";
-                $rules['show'] = "integer";
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':
@@ -136,22 +93,7 @@ class PermissionsModel extends Model
                 $rules['route_name'] = [
                     Rule::unique($this->getTable(), 'route_name')->ignore(request()->input('id'))
                 ];
-                $rules['route_action'] = [
-                    "nullable",
-                    Rule::unique($this->getTable(), 'route_action')->ignore(request()->input('id'))
-                ];
-                $rules['icon'] = "between:0,60";
-                $rules['sort'] = "integer";
-                $rules['type'] = "integer";
-                $rules['show'] = "integer";
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
-                break;
-            case 'drop':
-                $rules['id'] = "required|integer";
-                $rules['move'] = "required|in:inner,prev,next";
-                $rules['tid'] = "required|integer";
-                $rules['pid'] = "required|integer";
-                $rules['sort'] = "required|integer";
                 break;
         }
         return $rules;
@@ -167,10 +109,6 @@ class PermissionsModel extends Model
         $attributes = array_merge(parent::attributes(), [
             'title' => '权限名称',
             'route_name' => '路由名称',
-            'route_action' => '路由方法',
-            'icon' => '图标',
-            'sort' => '排序',
-            'show' => '是否展示',
         ]);
         if(is_null($key)){
             return $attributes;

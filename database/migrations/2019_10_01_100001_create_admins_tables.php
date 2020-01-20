@@ -68,10 +68,6 @@ class CreateAdminsTables extends Migration
             $table->bigIncrements('id')->comment('ID');
             $table->string('title', 30)->unique()->comment('权限名称');
             $table->string('route_name', 50)->unique()->comment('路由名称');
-            $table->string('route_action', 100)->unique()->comment('路由方法');
-            $table->string('icon', 60)->nullable()->comment('图标，支持font-awesome等');
-            $table->tinyInteger('sort')->default(1)->comment('排序，倒序，数字大的在前面');
-            $table->tinyInteger('show')->default(2)->comment('是否作为菜单展示：1-展示，2-隐藏');
             $table->tinyInteger('status')->default(1)->comment('状态：1-正常，2-禁用');
             $table->unsignedBigInteger('pid')->index()->default(0)->comment('父ID');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
