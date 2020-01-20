@@ -54,7 +54,7 @@ trait ToList
         $data = $this->toWhere($data, $params);
 
         $data = $data->orderBy('id', 'desc')
-            ->paginate($params['size'] ?? 10);
+            ->paginate($params['limit'] ?? 10);
 
         if(empty($data->items()) && isset($params['page']) && $params['page'] > 1){
             throw new \Exception("数据不存在");
