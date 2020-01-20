@@ -52,16 +52,25 @@ class PermissionsModel extends Model
 
     public function getPnameAttribute()
     {
-        return $this->parent->title;
+        return $this->attributes['pid'] > 0 ? $this->parent->title : '';
+    }
+
+    /**
+     * 模型关联，一对多
+     * 子级菜单
+     */
+    public function children()
+    {
+        return $this->hasMany(app(self::class), 'pid');
     }
 
     /**
      * 模型关联，一对多（反向）
-     * 管理员
+     * 父级菜单
      */
     public function parent()
     {
-        return $this->belongsTo(app(PermissionsModel::class), 'pid');
+        return $this->belongsTo(app(self::class), 'pid');
     }
 
     /**
