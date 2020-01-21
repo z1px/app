@@ -24,6 +24,46 @@ class AdminsService extends AdminsModel
 
     use ToAdd, ToUpdate, ToInfo, ToDelete, ToRestore, ToList;
 
+    /**
+     * 查询条件构造
+     * @param $data
+     * @param array $params
+     * @return mixed
+     */
+    protected function toWhere(object $data, array $params): object
+    {
+        if(!empty($params)){
+            foreach ($params as $key=>$value){
+                if(empty($value)) continue;
+                switch ($key){
+                    case 'keyword':
+                        $data = $data->where(function ($query) use ($value) {
+                            $query->where('nickname', 'like', "%{$value}%")
+                                ->orWhere('username', 'like', "%{$value}%")
+                                ->orWhere('mobile', 'like', "%{$value}%")
+                                ->orWhere('email', 'like', "%{$value}%");
+                        });
+                        break;
+                    case 'start_time':
+                        $data = $data->whereDate('created_at', '>=', $value);
+                        break;
+                    case 'end_time':
+                        $data = $data->whereDate('created_at', '<=', $value);
+                        break;
+                    default:
+                        if($this->isFillable($key)){
+                            if(is_array($value)){
+                                $data = $data->whereIn($key, $value);
+                            }else{
+                                $data = $data->where($key, $value);
+                            }
+                        }
+                }
+            }
+        }
+        return $data;
+    }
+
     protected function toUpdating()
     {
         if(request()->input('old_password') && !Hash::check(request()->input('old_password'), $this->getOriginal('password'))){
