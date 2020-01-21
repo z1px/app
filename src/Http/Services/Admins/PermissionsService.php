@@ -16,13 +16,4 @@ class PermissionsService extends PermissionsModel
 
     use ToList, ToInfo, ToAdd, ToUpdate, ToDelete, ToListAll;
 
-    /**
-     * 权限列表
-     */
-    protected function toListAlling(object $data): object
-    {
-        $data = $data->select(['id', 'title', 'route_name', 'status', 'pid']);
-        return $data;
-    }
-
 }

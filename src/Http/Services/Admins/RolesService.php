@@ -16,13 +16,4 @@ class RolesService extends RolesModel
 
     use ToInfo, ToAdd, ToUpdate, ToDelete, ToList, ToListAll;
 
-    /**
-     * 角色列表
-     */
-    protected function toListAlling(object $data): object
-    {
-        $data = $data->select(['id', 'title', 'status'])->orderBy('id', 'asc');
-        return $data;
-    }
-
 }

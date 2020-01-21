@@ -71,8 +71,7 @@ class TablesOperatedService extends TablesOperatedModel
                 'comment' => empty($columns) ? '' : $columns->getColumn($key)->getComment(),
                 'before' => $this->before_attr[$key] ?? '--',
                 'after' => ('delete' === $this->operate || !isset($this->after_attr[$key])) ? '--' : $this->after_attr[$key],
-                'change' => $this->change_attr[$key] ?? '--',
-                'class' => isset($this->change_attr[$key]) ? 'text-danger' : '',
+                'change' => $this->change_attr[$key] ?? '--'
             ];
         }
         $this->setAttribute('list', array_values($list));
