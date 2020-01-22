@@ -78,4 +78,67 @@ class AdminsService extends AdminsModel
         return $this;
     }
 
+
+    /**
+     * 获取角色
+     * @return array
+     * @throws \Exception
+     */
+    public function getRoles()
+    {
+        $data = $this->toInfo();
+        return [
+            'code' => 1,
+            'message' => '权限获取成功',
+            'data' =>  $data->roles
+        ];
+    }
+
+    /**
+     * 角色设置
+     * @return array
+     * @throws \Exception
+     */
+    public function setRoles()
+    {
+        $data = $this->toInfo();
+
+        $list_role_ids = request()->input('role_ids');
+
+        try {
+            if(empty($list_role_ids)){
+                $data->roles()->detach(); // 删除所有中间表ID
+            }else{
+                $list_pivot_role_ids = $data->roles()->pluck('role_id')->toArray(); // 中间表已存在属性ID
+                if(empty($list_pivot_role_ids)){
+                    $data->roles()->attach($list_role_ids);
+                }else{
+                    $detach = array_diff($list_pivot_role_ids, $list_role_ids);
+                    if(!empty($detach)){
+                        $data->roles()->detach($detach); // 删除中间表中未选择的ID
+                    }
+                    $attach = array_diff($list_role_ids, $list_pivot_role_ids);
+                    if(!empty($attach)){
+                        $data->roles()->attach($attach); // 添加中间表中未添加的ID
+                    }
+                    unset($detach, $attach);
+                }
+                unset($list_pivot_role_ids);
+            }
+            unset($list_role_ids);
+        }catch (\Exception $exception){
+            return [
+                'code' => 0,
+                'message' => '操作异常'
+            ];
+        }
+
+        return [
+            'code' => 1,
+            'message' => '设置成功',
+            'data' =>  $data->roles
+        ];
+    }
+
+
 }
