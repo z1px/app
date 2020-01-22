@@ -89,7 +89,7 @@ class AdminsService extends AdminsModel
         $data = $this->toInfo();
         return [
             'code' => 1,
-            'message' => '权限获取成功',
+            'message' => '角色获取成功',
             'data' =>  $data->roles
         ];
     }
