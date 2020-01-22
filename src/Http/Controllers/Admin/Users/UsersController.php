@@ -24,9 +24,9 @@ class UsersController extends Controller
     /**
      * 账号列表
      */
-    public function index()
+    public function getList()
     {
-        return $this->_index();
+        return $this->_list();
     }
 
     /**

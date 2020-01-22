@@ -25,10 +25,8 @@ class BehaviorController extends Controller
      */
     public function admins()
     {
-        if(request()->ajax()){
-            return $this->json(app($this->admins_behavior_model)->toList());
-        }
-        return $this->error();
+        $this->model = $this->admins_behavior_model;
+        return $this->_list();
     }
 
     /**
@@ -36,9 +34,7 @@ class BehaviorController extends Controller
      */
     public function users()
     {
-        if(request()->ajax()){
-            return $this->json(app($this->users_behavior_model)->toList());
-        }
-        return $this->error();
+        $this->model = $this->users_behavior_model;
+        return $this->_list();
     }
 }

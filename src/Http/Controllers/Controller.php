@@ -50,10 +50,14 @@ class Controller extends BaseController
     /**
      * 列表
      */
-    protected function _index()
+    protected function _list()
     {
-        if(request()->ajax()){
-            return $this->json(app($this->model)->toList());
+        if(request()->isMethod('post')){
+            $list = app($this->model)->toList();
+            return $this->json([
+                'data' => $list->items(),
+                'total' => $list->total()
+            ]);
         }
         return $this->error();
     }
@@ -63,7 +67,7 @@ class Controller extends BaseController
      */
     protected function _all()
     {
-        if(request()->ajax()){
+        if(request()->isMethod('post')){
             return $this->json(['data' => app($this->model)->toListAll()]);
         }
         return $this->error();
@@ -74,7 +78,7 @@ class Controller extends BaseController
      */
     protected function _info()
     {
-        if(request()->ajax()){
+        if(request()->isMethod('post')){
             return $this->json(['data' => app($this->model)->toInfo()]);
         }
         return $this->error();
@@ -85,7 +89,7 @@ class Controller extends BaseController
      */
     protected function _add()
     {
-        if(request()->ajax()){
+        if(request()->isMethod('post')){
             return $this->json(app($this->model)->toAdd());
         }
         return $this->error();
@@ -96,7 +100,7 @@ class Controller extends BaseController
      */
     protected function _update()
     {
-        if(request()->ajax()){
+        if(request()->isMethod('post')){
             return $this->json(app($this->model)->toUpdate());
         }
         return $this->error();
@@ -107,7 +111,7 @@ class Controller extends BaseController
      */
     protected function _delete()
     {
-        if(request()->ajax()) {
+        if(request()->isMethod('post')) {
             return $this->json(app($this->model)->toDelete());
         }
         return $this->error();
@@ -118,7 +122,7 @@ class Controller extends BaseController
      */
     protected function _restore()
     {
-        if(request()->ajax()) {
+        if(request()->isMethod('post')) {
             return $this->json(app($this->model)->toRestore());
         }
         return $this->error();

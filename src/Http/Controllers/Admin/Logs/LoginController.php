@@ -25,10 +25,8 @@ class LoginController extends Controller
      */
     public function admins()
     {
-        if(request()->ajax()){
-            return $this->json(app($this->admins_login_model)->toList());
-        }
-        return $this->error();
+        $this->model = $this->admins_login_model;
+        return $this->_list();
     }
 
     /**
@@ -36,9 +34,7 @@ class LoginController extends Controller
      */
     public function users()
     {
-        if(request()->ajax()){
-            return $this->json(app($this->users_login_model)->toList());
-        }
-        return $this->error();
+        $this->model = $this->users_login_model;
+        return $this->_list();
     }
 }

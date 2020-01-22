@@ -18,15 +18,26 @@ class FilesController extends Controller
 
     public function __construct()
     {
+        if(!request()->isMethod('post')) {
+            return $this->error();
+        }
         $this->model = FilesService::class;
     }
 
     /**
      * 文件资源列表
      */
-    public function index()
+    public function getList()
     {
-        return $this->_index();
+        return $this->_list();
+    }
+
+    /**
+     * 文件上传
+     */
+    public function upload()
+    {
+        return $this->json(app($this->model)->upload());
     }
 
     /**
@@ -34,10 +45,7 @@ class FilesController extends Controller
      */
     public function visible()
     {
-        if(request()->ajax()) {
-            return $this->json(app($this->model)->toVisible());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->toVisible());
     }
 
     /**
@@ -45,10 +53,7 @@ class FilesController extends Controller
      */
     public function invisible()
     {
-        if(request()->ajax()) {
-            return $this->json(app($this->model)->toInvisible());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->toInvisible());
     }
 
     /**

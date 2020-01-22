@@ -24,9 +24,25 @@ class RolesController extends Controller
     /**
      * 角色列表
      */
-    public function index()
+    public function getList()
     {
-        return $this->_index();
+        return $this->_list();
+    }
+
+    /**
+     * 所有角色
+     */
+    public function all()
+    {
+        return $this->_all();
+    }
+
+    /**
+     * 角色信息
+     */
+    public function info()
+    {
+        return $this->_info();
     }
 
     /**

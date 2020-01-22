@@ -24,9 +24,9 @@ class TablesOperatedController extends Controller
     /**
      * 数据库表操作日志列表
      */
-    public function index()
+    public function getList()
     {
-        return $this->_index();
+        return $this->_list();
     }
 
     /**

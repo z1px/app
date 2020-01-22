@@ -24,9 +24,17 @@ class PermissionsController extends Controller
     /**
      * 权限列表
      */
-    public function index()
+    public function getList()
     {
-        return $this->_index();
+        return $this->_list();
+    }
+
+    /**
+     * 所有权限
+     */
+    public function all()
+    {
+        return $this->_all();
     }
 
     /**
@@ -35,17 +43,6 @@ class PermissionsController extends Controller
     public function info()
     {
         return $this->_info();
-    }
-
-    /**
-     * 权限信息
-     */
-    public function getRouteActionByRouteName()
-    {
-        if(request()->ajax()) {
-            return $this->json(['data' => app($this->model)->getRouteActionByRouteName(request()->input('route_name'))]);
-        }
-        return $this->error();
     }
 
     /**
@@ -72,14 +69,4 @@ class PermissionsController extends Controller
         return $this->_delete();
     }
 
-    /**
-     * 拖拽移动权限
-     */
-    public function drop()
-    {
-        if(request()->ajax()) {
-            return $this->json(app($this->model)->toDrop());
-        }
-        return $this->error();
-    }
 }
