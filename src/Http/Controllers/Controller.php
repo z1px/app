@@ -52,14 +52,11 @@ class Controller extends BaseController
      */
     protected function _list()
     {
-        if(request()->isMethod('post')){
-            $list = app($this->model)->toList();
-            return $this->json([
-                'data' => $list->items(),
-                'total' => $list->total()
-            ]);
-        }
-        return $this->error();
+        $list = app($this->model)->toList();
+        return $this->json([
+            'data' => $list->items(),
+            'total' => $list->total()
+        ]);
     }
 
     /**
@@ -67,10 +64,7 @@ class Controller extends BaseController
      */
     protected function _all()
     {
-        if(request()->isMethod('post')){
-            return $this->json(['data' => app($this->model)->toListAll()]);
-        }
-        return $this->error();
+        return $this->json(['data' => app($this->model)->toListAll()]);
     }
 
     /**
@@ -78,10 +72,7 @@ class Controller extends BaseController
      */
     protected function _info()
     {
-        if(request()->isMethod('post')){
-            return $this->json(['data' => app($this->model)->toInfo()]);
-        }
-        return $this->error();
+        return $this->json(['data' => app($this->model)->toInfo()]);
     }
 
     /**
@@ -89,10 +80,7 @@ class Controller extends BaseController
      */
     protected function _add()
     {
-        if(request()->isMethod('post')){
-            return $this->json(app($this->model)->toAdd());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->toAdd());
     }
 
     /**
@@ -100,10 +88,7 @@ class Controller extends BaseController
      */
     protected function _update()
     {
-        if(request()->isMethod('post')){
-            return $this->json(app($this->model)->toUpdate());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->toUpdate());
     }
 
     /**
@@ -111,10 +96,7 @@ class Controller extends BaseController
      */
     protected function _delete()
     {
-        if(request()->isMethod('post')) {
-            return $this->json(app($this->model)->toDelete());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->toDelete());
     }
 
     /**
@@ -122,10 +104,7 @@ class Controller extends BaseController
      */
     protected function _restore()
     {
-        if(request()->isMethod('post')) {
-            return $this->json(app($this->model)->toRestore());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->toRestore());
     }
 
 }

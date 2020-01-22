@@ -18,9 +18,6 @@ class FilesController extends Controller
 
     public function __construct()
     {
-        if(!request()->isMethod('post')) {
-            return $this->error();
-        }
         $this->model = FilesService::class;
     }
 

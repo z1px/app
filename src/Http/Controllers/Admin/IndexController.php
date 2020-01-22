@@ -23,7 +23,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        return view('backend');
     }
 
     /**
@@ -32,10 +32,7 @@ class IndexController extends Controller
      */
     public function login()
     {
-        if(request()->isMethod('post')) {
-            return $this->json(app($this->model)->login());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->login());
     }
 
     /**
@@ -44,10 +41,7 @@ class IndexController extends Controller
      */
     public function info()
     {
-        if(request()->isMethod('post')) {
-            return $this->json(app($this->model)->info());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->info());
     }
 
     /**
@@ -56,10 +50,7 @@ class IndexController extends Controller
      */
     public function updateInfo()
     {
-        if(request()->isMethod('post')) {
-            return $this->json(app($this->model)->update());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->update());
     }
 
     /**
@@ -68,10 +59,39 @@ class IndexController extends Controller
      */
     public function logout()
     {
-        if(request()->isMethod('post')) {
-            return $this->json(app($this->model)->logout());
-        }
-        return $this->error();
+        return $this->json(app($this->model)->logout());
     }
 
+    public function rules()
+    {
+        return $this->json([
+            'code' => 1,
+            'message' => 'data normal',
+            'data' => [
+                'admins',
+                'admins.list',
+                'admins.add',
+                'admins.update',
+                'admins.edit',
+                'admins.delete',
+
+                'roles',
+                'roles.all',
+                'roles.list',
+                'roles.add',
+                'roles.update',
+                'roles.edit',
+                'roles.delete',
+                'roles.permissions',
+
+                'permissions',
+                'permissions.all',
+                'permissions.list',
+                'permissions.add',
+                'permissions.update',
+                'permissions.edit',
+                'permissions.delete',
+            ]
+        ]);
+    }
 }
