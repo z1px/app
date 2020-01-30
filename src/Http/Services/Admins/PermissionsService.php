@@ -16,4 +16,10 @@ class PermissionsService extends PermissionsModel
 
     use ToList, ToInfo, ToAdd, ToUpdate, ToDelete, ToListAll;
 
+    protected function toListAlling(object $data): object
+    {
+        $data = $data->orderBy('pid', 'asc')->orderBy('id', 'asc');
+        return $data;
+    }
+
 }
