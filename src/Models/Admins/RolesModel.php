@@ -21,7 +21,7 @@ class RolesModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'status'];
+    protected $fillable = ['title', 'description', 'status'];
 
     /**
      * 追加到模型数组表单的访问器。
@@ -104,6 +104,7 @@ class RolesModel extends Model
     {
         $attributes = array_merge(parent::attributes(), [
             'title' => '角色名称',
+            'description' => '角色描述',
         ]);
         if(is_null($key)){
             return $attributes;
