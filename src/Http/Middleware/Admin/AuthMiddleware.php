@@ -63,7 +63,12 @@ class AuthMiddleware
         if(!in_array($route, $white_routes) && !$data_permissions->contains('route_name', $route)){
             return result([
                 'code' => 0,
-                'message' => '无权限！！！'
+                'message' => '无权限！！！',
+                'white_routes' => $white_routes,
+                'route' => $route,
+                'permissions' => $data_permissions->toArray(),
+                'in' => in_array($route, $white_routes),
+                'contains' => $data_permissions->contains('route_name', $route),
             ]);
         }
         unset($data, $data_permissions, $white_routes, $route);
