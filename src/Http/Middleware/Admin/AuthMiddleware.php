@@ -57,7 +57,7 @@ class AuthMiddleware
         }
         request()->permissions = $data_permissions;
 
-        $white_routes = ['admin.info', 'admin.updateInfo', 'admin.rules', 'admin.logout'];
+        $white_routes = ['admin.info', 'admin.updateInfo', 'admin.rules', 'admin.upload', 'admin.logout'];
         $route = request()->route() ? request()->route()->getName() : '';
 
         if(!in_array($route, $white_routes) && !$data_permissions->contains('route_name', $route)){
