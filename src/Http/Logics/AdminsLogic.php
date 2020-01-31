@@ -196,33 +196,12 @@ class AdminsLogic
      */
     public function permissions()
     {
-        $data = request()->login;
-
-        if(empty($data)){
-            return [
-                'code' => -1,
-                'message' => '登录已过期或未登录'
-            ];
-        }
-
-        if(1 === $data->id){
-            $data_permissions = app($this->permissions_model)->toListAll();
-        }else{
-            $data_permissions = $data->permissions()->where('status', 1)->get();
-
-            $list_roles = $data->roles()->where('status', 1)->get();
-            if(count($list_roles) > 0){
-                foreach ($list_roles as $role){
-                    $data_permissions = $data_permissions->merge($role->permissions()->where('status', 1)->get());
-                }
-            }
-            unset($list_roles);
-        }
+        $data = request()->permissions;
 
         return [
             'code' => 1,
             'message' => 'data normal',
-            'data' => $data_permissions
+            'data' => $data
         ];
     }
 
