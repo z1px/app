@@ -208,10 +208,15 @@ class AdminsLogic
         if(1 === $data->id){
             $data_permissions = app($this->permissions_model)->toListAll();
         }else{
-            return [
-                'code' => 0,
-                'message' => '无权限'
-            ];
+            $data_permissions = $data->permissions()->where('status', 1)->get();
+
+            $list_roles = $data->roles()->where('status', 1)->get();
+            if(count($list_roles) > 0){
+                foreach ($list_roles as $role){
+                    $data_permissions = $data_permissions->merge($role->permissions()->where('status', 1)->get());
+                }
+            }
+            unset($list_roles);
         }
 
         return [
