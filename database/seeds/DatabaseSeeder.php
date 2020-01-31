@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
          $this->call([
              AdminsTableSeeder::class, // 后台管理员用户表默认数据
+             PermissionsTableSeeder::class, // 后台权限表默认数据
          ]);
     }
 }

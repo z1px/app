@@ -13,13 +13,15 @@ namespace Z1px\App\Http\Logics;
 use Illuminate\Support\Facades\Hash;
 use Z1px\App\Http\Services\Admins\AdminsLoginService;
 use Z1px\App\Http\Services\Admins\AdminsService;
+use Z1px\App\Http\Services\Admins\PermissionsService;
 use Z1px\App\Models\Admins\AdminsModel;
 use Z1px\Tool\Verify;
 
 class AdminsLogic
 {
 
-    private $model = AdminsModel::class;
+    private $admins_model = AdminsModel::class;
+    private $permissions_model = PermissionsService::class;
 
     /**
      * 登录
@@ -30,9 +32,9 @@ class AdminsLogic
         $params = request()->input();
 
         // 参数合法性验证
-        validator($params, app($this->model)->rules('login'), app($this->model)->messages(), app($this->model)->attributes())->validate();
+        validator($params, app($this->admins_model)->rules('login'), app($this->admins_model)->messages(), app($this->admins_model)->attributes())->validate();
 
-        $data = app($this->model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_failure', 'password', 'access_token']);
+        $data = app($this->admins_model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_failure', 'password', 'access_token']);
 
         if(Verify::mobile($params['username'])){
             $data = $data->where('mobile', $params['username']);
@@ -186,6 +188,37 @@ class AdminsLogic
                 'message' => '退出失败',
             ];
         }
+    }
+
+    /**
+     * 权限
+     * @return array
+     */
+    public function permissions()
+    {
+        $data = request()->login;
+
+        if(empty($data)){
+            return [
+                'code' => -1,
+                'message' => '登录已过期或未登录'
+            ];
+        }
+
+        if(1 === $data->id){
+            $data_permissions = app($this->permissions_model)->toListAll();
+        }else{
+            return [
+                'code' => 0,
+                'message' => '无权限'
+            ];
+        }
+
+        return [
+            'code' => 1,
+            'message' => 'data normal',
+            'data' => $data_permissions
+        ];
     }
 
 }
