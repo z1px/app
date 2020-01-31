@@ -3,8 +3,8 @@
 namespace Z1px\App\Http\Middleware\Admin;
 
 use Closure;
+use Z1px\App\Http\Services\Admins\PermissionsService;
 use Z1px\App\Models\Admins\AdminsModel;
-use Z1px\App\Models\Admins\PermissionsModel;
 
 class AuthMiddleware
 {
@@ -43,7 +43,7 @@ class AuthMiddleware
 
         // 权限判断
         if(1 === $data->id){
-            $data_permissions = app(PermissionsModel::class)->toListAll();
+            $data_permissions = app(PermissionsService::class)->toListAll();
         }else{
             $data_permissions = $data->permissions()->where('status', 1)->get();
 

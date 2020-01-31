@@ -13,7 +13,6 @@ namespace Z1px\App\Http\Logics;
 use Illuminate\Support\Facades\Hash;
 use Z1px\App\Http\Services\Admins\AdminsLoginService;
 use Z1px\App\Http\Services\Admins\AdminsService;
-use Z1px\App\Http\Services\Admins\PermissionsService;
 use Z1px\App\Models\Admins\AdminsModel;
 use Z1px\Tool\Verify;
 
@@ -21,7 +20,6 @@ class AdminsLogic
 {
 
     private $admins_model = AdminsModel::class;
-    private $permissions_model = PermissionsService::class;
 
     /**
      * 登录
