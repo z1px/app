@@ -167,8 +167,6 @@ class FilesService extends FilesModel
             }
             unset($root);
         }
-        $data['id'] = $this->insertGetId($data);
-        $data['url'] = $this->file_to_image($data['id']);
         unset($match, $file);
         unlink($tmp);
 
