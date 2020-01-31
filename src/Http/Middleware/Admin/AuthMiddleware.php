@@ -57,18 +57,13 @@ class AuthMiddleware
         }
         request()->permissions = $data_permissions;
 
-        $white_routes = ['info', 'updateInfo', 'rules', 'logout'];
+        $white_routes = ['admin.info', 'admin.updateInfo', 'admin.rules', 'admin.logout'];
         $route = request()->route() ? request()->route()->getName() : '';
 
         if(!in_array($route, $white_routes) && !$data_permissions->contains('route_name', $route)){
             return result([
                 'code' => 0,
-                'message' => '无权限！！！',
-                'white_routes' => $white_routes,
-                'route' => $route,
-                'permissions' => $data_permissions->toArray(),
-                'in' => in_array($route, $white_routes),
-                'contains' => $data_permissions->contains('route_name', $route),
+                'message' => '无权限！！！'
             ]);
         }
         unset($data, $data_permissions, $white_routes, $route);
