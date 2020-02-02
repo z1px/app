@@ -36,12 +36,9 @@ class CreateAdminsLogTables extends Migration
             $table->string('mobile', 20)->nullable()->comment('手机号');
             $table->string('email', 30)->nullable()->comment('邮箱号');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
-            $table->string('route_action', 100)->nullable()->comment('路由方法');
             $table->string('url', 200)->nullable()->comment('请求地址');
-            $table->string('method', 20)->nullable()->comment('请求类型');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
-            $table->text('user_agent')->nullable()->comment('浏览器信息');
             $table->string('device', 30)->nullable()->comment('设备');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
@@ -61,15 +58,9 @@ class CreateAdminsLogTables extends Migration
             $table->unsignedBigInteger('admin_id')->index()->default(0)->comment('管理员ID');
             $table->string('title', 30)->nullable()->comment('行为名称');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
-            $table->string('route_action', 100)->nullable()->comment('路由方法');
             $table->string('url', 200)->nullable()->comment('请求地址');
-            $table->string('method', 20)->nullable()->comment('请求类型');
-            $table->json('header')->nullable()->comment('请求头');
-            $table->json('request')->nullable()->comment('请求参数');
-            $table->longText('response')->nullable()->comment('响应结果');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
-            $table->text('user_agent')->nullable()->comment('浏览器信息');
             $table->string('device', 30)->nullable()->comment('设备');
             $table->decimal('runtime', 10, 6)->default(0)->comment('运行时间，单位秒');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');

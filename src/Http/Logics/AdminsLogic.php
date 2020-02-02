@@ -77,7 +77,13 @@ class AdminsLogic
             ];
         }
 
-        app(AdminsLoginService::class)->toAdd([], $data->toArray());
+        app(AdminsLoginService::class)->toAdd([], [
+            'admin_id' => $data->id,
+            'username' => $data->username,
+            'nickname' => $data->nickname,
+            'mobile' => $data->mobile,
+            'email' => $data->email,
+        ]);
 
         return [
             'code' => 1,

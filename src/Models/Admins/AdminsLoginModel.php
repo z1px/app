@@ -19,8 +19,7 @@ class AdminsLoginModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['admin_id', 'nickname', 'username', 'mobile', 'email', 'route_name', 'route_action', 'url',
-        'method', 'ip', 'area', 'user_agent', 'device'];
+    protected $fillable = ['admin_id', 'nickname', 'username', 'mobile', 'email', 'route_name', 'url', 'ip', 'area', 'device'];
 
     /**
      * 模型关联，一对多（反向）

@@ -26,15 +26,9 @@ class UsersBehaviorService extends UsersBehaviorModel
             'user_id' => 0, // 用户ID
             'title' => '', // 行为名称
             'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
-            'route_action' => request()->route() ? request()->route()->getActionName() : '', // 路由方法
             'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
-            'method' => request()->getRealMethod(), // 请求类型
-            'header' => request()->header(), // 请求头
-            'request' => request()->all(), // 请求参数
-            'response' => '', // 响应结果
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
-            'user_agent' => request()->userAgent(), // 浏览器信息
             'device' => Server::isMobile() ? 'mobile' : 'pc', // 设备
             'runtime' => microtime(true) - request()->server('REQUEST_TIME_FLOAT'), // 运行时间，单位秒
         ], $data);

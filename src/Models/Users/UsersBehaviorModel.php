@@ -16,14 +16,12 @@ class UsersBehaviorModel extends Model
     protected $table = 'u_users_behavior';
 
     /**
-     * 这个属性应该被转换为原生类型.
+     * 允许添加的字段名
      *
      * @var array
      */
-    protected $casts = [
-        'header' => 'array',
-        'request' => 'array'
-    ];
+    protected $fillable = ['user_id', 'title', 'route_name', 'url', 'ip', 'area', 'device', 'runtime'];
+
 
     /**
      * 追加到模型数组表单的访问器。

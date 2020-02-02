@@ -19,18 +19,7 @@ class AdminsBehaviorModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['admin_id', 'title', 'route_name', 'route_action', 'url', 'method', 'header', 'request',
-        'response', 'ip', 'area', 'user_agent', 'device', 'runtime'];
-
-    /**
-     * 这个属性应该被转换为原生类型.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'header' => 'array',
-        'request' => 'array'
-    ];
+    protected $fillable = ['admin_id', 'title', 'route_name', 'url', 'ip', 'area', 'device', 'runtime'];
 
     /**
      * 追加到模型数组表单的访问器。

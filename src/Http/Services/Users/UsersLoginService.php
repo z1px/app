@@ -29,12 +29,9 @@ class UsersLoginService extends UsersLoginModel
             'mobile' => '', // 手机号
             'email' => '', // 邮箱号
             'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
-            'route_action' => request()->route() ? request()->route()->getActionName() : '', // 路由方法
             'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
-            'method' => request()->getRealMethod(), // 请求类型
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
-            'user_agent' => request()->userAgent(), // 浏览器信息
             'device' => Server::isMobile() ? 'mobile' : 'pc', // 设备
         ], $data);
 
