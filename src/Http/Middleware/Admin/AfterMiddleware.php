@@ -26,7 +26,7 @@ class AfterMiddleware
         // 执行一些任务
 //        dump("AfterMiddleware");
 
-        app(AdminsBehaviorService::class)->toAdd(['response' => $response->getContent()]);
+        app(AdminsBehaviorService::class)->toAdd();
 
         return $response;
     }
