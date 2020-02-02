@@ -51,7 +51,10 @@ class AdminsService extends AdminsModel
                         $data = $data->whereDate('created_at', '<=', $value);
                         break;
                     case 'date_range':
-                        $data = $data->whereBetween('created_at', array_map(function ($date){return strtotime($date);}, $value));
+                        list($start_date, $end_date) = $value;
+                        $data = $data->whereDate('created_at', '>=', $start_date)
+                            ->whereDate('created_at', '<=', $end_date);
+                        unset($start_date, $end_date);
                         break;
                     default:
                         if($this->isFillable($key)){
