@@ -20,8 +20,16 @@ class UsersBehaviorModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'title', 'route_name', 'url', 'ip', 'area', 'device', 'runtime'];
+    protected $fillable = ['user_id', 'title', 'route_name', 'url', 'params', 'ip', 'area', 'device', 'runtime'];
 
+    /**
+     * 这个属性应该被转换为原生类型.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'params' => 'array'
+    ];
 
     /**
      * 追加到模型数组表单的访问器。

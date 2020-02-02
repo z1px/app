@@ -37,6 +37,7 @@ class CreateAdminsLogTables extends Migration
             $table->string('email', 30)->nullable()->comment('邮箱号');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
             $table->string('url', 200)->nullable()->comment('请求地址');
+            $table->json('params')->nullable()->comment('请求参数');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->string('device', 30)->nullable()->comment('设备');
@@ -59,6 +60,7 @@ class CreateAdminsLogTables extends Migration
             $table->string('title', 30)->nullable()->comment('行为名称');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
             $table->string('url', 200)->nullable()->comment('请求地址');
+            $table->json('params')->nullable()->comment('请求参数');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->string('device', 30)->nullable()->comment('设备');

@@ -50,6 +50,8 @@ class AdminsLogic
             ];
         }
 
+        request()->login = $data;
+
         if($data->login_failure >=5){
             return [
                 'code' => 0,

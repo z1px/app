@@ -30,6 +30,7 @@ class UsersLoginService extends UsersLoginModel
             'email' => '', // 邮箱号
             'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
             'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
+            'params' => request()->all(), // 请求参数
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
             'device' => Server::isMobile() ? 'mobile' : 'pc', // 设备
