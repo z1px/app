@@ -22,7 +22,7 @@ class AdminsLoginService extends AdminsLoginModel
      */
     protected function toAddParams(array $params, array $data = [])
     {
-        $params = array_merge($params, [
+        $params = array_merge([
             'admin_id' => request()->login ? request()->login->id : 0, // 管理员ID
             'nickname' => request()->login ? request()->login->nickname : '', // 昵称
             'username' => request()->login ? request()->login->username : '', // 账号

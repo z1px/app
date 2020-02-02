@@ -77,7 +77,7 @@ class AdminsLogic
             ];
         }
 
-        app(AdminsLoginService::class)->toAdd([], [
+        app(AdminsLoginService::class)->toAdd([
             'admin_id' => $data->id,
             'username' => $data->username,
             'nickname' => $data->nickname,
