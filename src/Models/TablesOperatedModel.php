@@ -25,7 +25,7 @@ class TablesOperatedModel extends Model
      * @var array
      */
     protected $fillable = ['model', 'table', 'tid', 'operate', 'before_attr', 'after_attr', 'change_attr', 'route_name',
-        'route_action', 'url', 'method', 'ip', 'area', 'user_agent', 'device', 'user_type', 'user_id', 'admin_id'];
+        'url', 'ip', 'area', 'device', 'user_type', 'user_id'];
 
     /**
      * 追加到模型数组表单的访问器。
@@ -127,7 +127,6 @@ class TablesOperatedModel extends Model
             'after_attr' => '操作后的数据',
             'change_attr' => '被修改的数据',
             'user_id' => '文件创建者用户ID',
-            'admin_id' => '后台操作管理员ID',
         ]);
         if(is_null($key)){
             return $attributes;

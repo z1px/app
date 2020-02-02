@@ -38,9 +38,7 @@ class TablesOperatedService extends TablesOperatedModel
             'after_attr' => $model->getAttributes(), // 操作后的数据
             'change_attr' => $model->getChanges(), // 修改后的数据
             'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
-            'route_action' => request()->route() ? request()->route()->getActionName() : '', // 路由方法
             'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
-            'method' => request()->getRealMethod(), // 请求类型
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
             'user_type' => 0, // 用户类型

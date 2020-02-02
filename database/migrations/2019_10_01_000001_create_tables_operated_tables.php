@@ -36,12 +36,9 @@ class CreateTablesOperatedTables extends Migration
             $table->json('after_attr')->nullable()->comment('操作后的数据');
             $table->json('change_attr')->nullable()->comment('被修改的数据');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
-            $table->string('route_action', 100)->nullable()->comment('路由方法');
             $table->string('url', 200)->nullable()->comment('请求地址');
-            $table->string('method', 20)->nullable()->comment('请求类型');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
-            $table->text('user_agent')->nullable()->comment('浏览器信息');
             $table->string('device', 30)->nullable()->comment('设备');
             $table->unsignedBigInteger('user_type')->default(0)->comment('用户类型：1-管理员，2-平台用户');
             $table->unsignedBigInteger('user_id')->default(0)->comment('操作用户ID');
