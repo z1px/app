@@ -47,6 +47,11 @@ class TablesOperatedService extends TablesOperatedModel
             'user_id' => 0, // 文件创建者用户ID
         ], $data);
 
+        if(request()->login){
+            $params['user_type'] = 1;
+            $params['user_id'] = request()->login->id;
+        }
+
         return $params;
     }
 
