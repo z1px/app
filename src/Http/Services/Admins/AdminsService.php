@@ -50,6 +50,9 @@ class AdminsService extends AdminsModel
                     case 'end_time':
                         $data = $data->whereDate('created_at', '<=', $value);
                         break;
+                    case 'timestamp_range':
+                        $data = $data->whereBetween('created_at', $value);
+                        break;
                     default:
                         if($this->isFillable($key)){
                             if(is_array($value)){
