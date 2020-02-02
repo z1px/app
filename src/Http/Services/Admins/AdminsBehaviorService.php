@@ -4,6 +4,7 @@ namespace Z1px\App\Http\Services\Admins;
 
 
 use Z1px\App\Models\Admins\AdminsBehaviorModel;
+use Z1px\App\Models\Admins\PermissionsModel;
 use Z1px\App\Traits\Eloquent\ToAdd;
 use Z1px\App\Traits\Eloquent\ToList;
 use Z1px\Tool\IP;
@@ -32,6 +33,9 @@ class AdminsBehaviorService extends AdminsBehaviorModel
             'device' => Server::isMobile() ? 'mobile' : 'pc', // 设备
             'runtime' => microtime(true) - request()->server('REQUEST_TIME_FLOAT'), // 运行时间，单位秒
         ], $data);
+        if(empty($params['title']) && !empty($params['route_name'])){
+            $params['title'] = app(PermissionsModel::class)->where('route_name', $params['route_name'])->value('title');
+        }
 
         return $params;
     }
