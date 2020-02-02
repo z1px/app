@@ -44,14 +44,14 @@ class AdminsService extends AdminsModel
                                 ->orWhere('email', 'like', "%{$value}%");
                         });
                         break;
-                    case 'start_time':
+                    case 'start_date':
                         $data = $data->whereDate('created_at', '>=', $value);
                         break;
-                    case 'end_time':
+                    case 'end_date':
                         $data = $data->whereDate('created_at', '<=', $value);
                         break;
-                    case 'timestamp_range':
-                        $data = $data->whereBetween('created_at', $value);
+                    case 'date_range':
+                        $data = $data->whereBetween('created_at', array_map(function ($date){return strtotime($date);}, $value));
                         break;
                     default:
                         if($this->isFillable($key)){

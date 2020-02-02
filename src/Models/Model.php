@@ -126,8 +126,8 @@ class Model extends BaseModel
             'user_id' => '用户ID',
             'admin_id' => '管理员ID',
             'logo' => 'LOGO',
-            'start_time' => '开始时间',
-            'end_time' => '结束时间',
+            'start_date' => '开始时间',
+            'end_date' => '结束时间',
         ];
         if(is_null($key)){
             return $attributes;
@@ -160,14 +160,14 @@ class Model extends BaseModel
                     case 'title':
                         $data = $data->where($key, 'like', "%{$value}%");
                         break;
-                    case 'start_time':
+                    case 'start_date':
                         $data = $data->whereDate('created_at', '>=', $value);
                         break;
-                    case 'end_time':
+                    case 'end_date':
                         $data = $data->whereDate('created_at', '<=', $value);
                         break;
-                    case 'timestamp_range':
-                        $data = $data->whereBetween('created_at', $value);
+                    case 'date_range':
+                        $data = $data->whereBetween('created_at', array_map(function ($date){return strtotime($date);}, $value));
                         break;
                     default:
                         if($this->isFillable($key)){
