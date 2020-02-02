@@ -32,7 +32,7 @@ class TablesOperatedModel extends Model
      *
      * @var array
      */
-    protected $appends = ['table_comment', 'operate_name', 'user_type_name', 'class'];
+    protected $appends = ['table_comment', 'operate_name', 'user_type_name'];
 
     /**
      * 这个属性应该被转换为原生类型.
@@ -92,20 +92,6 @@ class TablesOperatedModel extends Model
     public function getUserTypeNameAttribute()
     {
         return $this->list_user_type[$this->attributes['user_type']] ?? '未知';
-    }
-
-    public function getClassAttribute()
-    {
-        switch ($this->attributes['operate']){
-            case 'create': $value = 'text-info'; break;
-            case 'delete': $value = 'text-danger'; break;
-            case 'update': $value = 'text-success'; break;
-            case 'select': $value = 'text-warning'; break;
-            case 'restore': $value = 'text-primary'; break;
-            default:
-                $value = 'text-muted';
-        }
-        return $value;
     }
 
     /**

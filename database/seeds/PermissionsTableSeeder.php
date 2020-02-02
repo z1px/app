@@ -158,7 +158,7 @@ class PermissionsTableSeeder extends Seeder
 
 
         $data_system = app($this->permissions_model)->create([
-            'title' => '系统设置',
+            'title' => '系统管理',
             'route_name' => 'admin.system'
         ]);
 
@@ -244,11 +244,6 @@ class PermissionsTableSeeder extends Seeder
             app($this->permissions_model)->create($data);
         }, [
             [
-                'title' => '表操作日志',
-                'route_name' => 'admin.logs.tables_operated',
-                'pid' => $data_logs->id
-            ],
-            [
                 'title' => '登录日志',
                 'route_name' => 'admin.logs.login.admins',
                 'pid' => $data_logs->id
@@ -259,6 +254,17 @@ class PermissionsTableSeeder extends Seeder
                 'pid' => $data_logs->id
             ]
         ]);
+        $data_tables_operated = app($this->permissions_model)->create([
+            'title' => '表操作日志',
+            'route_name' => 'admin.logs.tables_operated',
+            'pid' => $data_logs->id
+        ]);
+        app($this->permissions_model)->create([
+            'title' => '表操作日志信息',
+            'route_name' => 'admin.logs.tables_operated.info',
+            'pid' => $data_tables_operated->id
+        ]);
+        unset($data_tables_operated);
         unset($data_logs);
     }
 }
