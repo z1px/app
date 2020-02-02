@@ -29,9 +29,26 @@ class AdminsBehaviorModel extends Model
      */
     protected $casts = [
         'header' => 'array',
-        'request' => 'array',
-        'created_at' => 'timestamp',
+        'request' => 'array'
     ];
+
+    /**
+     * 追加到模型数组表单的访问器。
+     *
+     * @var array
+     */
+    protected $appends = ['username'];
+
+    /**
+     * 定义一个访问器
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function getUsernameAttribute()
+    {
+        return $this->attributes['admin_id'] > 0 ? $this->admin->username : '';
+    }
 
     /**
      * 模型关联，一对多（反向）

@@ -16,15 +16,6 @@ class UsersLoginModel extends Model
     protected $table = 'u_users_login';
 
     /**
-     * 应该被转换成原生类型的属性。
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'timestamp',
-    ];
-
-    /**
      * 模型关联，一对多（反向）
      * 用户
      */

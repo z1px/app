@@ -15,15 +15,6 @@ class AdminsLoginModel extends Model
     protected $table = 'a_admins_login';
 
     /**
-     * 应该被转换成原生类型的属性。
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'timestamp',
-    ];
-
-    /**
      * 允许添加的字段名
      *
      * @var array
