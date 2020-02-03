@@ -106,7 +106,11 @@ class ConfigModel extends Model
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':
-                $rules['title'] = "required|between:2,30|unique:{$this->getTable()},title";
+                $rules['title'] = [
+                    "required",
+                    "between:2,30",
+                    Rule::unique($this->getTable(), 'title')->ignore(request()->input('id'))
+                ];
                 $rules['key'] = [
                     "required",
                     "between:2,30",

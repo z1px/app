@@ -32,7 +32,7 @@ class CreateConfigTables extends Migration
             $table->string('key', 30)->unique()->comment('配置健');
             $table->string('value', 120)->nullable()->comment('配置值');
             $table->mediumText('description')->nullable()->comment('配置描述');
-            $table->string('input', 200)->comment('表单操作类型，text：文本，select：下拉框，radio：单选框，checkbox：复选框');
+            $table->string('input', 30)->comment('表单操作类型，text：文本，select：下拉框，radio：单选框，checkbox：复选框');
             $table->json('values')->nullable()->comment('默认可选值');
             $table->tinyInteger('type')->default(0)->comment('配置类型：1-基本配置');
             $table->tinyInteger('status')->default(1)->comment('状态：1-正常，2-禁用');
