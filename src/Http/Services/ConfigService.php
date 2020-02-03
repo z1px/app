@@ -15,11 +15,12 @@ use Z1px\App\Traits\Eloquent\ToAdd;
 use Z1px\App\Traits\Eloquent\ToDelete;
 use Z1px\App\Traits\Eloquent\ToInfo;
 use Z1px\App\Traits\Eloquent\ToList;
+use Z1px\App\Traits\Eloquent\ToListAll;
 use Z1px\App\Traits\Eloquent\ToUpdate;
 
 class ConfigService extends ConfigModel
 {
 
-    use ToInfo, ToAdd, ToUpdate, ToDelete, ToList;
+    use ToInfo, ToAdd, ToUpdate, ToDelete, ToList, ToListAll;
 
 }

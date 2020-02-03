@@ -23,7 +23,7 @@ class ConfigModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'key', 'value', 'brief', 'input', 'values', 'type', 'status'];
+    protected $fillable = ['title', 'key', 'value', 'description', 'input', 'values', 'type', 'status'];
 
     /**
      * 追加到模型数组表单的访问器。
@@ -100,7 +100,7 @@ class ConfigModel extends Model
                     "unique:{$this->getTable()},key"
                 ];
                 $rules['value'] = "between:0,120";
-                $rules['brief'] = "between:0,200";
+                $rules['description'] = "between:0,200";
                 $rules['input'] = "required|in:" . implode(',', array_keys($this->list_input));
                 $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
@@ -114,7 +114,7 @@ class ConfigModel extends Model
                     Rule::unique($this->getTable(), 'key')->ignore(request()->input('id'))
                 ];
                 $rules['value'] = "between:0,120";
-                $rules['brief'] = "between:0,200";
+                $rules['description'] = "between:0,200";
                 $rules['input'] = "required|in:" . implode(',', array_keys($this->list_input));
                 $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
@@ -134,7 +134,7 @@ class ConfigModel extends Model
             'title' => '标题',
             'key' => '配置健',
             'value' => '配置值',
-            'brief' => '描述',
+            'description' => '配置描述',
             'input' => '表单操作类型',
             'values' => '默认可选值',
             'type' => '配置类型',
