@@ -3,13 +3,10 @@
 namespace Z1px\App\Models;
 
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
 
 class ConfigModel extends Model
 {
-
-    use SoftDeletes;
 
     /**
      * 与模型关联的表名
