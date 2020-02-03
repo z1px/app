@@ -40,18 +40,17 @@ trait ToDelete
 
         // 删除前执行
         if(method_exists(static::class, 'toDeleting')){
-            $deleting = $data->toDeleting(...$args);
-            if('object' !== gettype($deleting)){
-                if('array' === gettype($deleting)){
-                    return $deleting;
+            $data = $this->toDeleting($data, ...$args);
+            if('object' !== gettype($data)){
+                if('array' === gettype($data)){
+                    return $data;
                 }else{
                     return [
                         'code' => 0,
-                        'message' => is_string($deleting) ? $deleting : '删除失败，删除行为被阻住！'
+                        'message' => is_string($data) ? $data : '删除失败，删除行为被阻住！'
                     ];
                 }
             }
-            unset($deleting);
         }
         unset($args);
 
@@ -59,12 +58,13 @@ trait ToDelete
 
             // 删除后执行
             if(method_exists(static::class, 'toDeleted')){
-                $data->toDeleted();
+                $data = $this->toDeleted($data);
             }
 
             return [
                 'code' => 1,
-                'message' => '删除成功'
+                'message' => '删除成功',
+                'data' => $data
             ];
         }else{
             return [

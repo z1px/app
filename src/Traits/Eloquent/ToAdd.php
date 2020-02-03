@@ -29,37 +29,36 @@ trait ToAdd
         validator($params, $this->rules('add'), $this->messages(), $this->attributes())->validate();
 
         // 赋值
-        $this->fill($params);
+        $data = $this->fill($params);
         unset($params);
 
         // 新增前执行
         if(method_exists(static::class, 'toAdding')){
-            $adding = $this->toAdding(...$args);
-            if('object' !== gettype($adding)){
-                if('array' === gettype($adding)){
-                    return $adding;
+            $data = $this->toAdding($data, ...$args);
+            if('object' !== gettype($data)){
+                if('array' === gettype($data)){
+                    return $data;
                 }else{
                     return [
                         'code' => 0,
-                        'message' => is_string($adding) ? $adding : '新增失败，新增行为被阻住！'
+                        'message' => is_string($data) ? $data : '新增失败，新增行为被阻住！'
                     ];
                 }
             }
-            unset($adding);
         }
         unset($args);
 
-        if($this->save()){
+        if($data->save()){
 
             // 新增后执行
             if(method_exists(static::class, 'toAdded')){
-                $this->toAdded();
+                $data = $this->toAdded($data);
             }
 
             return [
                 'code' => 1,
                 'message' => '新增成功',
-                'data' => $this
+                'data' => $data
             ];
         }else{
             return [

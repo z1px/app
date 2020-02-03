@@ -55,15 +55,15 @@ class TablesOperatedService extends TablesOperatedModel
 
     /**
      * 获取数据库表操作日志信息后
-     * @return $this
+     * @return $data
      */
-    protected function toInfoed(): object
+    protected function toInfoed(object $data): object
     {
-        is_array($this->before_attr) || $this->before_attr = [];
-        is_array($this->after_attr) || $this->after_attr = [];
-        is_array($this->change_attr) || $this->change_attr = [];
-        $list = array_merge($this->before_attr, $this->after_attr, $this->change_attr);
-        $columns = (!empty($this->model) && class_exists($this->model)) ? app($this->model)->toColumnsComment() : '';
+        is_array($data->before_attr) || $data->before_attr = [];
+        is_array($data->after_attr) || $data->after_attr = [];
+        is_array($data->change_attr) || $data->change_attr = [];
+        $list = array_merge($data->before_attr, $data->after_attr, $data->change_attr);
+        $columns = (!empty($data->model) && class_exists($data->model)) ? app($data->model)->toColumnsComment() : '';
         foreach ($list as $key=>$value){
             if(in_array($key, ['password'])){
                 unset($list[$key]);
@@ -72,14 +72,14 @@ class TablesOperatedService extends TablesOperatedModel
             $list[$key] = [
                 'field' => $key,
                 'comment' => empty($columns) ? '' : $columns->getColumn($key)->getComment(),
-                'before' => $this->before_attr[$key] ?? '--',
-                'after' => ('delete' === $this->operate || !isset($this->after_attr[$key])) ? '--' : $this->after_attr[$key],
-                'change' => $this->change_attr[$key] ?? '--'
+                'before' => $data->before_attr[$key] ?? '--',
+                'after' => ('delete' === $data->operate || !isset($data->after_attr[$key])) ? '--' : $data->after_attr[$key],
+                'change' => $data->change_attr[$key] ?? '--'
             ];
         }
-        $this->setAttribute('list', array_values($list));
+        $data->setAttribute('list', array_values($list));
         unset($list, $columns);
-        return $this;
+        return $data;
     }
 
 }

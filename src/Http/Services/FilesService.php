@@ -184,12 +184,12 @@ class FilesService extends FilesModel
      * 删除数据后
      * @return $this
      */
-    protected function toDeleted()
+    protected function toDeleted(object $data)
     {
-        if(Storage::disk($this->disk)->exists($this->path_name)){
-            Storage::disk($this->disk)->delete($this->path_name);
+        if(Storage::disk($data->disk)->exists($data->path_name)){
+            Storage::disk($data->disk)->delete($data->path_name);
         }
-        return $this;
+        return $data;
     }
 
     /**
@@ -217,15 +217,23 @@ class FilesService extends FilesModel
     }
 
     /**
+     * 获取文件信息前
+     * @return FilesService|null
+     */
+    protected function toInfoing(object $data)
+    {
+        $data = $data->withTrashed();
+        return $data;
+    }
+
+    /**
      * 获取文件信息后
      * @return FilesService|null
      */
-    protected function toInfoed()
+    protected function toInfoed(object $data)
     {
-        if(!Storage::disk($this->disk)->exists($this->path_name) || 'public' !== Storage::disk($this->disk)->getVisibility($this->path_name)){
+        if(!Storage::disk($data->disk)->exists($data->path_name) || 'public' !== Storage::disk($data->disk)->getVisibility($data->path_name)){
             $data = null;
-        }else{
-            $data = $this;
         }
         return $data;
     }
@@ -345,75 +353,75 @@ class FilesService extends FilesModel
         return $result;
     }
 
-    public $list_mime = [
-        //applications
-        'ai' => 'application/postscript',
-        'eps' => 'application/postscript',
-        'exe' => 'application/octet-stream',
-        'doc' => 'application/vnd.ms-word',
-        'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'xls' => 'application/vnd.ms-excel',
-        'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'ppt' => 'application/vnd.ms-powerpoint',
-        'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        'pdf' => 'application/pdf',
-        'xml' => 'application/xml',
-        'odt' => 'application/vnd.oasis.opendocument.text',
-        'swf' => 'application/x-shockwave-flash',
-        // archives
-        'gz' => 'application/x-gzip',
-        'tgz' => 'application/x-gzip',
-        'bz' => 'application/x-bzip2',
-        'bz2' => 'application/x-bzip2',
-        'tbz' => 'application/x-bzip2',
-        'zip' => 'application/zip',
-        'rar' => 'application/x-rar',
-        'tar' => 'application/x-tar',
-        '7z' => 'application/x-7z-compressed',
-        // texts
-        'txt' => 'text/plain',
-        'php' => 'text/x-php',
-        'html' => 'text/html',
-        'htm' => 'text/html',
-        'js' => 'text/javascript',
-        'css' => 'text/css',
-        'rtf' => 'text/rtf',
-        'rtfd' => 'text/rtfd',
-        'py' => 'text/x-python',
-        'java' => 'text/x-java-source',
-        'rb' => 'text/x-ruby',
-        'sh' => 'text/x-shellscript',
-        'pl' => 'text/x-perl',
-        'sql' => 'text/x-sql',
-        // images
-        'bmp' => 'image/x-ms-bmp',
-        'jpg' => 'image/jpeg',
-        'jpeg' => 'image/jpeg',
-        'gif' => 'image/gif',
-        'png' => 'image/png',
-        'tif' => 'image/tiff',
-        'tiff' => 'image/tiff',
-        'tga' => 'image/x-targa',
-        'psd' => 'image/vnd.adobe.photoshop',
-        'svg' => 'image/svg+xml',
-        // audio
-        'mp3' => 'audio/mpeg',
-        'mid' => 'audio/midi',
-        'ogg' => 'audio/ogg',
-        'mp4a' => 'audio/mp4',
-        'wav' => 'audio/wav',
-        'wma' => 'audio/x-ms-wma',
-        // video
-        'avi' => 'video/x-msvideo',
-        'dv' => 'video/x-dv',
-        'mp4' => 'video/mp4',
-        'mpeg' => 'video/mpeg',
-        'mpg' => 'video/mpeg',
-        'mov' => 'video/quicktime',
-        'wm' => 'video/x-ms-wmv',
-        'flv' => 'video/x-flv',
-        'mkv' => 'video/x-matroska'
-    ];
+//    public $list_mime = [
+//        //applications
+//        'ai' => 'application/postscript',
+//        'eps' => 'application/postscript',
+//        'exe' => 'application/octet-stream',
+//        'doc' => 'application/vnd.ms-word',
+//        'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+//        'xls' => 'application/vnd.ms-excel',
+//        'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+//        'ppt' => 'application/vnd.ms-powerpoint',
+//        'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+//        'pdf' => 'application/pdf',
+//        'xml' => 'application/xml',
+//        'odt' => 'application/vnd.oasis.opendocument.text',
+//        'swf' => 'application/x-shockwave-flash',
+//        // archives
+//        'gz' => 'application/x-gzip',
+//        'tgz' => 'application/x-gzip',
+//        'bz' => 'application/x-bzip2',
+//        'bz2' => 'application/x-bzip2',
+//        'tbz' => 'application/x-bzip2',
+//        'zip' => 'application/zip',
+//        'rar' => 'application/x-rar',
+//        'tar' => 'application/x-tar',
+//        '7z' => 'application/x-7z-compressed',
+//        // texts
+//        'txt' => 'text/plain',
+//        'php' => 'text/x-php',
+//        'html' => 'text/html',
+//        'htm' => 'text/html',
+//        'js' => 'text/javascript',
+//        'css' => 'text/css',
+//        'rtf' => 'text/rtf',
+//        'rtfd' => 'text/rtfd',
+//        'py' => 'text/x-python',
+//        'java' => 'text/x-java-source',
+//        'rb' => 'text/x-ruby',
+//        'sh' => 'text/x-shellscript',
+//        'pl' => 'text/x-perl',
+//        'sql' => 'text/x-sql',
+//        // images
+//        'bmp' => 'image/x-ms-bmp',
+//        'jpg' => 'image/jpeg',
+//        'jpeg' => 'image/jpeg',
+//        'gif' => 'image/gif',
+//        'png' => 'image/png',
+//        'tif' => 'image/tiff',
+//        'tiff' => 'image/tiff',
+//        'tga' => 'image/x-targa',
+//        'psd' => 'image/vnd.adobe.photoshop',
+//        'svg' => 'image/svg+xml',
+//        // audio
+//        'mp3' => 'audio/mpeg',
+//        'mid' => 'audio/midi',
+//        'ogg' => 'audio/ogg',
+//        'mp4a' => 'audio/mp4',
+//        'wav' => 'audio/wav',
+//        'wma' => 'audio/x-ms-wma',
+//        // video
+//        'avi' => 'video/x-msvideo',
+//        'dv' => 'video/x-dv',
+//        'mp4' => 'video/mp4',
+//        'mpeg' => 'video/mpeg',
+//        'mpg' => 'video/mpeg',
+//        'mov' => 'video/quicktime',
+//        'wm' => 'video/x-ms-wmv',
+//        'flv' => 'video/x-flv',
+//        'mkv' => 'video/x-matroska'
+//    ];
 
     public function getFileType($extension)
     {

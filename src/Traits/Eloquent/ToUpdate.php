@@ -38,23 +38,22 @@ trait ToUpdate
         $data->setBeforeAttributes($data->getAttributes());
 
         // 赋值
-        $data->fill($params);
+        $data = $data->fill($params);
         unset($params);
 
         // 更新前执行
         if(method_exists(static::class, 'toUpdating')){
-            $updating = $data->toUpdating(...$args);
-            if('object' !== gettype($updating)){
-                if('array' === gettype($updating)){
-                    return $updating;
+            $data = $this->toUpdating($data, ...$args);
+            if('object' !== gettype($data)){
+                if('array' === gettype($data)){
+                    return $data;
                 }else{
                     return [
                         'code' => 0,
-                        'message' => is_string($updating) ? $updating : '更新失败，更新行为被阻住！'
+                        'message' => is_string($data) ? $data : '更新失败，更新行为被阻住！'
                     ];
                 }
             }
-            unset($updating);
         }
         unset($args);
 
@@ -68,7 +67,7 @@ trait ToUpdate
 
             // 更新后执行
             if(method_exists(static::class, 'toUpdated')){
-                $data->toUpdated();
+                $data = $this->toUpdated($data);
             }
 
             return [

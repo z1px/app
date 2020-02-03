@@ -40,18 +40,17 @@ trait ToRestore
 
         // 恢复前执行
         if(method_exists(static::class, 'toRestoring')){
-            $restoring = $data->toRestoring(...$args);
-            if('object' !== gettype($restoring)){
-                if('array' === gettype($restoring)){
-                    return $restoring;
+            $data = $this->toRestoring($data, ...$args);
+            if('object' !== gettype($data)){
+                if('array' === gettype($data)){
+                    return $data;
                 }else{
                     return [
                         'code' => 0,
-                        'message' => is_string($restoring) ? $restoring : '恢复失败，恢复行为被阻住！'
+                        'message' => is_string($data) ? $data : '恢复失败，恢复行为被阻住！'
                     ];
                 }
             }
-            unset($restoring);
         }
         unset($args);
 
@@ -61,7 +60,7 @@ trait ToRestore
 
                 // 恢复后执行
                 if(method_exists(static::class, 'toRestored')){
-                    $data->toRestored();
+                    $data = $this->toRestored($data);
                 }
 
                 return [

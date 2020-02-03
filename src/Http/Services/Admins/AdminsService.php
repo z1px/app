@@ -70,18 +70,18 @@ class AdminsService extends AdminsModel
         return $data;
     }
 
-    protected function toUpdating()
+    protected function toUpdating(object $data)
     {
-        if(request()->input('old_password') && !Hash::check(request()->input('old_password'), $this->getOriginal('password'))){
+        if(request()->input('old_password') && !Hash::check(request()->input('old_password'), $data->getOriginal('password'))){
             return [
                 'code' => 0,
                 'message' => '密码错误'
             ];
         }
-        if($this->getAttribute('password') && $this->getOriginal('password') !== $this->getAttribute('password')){
-            $this->setAttribute('access_token', null);
+        if($data->getAttribute('password') && $data->getOriginal('password') !== $data->getAttribute('password')){
+            $data->setAttribute('access_token', null);
         }
-        return $this;
+        return $data;
     }
 
 

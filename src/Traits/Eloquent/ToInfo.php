@@ -28,24 +28,25 @@ trait ToInfo
         // 参数合法性验证
         validator($params, $this->rules('info'), $this->messages(), $this->attributes())->validate();
 
+        $data = $this;
+
         // 查询前执行
         if(method_exists(static::class, 'toInfoing')){
-            $infoing = $this->toInfoing(...$args);
-            if('object' !== gettype($infoing)){
-                if('array' === gettype($infoing)){
-                    return $infoing;
+            $data = $this->toInfoing($data, ...$args);
+            if('object' !== gettype($data)){
+                if('array' === gettype($data)){
+                    return $data;
                 }else{
                     return [
                         'code' => 0,
-                        'message' => is_string($infoing) ? $infoing : '查询失败，查询行为被阻住！'
+                        'message' => is_string($data) ? $data : '查询失败，查询行为被阻住！'
                     ];
                 }
             }
-            unset($infoing);
         }
         unset($args);
 
-        $data = $this->find($params['id']);
+        $data = $data->find($params['id']);
         unset($params);
         if(empty($data)){
             throw new \Exception("数据不存在");
@@ -53,7 +54,7 @@ trait ToInfo
 
         // 查询后执行
         if(method_exists(static::class, 'toInfoed')){
-            $data = $data->toInfoed();
+            $data = $this->toInfoed($data);
         }
 
         return $data;
