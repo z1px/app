@@ -17,6 +17,46 @@ class PermissionsTableSeeder extends Seeder
     {
         request()->offsetSet('command',  "console: php artisan {$this->command->getName()}");
         # 添加默认权限
+        $data = app($this->permissions_model)->create([
+            'title' => '首页',
+            'route_name' => 'admin.index'
+        ]);
+        array_map(function ($data){
+            app($this->permissions_model)->create($data);
+        }, [
+            [
+                'title' => '登录',
+                'route_name' => 'admin.login',
+                'pid' => $data->id
+            ],
+            [
+                'title' => '登录用户信息',
+                'route_name' => 'admin.info',
+                'pid' => $data->id
+            ],
+            [
+                'title' => '更新登录用户信息',
+                'route_name' => 'admin.updateInfo',
+                'pid' => $data->id
+            ],
+            [
+                'title' => '登录用户权限',
+                'route_name' => 'admin.rules',
+                'pid' => $data->id
+            ],
+            [
+                'title' => '登录用户退出',
+                'route_name' => 'admin.logout',
+                'pid' => $data->id
+            ],
+            [
+                'title' => '文件上传',
+                'route_name' => 'admin.upload',
+                'pid' => $data->id
+            ]
+        ]);
+        unset($data);
+
         $data_manage = app($this->permissions_model)->create([
             'title' => '后台管理',
             'route_name' => 'admin.manage'
