@@ -356,6 +356,13 @@ class FilesService extends FilesModel
         return $result;
     }
 
+    protected function toDeleting(object $data)
+    {
+        $data->admin_id = request()->login->id;
+        $data->save();
+        return $data;
+    }
+
 //    public $list_mime = [
 //        //applications
 //        'ai' => 'application/postscript',
