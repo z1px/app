@@ -257,6 +257,7 @@ class FilesService extends FilesModel
             return $result;
         }
         $data->setBeforeAttributes($data->getAttributes());
+        $data->admin_id = request()->login->id;
 
         if(Storage::disk($data->disk)->exists($data->path_name)){
             $data->visibility = Storage::disk($data->disk)->getVisibility($data->path_name);
@@ -315,6 +316,8 @@ class FilesService extends FilesModel
             return $result;
         }
         $data->setBeforeAttributes($data->getAttributes());
+        $data->admin_id = request()->login->id;
+
         if(Storage::disk($data->disk)->exists($data->path_name)){
             $data->visibility = Storage::disk($data->disk)->getVisibility($data->path_name);
             if('private' === $data->visibility){
