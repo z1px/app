@@ -43,6 +43,7 @@ class TablesOperatedService extends TablesOperatedModel
             'area' => IP::format(request()->getClientIp()), // IP区域
             'user_type' => 0, // 用户类型
             'user_id' => 0, // 文件创建者用户ID
+            'admin_id' => 0, // 后台操作管理员ID
         ], $data);
 
         if(request()->login){

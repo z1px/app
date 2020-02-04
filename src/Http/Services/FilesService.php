@@ -82,9 +82,14 @@ class FilesService extends FilesModel
             'mime' => $file->getMimeType(), // 文件MIME类型
             'md5' => '', // 文件MD5校验
             'sha1' => '', // 文件SHA-1校验
-            'user_type' => 1, // 用户类型
-            'user_id' => request()->login->id, // 文件创建者用户ID
+            'user_type' => 0, // 用户类型
+            'user_id' => 0, // 文件创建者用户ID
+            'admin_id' => 0, // 后台操作管理员ID
         ];
+        if(request()->login){
+            $data['user_type'] = 1;
+            $data['user_id'] = request()->login->id;
+        }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
                 Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);
@@ -153,9 +158,14 @@ class FilesService extends FilesModel
             'mime' => $file->getMimeType(), // 文件MIME类型
             'md5' => '', // 文件MD5校验
             'sha1' => '', // 文件SHA-1校验
-            'user_type' => 1, // 用户类型
-            'user_id' => request()->login->id, // 文件创建者用户ID
+            'user_type' => 0, // 用户类型
+            'user_id' => 0, // 文件创建者用户ID
+            'admin_id' => 0, // 后台操作管理员ID
         ];
+        if(request()->login){
+            $data['user_type'] = 1;
+            $data['user_id'] = request()->login->id;
+        }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
                 Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);

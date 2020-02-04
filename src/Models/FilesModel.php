@@ -142,7 +142,7 @@ class FilesModel extends Model
 
     public function getUserAttribute()
     {
-        if($this->attributes['user_id']){
+        if($this->attributes['user_id'] > 0){
             switch ($this->attributes['user_type']){
                 case 1:
                     $value = app(AdminsService::class)->toInfo($this->attributes['user_id']);
@@ -161,7 +161,7 @@ class FilesModel extends Model
 
     public function getAdminAttribute()
     {
-        if($this->attributes['admin_id']){
+        if($this->attributes['admin_id'] > 0){
             $value = app(AdminsService::class)->toInfo($this->attributes['admin_id']);
         }else{
             $value = '';
