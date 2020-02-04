@@ -23,6 +23,15 @@ class ConfigModel extends Model
     protected $fillable = ['title', 'key', 'value', 'description', 'input', 'values', 'type', 'status'];
 
     /**
+     * 这个属性应该被转换为原生类型.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'values' => 'array'
+    ];
+
+    /**
      * 追加到模型数组表单的访问器。
      *
      * @var array
