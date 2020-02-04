@@ -25,6 +25,20 @@ class AdminsService extends AdminsModel
     use ToAdd, ToUpdate, ToInfo, ToDelete, ToRestore, ToList;
 
     /**
+     * 获取信息前修改数据
+     * @param array $params
+     * @param null $id
+     * @return array
+     */
+    protected function toInfoParams(array $params, $id=null)
+    {
+        if(!is_null($id)){
+            $params['id'] = $id;
+        }
+        return $params;
+    }
+
+    /**
      * 查询条件构造
      * @param $data
      * @param array $params

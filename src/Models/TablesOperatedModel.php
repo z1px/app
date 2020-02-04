@@ -3,6 +3,9 @@
 namespace Z1px\App\Models;
 
 
+use Z1px\App\Http\Services\Admins\AdminsService;
+use Z1px\App\Http\Services\Users\UsersService;
+
 class TablesOperatedModel extends Model
 {
 
@@ -32,7 +35,7 @@ class TablesOperatedModel extends Model
      *
      * @var array
      */
-    protected $appends = ['table_comment', 'operate_name', 'user_type_name'];
+    protected $appends = ['table_comment', 'operate_name', 'user_type_name', 'user'];
 
     /**
      * 这个属性应该被转换为原生类型.
@@ -92,6 +95,25 @@ class TablesOperatedModel extends Model
     public function getUserTypeNameAttribute()
     {
         return $this->list_user_type[$this->attributes['user_type']] ?? '未知';
+    }
+
+    public function getUserAttribute()
+    {
+        if($this->attributes['user_id']){
+            switch ($this->attributes['user_type']){
+                case 1:
+                    $value = app(AdminsService::class)->toInfo($this->attributes['user_id']);
+                    break;
+                case 2:
+                    $value = app(UsersService::class)->toInfo($this->attributes['user_id']);
+                    break;
+                default:
+                    $value = '';
+            }
+        }else{
+            $value = '';
+        }
+        return $value;
     }
 
     /**

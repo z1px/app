@@ -5,6 +5,8 @@ namespace Z1px\App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Z1px\App\Http\Services\Admins\AdminsService;
+use Z1px\App\Http\Services\Users\UsersService;
 
 class FilesModel extends Model
 {
@@ -31,7 +33,7 @@ class FilesModel extends Model
      *
      * @var array
      */
-    protected $appends = ['file_type_name', 'visibility_name', 'size_format', 'user_type_name', 'base64', 'image'];
+    protected $appends = ['file_type_name', 'visibility_name', 'size_format', 'user_type_name', 'base64', 'image', 'user', 'admin'];
 
     /**
      * 文件类型列表
@@ -128,8 +130,39 @@ class FilesModel extends Model
 
     public function getImageAttribute()
     {
-        if(1 === $this->attributes['file_type']){
-            $value = $this->file_to_image($this->attributes['id']);
+        switch ($this->attributes['file_type']){
+            case 1:
+                $value = $this->file_to_image($this->attributes['id']);
+                break;
+            default:
+                $value = '';
+        }
+        return $value;
+    }
+
+    public function getUserAttribute()
+    {
+        if($this->attributes['user_id']){
+            switch ($this->attributes['user_type']){
+                case 1:
+                    $value = app(AdminsService::class)->toInfo($this->attributes['user_id']);
+                    break;
+                case 2:
+                    $value = app(UsersService::class)->toInfo($this->attributes['user_id']);
+                    break;
+                default:
+                    $value = '';
+            }
+        }else{
+            $value = '';
+        }
+        return $value;
+    }
+
+    public function getAdminAttribute()
+    {
+        if($this->attributes['admin_id']){
+            $value = app(AdminsService::class)->toInfo($this->attributes['admin_id']);
         }else{
             $value = '';
         }

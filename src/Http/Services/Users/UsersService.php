@@ -23,4 +23,18 @@ class UsersService extends UsersModel
 
     use ToAdd, ToUpdate, ToInfo, ToDelete, ToList, ToRestore;
 
+    /**
+     * 获取信息前修改数据
+     * @param array $params
+     * @param null $id
+     * @return array
+     */
+    protected function toInfoParams(array $params, $id=null)
+    {
+        if(!is_null($id)){
+            $params['id'] = $id;
+        }
+        return $params;
+    }
+
 }
