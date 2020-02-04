@@ -46,9 +46,6 @@ class CreateFilesTables extends Migration
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
 
             // 创建索引
-            $table->index(['table', 'tid']);
-            $table->index(['table', 'tid', 'file_type']);
-
             $table->index(['user_type', 'user_id']);
         });
         app('db')->statement("ALTER TABLE `" . app($this->files_model)->getTable() . "` comment '文件资源管理表'"); // 表注释

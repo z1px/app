@@ -2,27 +2,27 @@
 /**
  * Created by PhpStorm.
  * User: kevin
- * Date: 2019/10/24
- * Time: 9:33 下午
+ * Date: 2020/2/4
+ * Time: 2:49 上午
  */
 
 
-namespace Z1px\App\Http\Controllers\Admin\Admins;
+namespace Z1px\App\Http\Controllers\Admin;
 
 
 use Z1px\App\Http\Controllers\Controller;
-use Z1px\App\Http\Services\Admins\RolesService;
+use Z1px\App\Http\Services\ConfigService;
 
-class RolesController extends Controller
+class ConfigController extends Controller
 {
 
     public function __construct()
     {
-        $this->model = RolesService::class;
+        $this->model = ConfigService::class;
     }
 
     /**
-     * 角色列表
+     * 配置列表
      */
     public function getList()
     {
@@ -30,7 +30,7 @@ class RolesController extends Controller
     }
 
     /**
-     * 所有角色
+     * 所有权限
      */
     public function all()
     {
@@ -38,7 +38,7 @@ class RolesController extends Controller
     }
 
     /**
-     * 角色信息
+     * 配置信息
      */
     public function info()
     {
@@ -46,7 +46,7 @@ class RolesController extends Controller
     }
 
     /**
-     * 添加角色
+     * 添加配置
      */
     public function add()
     {
@@ -54,7 +54,7 @@ class RolesController extends Controller
     }
 
     /**
-     * 修改角色
+     * 修改配置
      */
     public function update()
     {
@@ -62,27 +62,11 @@ class RolesController extends Controller
     }
 
     /**
-     * 删除角色
+     * 删除配置
      */
     public function delete()
     {
         return $this->_delete();
-    }
-
-    /**
-     * 获取角色权限
-     */
-    public function getPermissions()
-    {
-        return $this->json(app($this->model)->getPermissions());
-    }
-
-    /**
-     * 设置角色权限
-     */
-    public function setPermissions()
-    {
-        return $this->json(app($this->model)->setPermissions());
     }
 
 }

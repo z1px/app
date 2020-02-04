@@ -62,36 +62,12 @@ class IndexController extends Controller
         return $this->json(app($this->model)->logout());
     }
 
+    /**
+     * 获取权限规则
+     * @return \Illuminate\Http\Response
+     */
     public function rules()
     {
-        return $this->json([
-            'code' => 1,
-            'message' => 'data normal',
-            'data' => [
-                'admins',
-                'admins.list',
-                'admins.add',
-                'admins.update',
-                'admins.edit',
-                'admins.delete',
-
-                'roles',
-                'roles.all',
-                'roles.list',
-                'roles.add',
-                'roles.update',
-                'roles.edit',
-                'roles.delete',
-                'roles.permissions',
-
-                'permissions',
-                'permissions.all',
-                'permissions.list',
-                'permissions.add',
-                'permissions.update',
-                'permissions.edit',
-                'permissions.delete',
-            ]
-        ]);
+        return $this->json(app($this->model)->permissions());
     }
 }

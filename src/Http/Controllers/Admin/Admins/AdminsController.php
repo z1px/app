@@ -69,4 +69,20 @@ class AdminsController extends Controller
         return $this->_restore();
     }
 
+    /**
+     * 获取角色
+     */
+    public function getRoles()
+    {
+        return $this->json(app($this->model)->getRoles());
+    }
+
+    /**
+     * 设置角色
+     */
+    public function setRoles()
+    {
+        return $this->json(app($this->model)->setRoles());
+    }
+
 }
