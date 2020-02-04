@@ -49,6 +49,7 @@ class AdminsLogic
                 'message' => '账号不存在'
             ];
         }
+        $data->setBeforeAttributes($data->getAttributes());
 
         request()->login = $data;
 
