@@ -86,9 +86,9 @@ class FilesService extends FilesModel
             'user_id' => 0, // 文件创建者用户ID
             'admin_id' => 0, // 后台操作管理员ID
         ];
-        if(request()->login){
+        if(request()->admin){
             $data['user_type'] = 1;
-            $data['user_id'] = request()->login->id;
+            $data['user_id'] = request()->admin->id;
         }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
@@ -162,9 +162,9 @@ class FilesService extends FilesModel
             'user_id' => 0, // 文件创建者用户ID
             'admin_id' => 0, // 后台操作管理员ID
         ];
-        if(request()->login){
+        if(request()->admin){
             $data['user_type'] = 1;
-            $data['user_id'] = request()->login->id;
+            $data['user_id'] = request()->admin->id;
         }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
@@ -267,7 +267,7 @@ class FilesService extends FilesModel
             return $result;
         }
         $data->setBeforeAttributes($data->getAttributes());
-        $data->admin_id = request()->login->id;
+        $data->admin_id = request()->admin->id;
 
         if(Storage::disk($data->disk)->exists($data->path_name)){
             $data->visibility = Storage::disk($data->disk)->getVisibility($data->path_name);
@@ -326,7 +326,7 @@ class FilesService extends FilesModel
             return $result;
         }
         $data->setBeforeAttributes($data->getAttributes());
-        $data->admin_id = request()->login->id;
+        $data->admin_id = request()->admin->id;
 
         if(Storage::disk($data->disk)->exists($data->path_name)){
             $data->visibility = Storage::disk($data->disk)->getVisibility($data->path_name);
@@ -368,7 +368,7 @@ class FilesService extends FilesModel
 
     protected function toDeleting(object $data)
     {
-        $data->admin_id = request()->login->id;
+        $data->admin_id = request()->admin->id;
         $data->save();
         return $data;
     }

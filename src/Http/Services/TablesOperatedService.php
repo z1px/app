@@ -46,9 +46,9 @@ class TablesOperatedService extends TablesOperatedModel
             'admin_id' => 0, // 后台操作管理员ID
         ], $data);
 
-        if(request()->login){
+        if(request()->admin){
             $params['user_type'] = 1;
-            $params['user_id'] = request()->login->id;
+            $params['user_id'] = request()->admin->id;
         }
 
         return $params;

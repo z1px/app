@@ -23,11 +23,11 @@ class AdminsLoginService extends AdminsLoginModel
     protected function toAddParams(array $params, array $data = [])
     {
         $params = array_merge([
-            'admin_id' => request()->login ? request()->login->id : 0, // 管理员ID
-            'nickname' => request()->login ? request()->login->nickname : '', // 昵称
-            'username' => request()->login ? request()->login->username : '', // 账号
-            'mobile' => request()->login ? request()->login->mobile : '', // 手机号
-            'email' => request()->login ? request()->login->email : '', // 邮箱号
+            'admin_id' => request()->admin ? request()->admin->id : 0, // 管理员ID
+            'nickname' => request()->admin ? request()->admin->nickname : '', // 昵称
+            'username' => request()->admin ? request()->admin->username : '', // 账号
+            'mobile' => request()->admin ? request()->admin->mobile : '', // 手机号
+            'email' => request()->admin ? request()->admin->email : '', // 邮箱号
             'route_name' => request()->route() ? request()->route()->getName() : '', // 路由名称
             'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
             'params' => request()->all() ?: null, // 请求参数

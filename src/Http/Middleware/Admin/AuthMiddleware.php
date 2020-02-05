@@ -39,7 +39,7 @@ class AuthMiddleware
                 'message' => '登录已过期或未登录'
             ]);
         }
-        request()->login = $data;
+        request()->admin = $data;
 
         // 权限判断
         if(1 === $data->id){

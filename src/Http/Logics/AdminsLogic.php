@@ -51,7 +51,7 @@ class AdminsLogic
         }
         $data->setBeforeAttributes($data->getAttributes());
 
-        request()->login = $data;
+        request()->admin = $data;
 
         if($data->login_failure >=5){
             return [
@@ -111,7 +111,7 @@ class AdminsLogic
      */
     public function info()
     {
-        $data = request()->login;
+        $data = request()->admin;
 
         if(empty($data)){
             return [
@@ -143,7 +143,7 @@ class AdminsLogic
      */
     public function update()
     {
-        request()->offsetSet('id', request()->login->id);
+        request()->offsetSet('id', request()->admin->id);
         if(request()->offsetExists('username')){
             request()->offsetUnset('username');
         }
@@ -174,7 +174,7 @@ class AdminsLogic
      */
     public function logout()
     {
-        $data = request()->login;
+        $data = request()->admin;
 
         if(empty($data)){
             return [
