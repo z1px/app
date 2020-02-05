@@ -38,7 +38,6 @@ class CreateUsersTables extends Migration
 //            $table->string('avatar', 100)->nullable()->comment('头像');
             $table->unsignedBigInteger('file_id')->index()->default(0)->comment('头像-关联文件ID');
             $table->string('password', 120)->nullable()->comment('密码');
-            $table->string('access_token', 100)->nullable()->comment('登录授权码');
             $table->tinyInteger('status')->default(1)->comment('账号状态：1-正常，2-禁用');
             $table->tinyInteger('login_failure')->default(0)->comment('连续登录失败次数');
             $table->timestamp('login_at')->nullable()->comment('最后登录时间');
@@ -62,12 +61,9 @@ class CreateUsersTables extends Migration
             $table->unsignedBigInteger('user_id')->index()->default(0)->comment('用户ID');
             $table->string('access_token', 100)->nullable()->comment('访问令牌');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
-            $table->string('route_action', 100)->nullable()->comment('路由方法');
             $table->string('url', 200)->nullable()->comment('请求地址');
-            $table->string('method', 20)->nullable()->comment('请求类型');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
-            $table->text('user_agent')->nullable()->comment('浏览器信息');
             $table->string('device', 30)->nullable()->comment('设备');
             $table->string('device_name', 30)->nullable()->comment('设备名称');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
