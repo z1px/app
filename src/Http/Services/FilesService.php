@@ -33,7 +33,7 @@ class FilesService extends FilesModel
      */
     protected function toAddParams(array $params, array $data = [])
     {
-        $params = array_merge($params, $data);
+        $params = $data ?: $params;
         return $params;
     }
 

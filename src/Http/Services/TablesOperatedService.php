@@ -29,7 +29,7 @@ class TablesOperatedService extends TablesOperatedModel
      */
     protected function toAddParams(array $params, object $model, string $operate, array $data = [])
     {
-        $params = array_merge($params, [
+        $params = array_merge([
             'model' => $model->getMorphClass(), // 操作表模型
             'table' => $model->getTable(), // 操作表名称
             'tid' => $model->id ?? 0, // 操作表ID

@@ -126,6 +126,7 @@ class Model extends BaseModel
             'user_id' => '用户ID',
             'admin_id' => '管理员ID',
             'logo' => 'LOGO',
+            'remark' => '备注',
             'start_date' => '开始时间',
             'end_date' => '结束时间',
         ];
