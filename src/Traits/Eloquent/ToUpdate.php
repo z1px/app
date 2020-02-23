@@ -26,7 +26,14 @@ trait ToUpdate
         }
 
         // 参数合法性验证
-        validator($params, $this->rules('update'), $this->messages(), $this->attributes())->validate();
+        $validator = validator($params, $this->rules('update'), $this->messages(), $this->attributes());
+        if ($validator->fails()) {
+            return [
+                'code' => 0,
+                'message' => $validator->errors()->first(),
+                'data' => $validator->errors()
+            ];
+        }
 
         $data = $this->find($params['id']);
         if(empty($data)){

@@ -26,7 +26,14 @@ trait ToAdd
         }
 
         // 参数合法性验证
-        validator($params, $this->rules('add'), $this->messages(), $this->attributes())->validate();
+        $validator = validator($params, $this->rules('add'), $this->messages(), $this->attributes());
+        if ($validator->fails()) {
+            return [
+                'code' => 0,
+                'message' => $validator->errors()->first(),
+                'data' => $validator->errors()
+            ];
+        }
 
         // 赋值
         $data = $this->fill($params);

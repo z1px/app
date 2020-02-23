@@ -27,7 +27,14 @@ trait ToListAll
         }
 
         // 参数合法性验证
-        validator($params, $this->rules('list'), $this->messages(), $this->attributes())->validate();
+        $validator = validator($params, $this->rules('list'), $this->messages(), $this->attributes());
+        if ($validator->fails()) {
+            return [
+                'code' => 0,
+                'message' => $validator->errors()->first(),
+                'data' => $validator->errors()
+            ];
+        }
 
         if(method_exists(static::class, 'trashed')){
             $data = $this->withTrashed();
