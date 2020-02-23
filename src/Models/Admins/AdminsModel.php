@@ -184,18 +184,18 @@ class AdminsModel extends Model
                     "alpha_dash",
                     new NotMobileRule(),
                     new NotEmailRule(),
-                    Rule::unique($this->getTable(), 'username')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['nickname'] = "nullable|between:2,30";
                 $rules['mobile'] = [
                     "nullable",
                     new MobileRule(),
-                    Rule::unique($this->getTable(), 'mobile')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['email'] = [
                     "nullable",
                     "email:spoof",
-                    Rule::unique($this->getTable(), 'email')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['file_id'] = "nullable|integer";
                 $rules['password'] = "nullable|between:6,20";

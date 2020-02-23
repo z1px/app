@@ -115,13 +115,13 @@ class ConfigModel extends Model
                 $rules['title'] = [
                     "required",
                     "between:2,30",
-                    Rule::unique($this->getTable(), 'title')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['key'] = [
                     "required",
                     "between:2,30",
                     "alpha_dash",
-                    Rule::unique($this->getTable(), 'key')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['value'] = "between:0,120";
                 $rules['description'] = "between:0,200";

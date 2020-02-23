@@ -87,7 +87,7 @@ class RolesModel extends Model
             case 'update':
                 $rules['title'] = [
                     "between:2,20",
-                    Rule::unique($this->getTable(), 'title')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;

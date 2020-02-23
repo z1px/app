@@ -111,10 +111,10 @@ class PermissionsModel extends Model
             case 'update':
                 $rules['title'] = [
                     "between:2,30",
-                    Rule::unique($this->getTable(), 'title')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['route_name'] = [
-                    Rule::unique($this->getTable(), 'route_name')->ignore(request()->input('id'))
+                    Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
