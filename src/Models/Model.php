@@ -214,11 +214,10 @@ class Model extends BaseModel
                         $value = null;
                     }
                     if(!array_key_exists($key, $attributes)){
-                        $attributes = Arr::prepend($attributes, $value, $key);
+                        $model->setAttribute($key, $value);
                     }
                     unset($key, $value);
                 }
-                $model->setRawAttributes($attributes);
                 unset($attributes);
             }
         });
