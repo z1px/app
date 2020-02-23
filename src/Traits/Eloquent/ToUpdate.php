@@ -34,6 +34,7 @@ trait ToUpdate
                 'data' => $validator->errors()
             ];
         }
+        unset($validator);
 
         $data = $this->find($params['id']);
         if(empty($data)){

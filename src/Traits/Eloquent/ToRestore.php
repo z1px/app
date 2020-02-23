@@ -34,6 +34,7 @@ trait ToRestore
                 'data' => $validator->errors()
             ];
         }
+        unset($validator);
 
         $data = $this->withTrashed()->find($params['id']);
         unset($params);

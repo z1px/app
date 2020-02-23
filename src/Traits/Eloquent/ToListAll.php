@@ -35,6 +35,7 @@ trait ToListAll
                 'data' => $validator->errors()
             ];
         }
+        unset($validator);
 
         if(method_exists(static::class, 'trashed')){
             $data = $this->withTrashed();

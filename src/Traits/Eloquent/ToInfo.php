@@ -34,6 +34,7 @@ trait ToInfo
                 'data' => $validator->errors()
             ];
         }
+        unset($validator);
 
         $data = $this;
 

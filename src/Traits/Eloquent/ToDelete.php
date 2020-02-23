@@ -34,6 +34,7 @@ trait ToDelete
                 'data' => $validator->errors()
             ];
         }
+        unset($validator);
 
         $data = $this->find($params['id']);
         unset($params);

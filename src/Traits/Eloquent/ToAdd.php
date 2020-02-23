@@ -34,6 +34,7 @@ trait ToAdd
                 'data' => $validator->errors()
             ];
         }
+        unset($validator);
 
         // 赋值
         $data = $this->fill($params);
