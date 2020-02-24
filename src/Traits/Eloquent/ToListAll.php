@@ -18,12 +18,11 @@ trait ToListAll
      */
     public function toListAll(...$args)
     {
+        $params = request()->input();
 
         // 查询前执行修改参数
         if(method_exists(static::class, 'toListAllParams')){
-            $params = $this->toListAllParams(...$args);
-        }else{
-            $params = $args[0] ?? [];
+            $params = $this->toListAllParams($params, ...$args);
         }
 
         // 参数合法性验证
