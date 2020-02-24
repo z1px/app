@@ -167,7 +167,7 @@ class Model extends BaseModel
     {
         if(!empty($params)){
             foreach ($params as $key=>$value){
-                if(empty($value)) continue;
+                if(empty($value) && !is_numeric($value)) continue;
                 switch ($key){
                     case 'title':
                         $data = $data->where($key, 'like', "%{$value}%");

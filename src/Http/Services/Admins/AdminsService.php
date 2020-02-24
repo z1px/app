@@ -48,7 +48,7 @@ class AdminsService extends AdminsModel
     {
         if(!empty($params)){
             foreach ($params as $key=>$value){
-                if(empty($value)) continue;
+                if(empty($value) && !is_numeric($value)) continue;
                 switch ($key){
                     case 'keyword':
                         $data = $data->where(function ($query) use ($value) {
