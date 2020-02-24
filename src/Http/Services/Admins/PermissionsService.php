@@ -22,4 +22,9 @@ class PermissionsService extends PermissionsModel
         return $data;
     }
 
+    protected function toListAllParams($params)
+    {
+        return [];
+    }
+
 }
