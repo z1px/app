@@ -15,6 +15,7 @@ use Z1px\App\Traits\Eloquent\ToAdd;
 use Z1px\App\Traits\Eloquent\ToInfo;
 use Z1px\App\Traits\Eloquent\ToList;
 use Z1px\Tool\IP;
+use Z1px\Tool\Server;
 
 class TablesOperatedService extends TablesOperatedModel
 {
