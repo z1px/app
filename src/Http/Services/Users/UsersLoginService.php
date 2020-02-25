@@ -33,7 +33,10 @@ class UsersLoginService extends UsersLoginModel
             'params' => request()->all() ?: null, // 请求参数
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
-            'device' => Server::isMobile() ? 'mobile' : 'pc', // 设备
+            'platform' => Server::getDevice(), // 客户端平台
+            'model' => Server::getDevice(), // 设备型号
+            'brand' => Server::getBroswer(), // 设备品牌
+            'system' => Server::getOs(), // 操作系统及版本
         ], $data);
 
         return $params;

@@ -19,7 +19,7 @@ class AdminsBehaviorModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['admin_id', 'title', 'route_name', 'url', 'params', 'ip', 'area', 'device', 'runtime'];
+    protected $fillable = ['admin_id', 'title', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'runtime'];
 
     /**
      * 这个属性应该被转换为原生类型.

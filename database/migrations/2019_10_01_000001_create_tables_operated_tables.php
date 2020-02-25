@@ -39,7 +39,7 @@ class CreateTablesOperatedTables extends Migration
             $table->string('url', 200)->nullable()->comment('请求地址');
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
-            $table->string('device', 30)->nullable()->comment('设备');
+            $table->string('platform', 30)->nullable()->comment('客户端平台');
             $table->unsignedBigInteger('user_type')->default(0)->comment('用户类型：1-管理员，2-平台用户');
             $table->unsignedBigInteger('user_id')->default(0)->comment('操作用户ID');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');

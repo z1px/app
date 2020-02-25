@@ -31,7 +31,7 @@ class AdminsBehaviorService extends AdminsBehaviorModel
             'params' => request()->all() ?: null, // 请求参数
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
-            'device' => Server::isMobile() ? 'mobile' : 'pc', // 设备
+            'platform' => Server::getDevice(), // 客户端平台
             'runtime' => microtime(true) - request()->server('REQUEST_TIME_FLOAT'), // 运行时间，单位秒
         ], $data);
         if(empty($params['title']) && !empty($params['route_name'])){

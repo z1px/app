@@ -25,8 +25,7 @@ class FilesModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['original_name', 'disk', 'visibility', 'path_name', 'size', 'file_type', 'extension', 'mime',
-        'md5', 'sha1', 'user_type', 'user_id', 'admin_id'];
+    protected $fillable = ['original_name', 'disk', 'visibility', 'path_name', 'size', 'file_type', 'extension', 'mime', 'md5', 'sha1', 'user_type', 'user_id', 'admin_id'];
 
     /**
      * 追加到模型数组表单的访问器。

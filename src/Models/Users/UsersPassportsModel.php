@@ -30,7 +30,7 @@ class UsersPassportsModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'access_token', 'route_name', 'url', 'ip', 'area', 'device', 'device_name'];
+    protected $fillable = ['user_id', 'access_token', 'route_name', 'url', 'ip', 'area', 'platform', 'model', 'brand', 'system'];
 
     /**
      * 模型关联，一对多（反向）

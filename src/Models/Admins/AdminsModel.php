@@ -36,8 +36,7 @@ class AdminsModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['username', 'nickname', 'mobile', 'email', 'file_id', 'password', 'google_secret',
-        'access_token', 'status', 'login_failure', 'login_at'];
+    protected $fillable = ['username', 'nickname', 'mobile', 'email', 'file_id', 'password', 'google_secret', 'access_token', 'status', 'login_failure', 'login_at'];
 
     /**
      * 追加到模型数组表单的访问器。

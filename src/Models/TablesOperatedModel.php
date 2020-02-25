@@ -27,8 +27,7 @@ class TablesOperatedModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['model', 'table', 'tid', 'operate', 'before_attr', 'after_attr', 'change_attr', 'route_name',
-        'url', 'ip', 'area', 'device', 'user_type', 'user_id'];
+    protected $fillable = ['model', 'table', 'tid', 'operate', 'before_attr', 'after_attr', 'change_attr', 'route_name', 'url', 'ip', 'area', 'platform', 'user_type', 'user_id'];
 
     /**
      * 追加到模型数组表单的访问器。

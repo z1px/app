@@ -41,9 +41,9 @@ class TablesOperatedService extends TablesOperatedModel
             'url' => app()->runningInConsole() ? request()->input('command', 'console') : request()->getUri(), // 请求地址
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
+            'platform' => Server::getDevice(), // 客户端平台
             'user_type' => 0, // 用户类型
             'user_id' => 0, // 文件创建者用户ID
-            'admin_id' => 0, // 后台操作管理员ID
         ], $data);
 
         if(request()->admin){
