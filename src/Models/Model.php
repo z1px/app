@@ -135,8 +135,6 @@ class Model extends BaseModel
             'area' => 'IP区域',
             'platform' => '客户端平台',
             'model' => '设备型号',
-            'brand' => '设备品牌',
-            'system' => '操作系统及版本',
             'user_type' => '用户类型',
             'user_id' => '用户ID',
             'admin_id' => '管理员ID',

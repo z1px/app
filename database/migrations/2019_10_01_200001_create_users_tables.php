@@ -66,8 +66,6 @@ class CreateUsersTables extends Migration
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->string('platform', 30)->nullable()->comment('客户端平台');
             $table->string('model', 30)->nullable()->comment('设备型号');
-            $table->string('brand', 30)->nullable()->comment('设备品牌');
-            $table->string('system', 30)->nullable()->comment('操作系统及版本');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
