@@ -65,6 +65,7 @@ class CreateAdminsLogTables extends Migration
             $table->ipAddress('ip')->nullable()->comment('请求IP');
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->string('platform', 30)->nullable()->comment('客户端平台');
+            $table->string('model', 30)->nullable()->comment('设备型号');
             $table->decimal('runtime', 10, 6)->default(0)->comment('运行时间，单位秒');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');

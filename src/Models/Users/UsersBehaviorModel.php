@@ -20,7 +20,7 @@ class UsersBehaviorModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'title', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'runtime'];
+    protected $fillable = ['user_id', 'title', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'model', 'runtime'];
 
     /**
      * 这个属性应该被转换为原生类型.
