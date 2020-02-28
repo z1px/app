@@ -70,7 +70,7 @@ class CreateUsersTables extends Migration
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
         });
-        app('db')->statement("ALTER TABLE `" . app($this->users_passports_model)->getTable() . "` comment '创建用户认证表'"); // 表注释
+        app('db')->statement("ALTER TABLE `" . app($this->users_passports_model)->getTable() . "` comment '用户认证表'"); // 表注释
     }
 
     /**
