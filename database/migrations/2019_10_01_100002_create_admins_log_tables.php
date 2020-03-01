@@ -30,7 +30,6 @@ class CreateAdminsLogTables extends Migration
             $table->collation = 'utf8mb4_unicode_ci'; // 指定表的默认排序格式 (MySQL).
 
             $table->bigIncrements('id')->comment('ID');
-            $table->unsignedBigInteger('admin_id')->index()->default(0)->comment('管理员ID');
             $table->string('nickname', 30)->nullable()->comment('昵称');
             $table->string('username', 20)->nullable()->comment('账号');
             $table->string('mobile', 20)->nullable()->comment('手机号');
@@ -42,6 +41,7 @@ class CreateAdminsLogTables extends Migration
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->string('platform', 30)->nullable()->comment('客户端平台');
             $table->string('model', 30)->nullable()->comment('设备型号');
+            $table->unsignedBigInteger('admin_id')->index()->default(0)->comment('管理员ID');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });
@@ -57,7 +57,6 @@ class CreateAdminsLogTables extends Migration
             $table->collation = 'utf8mb4_unicode_ci'; // 指定表的默认排序格式 (MySQL).
 
             $table->bigIncrements('id')->comment('ID');
-            $table->unsignedBigInteger('admin_id')->index()->default(0)->comment('管理员ID');
             $table->string('title', 30)->nullable()->comment('行为名称');
             $table->string('route_name', 50)->nullable()->comment('路由名称');
             $table->string('url', 200)->nullable()->comment('请求地址');
@@ -67,6 +66,7 @@ class CreateAdminsLogTables extends Migration
             $table->string('platform', 30)->nullable()->comment('客户端平台');
             $table->string('model', 30)->nullable()->comment('设备型号');
             $table->decimal('runtime', 10, 6)->default(0)->comment('运行时间，单位秒');
+            $table->unsignedBigInteger('admin_id')->index()->default(0)->comment('管理员ID');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
         });

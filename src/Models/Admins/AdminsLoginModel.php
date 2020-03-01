@@ -19,7 +19,7 @@ class AdminsLoginModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['admin_id', 'nickname', 'username', 'mobile', 'email', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'model'];
+    protected $fillable = ['nickname', 'username', 'mobile', 'email', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'model', 'admin_id'];
 
     /**
      * 这个属性应该被转换为原生类型.
