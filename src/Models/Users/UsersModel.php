@@ -95,7 +95,9 @@ class UsersModel extends Model
 
     public function setEmailAttribute($value)
     {
-        if(!empty($value)){
+        if(empty($value)){
+            $this->attributes['email'] = null;
+        }else{
             $this->attributes['email'] = Format::format_email($value);
         }
     }
