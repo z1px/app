@@ -174,7 +174,7 @@ class AdminsModel extends Model
                     new MobileRule(),
                     "unique:{$this->getTable()},mobile"
                 ];
-                $rules['email'] = "nullable|email:spoof|unique:{$this->getTable()},email";
+                $rules['email'] = "nullable|email:rfc,dns|unique:{$this->getTable()},email";
                 $rules['file_id'] = "nullable|integer";
                 $rules['password'] = "required|between:6,20";
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
@@ -195,7 +195,7 @@ class AdminsModel extends Model
                 ];
                 $rules['email'] = [
                     "nullable",
-                    "email:spoof",
+                    "email:rfc,dns",
                     Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
                 $rules['file_id'] = "nullable|integer";
