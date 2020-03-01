@@ -10,7 +10,6 @@
 namespace Z1px\App\Http\Controllers\Admin;
 
 
-use Z1px\App\Http\Controllers\Controller;
 use Z1px\App\Http\Logics\AdminsLogic;
 
 class IndexController extends Controller
