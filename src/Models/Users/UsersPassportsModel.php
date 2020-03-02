@@ -30,7 +30,7 @@ class UsersPassportsModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['access_token', 'route_name', 'url', 'ip', 'area', 'platform', 'model', 'user_id'];
+    protected $fillable = ['access_token', 'route_name', 'url', 'ip', 'area', 'platform', 'model', 'uuid', 'user_id'];
 
     /**
      * 模型关联，一对多（反向）
@@ -39,6 +39,32 @@ class UsersPassportsModel extends Model
     public function users()
     {
         return $this->belongsTo(app(UsersModel::class), 'user_id');
+    }
+
+
+    /**
+     * 获取适用于请求的验证规则
+     *
+     * @param $scene 验证场景
+     * @return array
+     */
+    public function rules($scene='update')
+    {
+        $rules = parent::rules($scene);
+        switch ($scene){
+            case 'add':
+                $rules['access_token'] = "required|between:2,100";
+                $rules['route_name'] = "required|between:2,50";
+                $rules['url'] = "required|url";
+                $rules['ip'] = "required|ip";
+                $rules['area'] = "max:50";
+                $rules['platform'] = "max:30";
+                $rules['model'] = "max:30";
+                $rules['uuid'] = "required|max:32";
+                $rules['user_id'] = "required|integer";
+                break;
+        }
+        return $rules;
     }
 
 }

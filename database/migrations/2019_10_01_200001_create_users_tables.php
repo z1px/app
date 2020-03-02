@@ -67,10 +67,14 @@ class CreateUsersTables extends Migration
             $table->string('area', 50)->nullable()->comment('IP区域');
             $table->string('platform', 30)->nullable()->comment('客户端平台');
             $table->string('model', 30)->nullable()->comment('设备型号');
+            $table->string('uuid', 36)->index()->comment('通用唯一识别码');
             $table->unsignedBigInteger('user_id')->index()->default(0)->comment('用户ID');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
             $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
+
+            // 创建索引
+            $table->unique(['user_id', 'uuid']);
         });
         app('db')->statement("ALTER TABLE `" . app($this->users_passports_model)->getTable() . "` comment '用户认证表'"); // 表注释
     }

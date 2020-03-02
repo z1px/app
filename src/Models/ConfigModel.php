@@ -105,8 +105,8 @@ class ConfigModel extends Model
                     "alpha_dash",
                     "unique:{$this->getTable()},key"
                 ];
-                $rules['value'] = "between:0,120";
-                $rules['description'] = "between:0,200";
+                $rules['value'] = "max:120";
+                $rules['description'] = "max:200";
                 $rules['input'] = "required|in:" . implode(',', array_keys($this->list_input));
                 $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
@@ -123,8 +123,8 @@ class ConfigModel extends Model
                     "alpha_dash",
                     Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
-                $rules['value'] = "between:0,120";
-                $rules['description'] = "between:0,200";
+                $rules['value'] = "max:120";
+                $rules['description'] = "max:200";
                 $rules['input'] = "required|in:" . implode(',', array_keys($this->list_input));
                 $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
