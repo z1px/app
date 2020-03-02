@@ -12,7 +12,7 @@ class AdminsBehaviorModel extends Model
      *
      * @var string
      */
-    protected $table = 'a_admins_behavior';
+    protected $table = 'l_admins_behavior';
 
     /**
      * 允许添加的字段名

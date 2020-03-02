@@ -20,6 +20,7 @@ class CreateFilesTables extends Migration
 
         /**
          * 创建文件资源管理表
+         * s_files
          */
         Schema::create(app($this->files_model)->getTable(), function (Blueprint $table) {
 

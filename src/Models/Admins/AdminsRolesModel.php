@@ -16,7 +16,7 @@ class AdminsRolesModel extends Model
      *
      * @var string
      */
-    protected $table = 'a_admins_roles';
+    protected $table = 'm_admins_roles';
 
     /**
      * 允许添加的字段名

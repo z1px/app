@@ -18,7 +18,7 @@ class FilesModel extends Model
      *
      * @var string
      */
-    protected $table = 'files';
+    protected $table = 's_files';
 
     /**
      * 允许添加的字段名

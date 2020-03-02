@@ -20,7 +20,7 @@ class TablesOperatedModel extends Model
      *
      * @var string
      */
-    protected $table = 'tables_operated';
+    protected $table = 'l_tables_operated';
 
     /**
      * 允许添加的字段名

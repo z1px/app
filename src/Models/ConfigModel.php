@@ -13,7 +13,7 @@ class ConfigModel extends Model
      *
      * @var string
      */
-    protected $table = 'config';
+    protected $table = 's_config';
 
     /**
      * 允许添加的字段名

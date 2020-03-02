@@ -14,7 +14,7 @@ class PermissionsModel extends Model
      *
      * @var string
      */
-    protected $table = 'a_permissions';
+    protected $table = 'm_permissions';
 
     /**
      * 允许添加的字段名

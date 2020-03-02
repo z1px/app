@@ -13,7 +13,7 @@ class UsersBehaviorModel extends Model
      *
      * @var string
      */
-    protected $table = 'u_users_behavior';
+    protected $table = 'l_users_behavior';
 
     /**
      * 允许添加的字段名

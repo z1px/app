@@ -20,6 +20,7 @@ class CreateConfigTables extends Migration
 
         /**
          * 创建数据库表操作日志表
+         * s_config
          */
         Schema::create(app($this->config_model)->getTable(), function (Blueprint $table) {
 

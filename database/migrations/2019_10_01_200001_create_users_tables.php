@@ -22,6 +22,7 @@ class CreateUsersTables extends Migration
     {
         /**
          * 创建用户表
+         * u_users
          */
         Schema::create(app($this->users_model)->getTable(), function (Blueprint $table) {
 
@@ -49,6 +50,7 @@ class CreateUsersTables extends Migration
 
         /**
          * 创建用户认证表
+         * u_users_passports
          */
         Schema::create(app($this->users_passports_model)->getTable(), function (Blueprint $table) {
 

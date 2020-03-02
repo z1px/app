@@ -22,6 +22,7 @@ class CreateAdminsLogTables extends Migration
     {
         /**
          * 创建管理员登录日志表
+         * l_admins_login
          */
         Schema::create(app($this->admins_login_model)->getTable(), function (Blueprint $table) {
 
@@ -49,6 +50,7 @@ class CreateAdminsLogTables extends Migration
 
         /**
          * 创建管理员行为日志表
+         * l_admins_behavior
          */
         Schema::create(app($this->admins_behavior_model)->getTable(), function (Blueprint $table) {
 

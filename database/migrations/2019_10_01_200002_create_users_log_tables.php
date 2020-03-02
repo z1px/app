@@ -22,6 +22,7 @@ class CreateUsersLogTables extends Migration
     {
         /**
          * 创建用户登录日志表
+         * l_users_login
          */
         Schema::create(app($this->users_login_model)->getTable(), function (Blueprint $table) {
 
@@ -49,6 +50,7 @@ class CreateUsersLogTables extends Migration
 
         /**
          * 创建用户行为日志表
+         * l_users_behavior
          */
         Schema::create(app($this->users_behavior_model)->getTable(), function (Blueprint $table) {
 

@@ -20,6 +20,7 @@ class CreateTablesOperatedTables extends Migration
 
         /**
          * 创建数据库表操作日志表
+         * l_tables_operated
          */
         Schema::create(app($this->tables_operated_model)->getTable(), function (Blueprint $table) {
 

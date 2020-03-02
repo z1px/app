@@ -12,7 +12,7 @@ class AdminsLoginModel extends Model
      *
      * @var string
      */
-    protected $table = 'a_admins_login';
+    protected $table = 'l_admins_login';
 
     /**
      * 允许添加的字段名

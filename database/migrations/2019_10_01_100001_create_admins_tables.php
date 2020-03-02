@@ -29,6 +29,7 @@ class CreateAdminsTables extends Migration
     {
         /**
          * 创建后台管理员账号表
+         * m_admins
          */
         Schema::create(app($this->admins_model)->getTable(), function (Blueprint $table) {
 
@@ -58,6 +59,7 @@ class CreateAdminsTables extends Migration
 
         /**
          * 创建权限表
+         * m_permissions
          */
         Schema::create(app($this->permissions_model)->getTable(), function (Blueprint $table) {
 
@@ -78,6 +80,7 @@ class CreateAdminsTables extends Migration
 
         /**
          * 创建角色表
+         * m_roles
          */
         Schema::create(app($this->roles_model)->getTable(), function (Blueprint $table) {
 
@@ -96,6 +99,7 @@ class CreateAdminsTables extends Migration
 
         /**
          * 创建角色-权限关系表
+         * m_roles_permissions
          */
         Schema::create(app($this->roles_permissions_model)->getTable(), function (Blueprint $table) {
 
@@ -116,6 +120,7 @@ class CreateAdminsTables extends Migration
 
         /**
          * 创建管理员-角色关系表
+         * m_admins_roles
          */
         Schema::create(app($this->admins_roles_model)->getTable(), function (Blueprint $table) {
 
@@ -136,6 +141,7 @@ class CreateAdminsTables extends Migration
 
         /**
          * 创建管理员-权限关系表
+         * m_admins_permissions
          */
         Schema::create(app($this->admins_permissions_model)->getTable(), function (Blueprint $table) {
 

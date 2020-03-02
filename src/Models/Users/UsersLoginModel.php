@@ -13,7 +13,7 @@ class UsersLoginModel extends Model
      *
      * @var string
      */
-    protected $table = 'u_users_login';
+    protected $table = 'l_users_login';
 
     /**
      * 允许添加的字段名
