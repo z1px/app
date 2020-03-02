@@ -13,13 +13,12 @@ namespace Z1px\App\Http\Logics;
 use Illuminate\Support\Facades\Hash;
 use Z1px\App\Http\Services\Admins\AdminsLoginService;
 use Z1px\App\Http\Services\Admins\AdminsService;
-use Z1px\App\Models\Admins\AdminsModel;
 use Z1px\Tool\Verify;
 
 class AdminsLogic
 {
 
-    private $admins_model = AdminsModel::class;
+    private $admins_model = AdminsService::class;
 
     /**
      * 登录
@@ -154,7 +153,7 @@ class AdminsLogic
             ];
         }
 
-        $result = app(AdminsService::class)->toUpdate();
+        $result = app($this->admins_model)->toUpdate();
 
         if(1 === $result['code']){
             if(request()->input('password')){
