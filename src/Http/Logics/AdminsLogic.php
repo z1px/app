@@ -29,7 +29,15 @@ class AdminsLogic
         $params = request()->input();
 
         // 参数合法性验证
-        validator($params, app($this->admins_model)->rules('login'), app($this->admins_model)->messages(), app($this->admins_model)->attributes())->validate();
+        $validator = validator($params, app($this->admins_model)->rules('login'), app($this->admins_model)->messages(), app($this->admins_model)->attributes());
+        if ($validator->fails()) {
+            return [
+                'code' => 0,
+                'message' => $validator->errors()->first(),
+                'data' => $validator->errors()
+            ];
+        }
+        unset($validator);
 
         $data = app($this->admins_model)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_failure', 'password', 'access_token']);
 
