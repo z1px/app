@@ -23,23 +23,33 @@ class AlterUsersTables extends Migration
     public function up()
     {
         /**
-         * 更新用户表
+         * 更新用户认证表
          */
         if(Schema::hasTable(app($this->users_passports_model)->getTable())
-            && Schema::hasTable(app($this->users_model)->getTable())
-            && Schema::hasTable(app($this->users_third_model)->getTable())) {
+            && Schema::hasTable(app($this->users_model)->getTable())) {
             Schema::table(app($this->users_passports_model)->getTable(), function (Blueprint $table) {
                 # 创建外键约束
                 $table->foreign('user_id')
                     ->references('id')
                     ->on(app($this->users_model)->getTable())
                     ->onDelete('cascade');
+            });
+        }
+
+        /**
+         * 更新第三方账号关联表
+         */
+        if(Schema::hasTable(app($this->users_third_model)->getTable())
+            && Schema::hasTable(app($this->users_model)->getTable())) {
+            Schema::table(app($this->users_third_model)->getTable(), function (Blueprint $table) {
+                # 创建外键约束
                 $table->foreign('user_id')
                     ->references('id')
-                    ->on(app($this->users_third_model)->getTable())
+                    ->on(app($this->users_model)->getTable())
                     ->onDelete('cascade');
             });
         }
+
     }
 
     /**
