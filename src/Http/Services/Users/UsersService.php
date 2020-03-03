@@ -37,4 +37,50 @@ class UsersService extends UsersModel
         return $params;
     }
 
+    /**
+     * 查询条件构造
+     * @param $data
+     * @param array $params
+     * @return mixed
+     */
+    protected function toWhere(object $data, array $params): object
+    {
+        if(!empty($params)){
+            foreach ($params as $key=>$value){
+                if(empty($value) && !is_numeric($value)) continue;
+                switch ($key){
+                    case 'keyword':
+                        $data = $data->where(function ($query) use ($value) {
+                            $query->where('nickname', 'like', "%{$value}%")
+                                ->orWhere('username', 'like', "%{$value}%")
+                                ->orWhere('mobile', 'like', "%{$value}%")
+                                ->orWhere('email', 'like', "%{$value}%");
+                        });
+                        break;
+                    case 'start_date':
+                        $data = $data->whereDate('created_at', '>=', $value);
+                        break;
+                    case 'end_date':
+                        $data = $data->whereDate('created_at', '<=', $value);
+                        break;
+                    case 'date_range':
+                        list($start_date, $end_date) = $value;
+                        $data = $data->whereDate('created_at', '>=', $start_date)
+                            ->whereDate('created_at', '<=', $end_date);
+                        unset($start_date, $end_date);
+                        break;
+                    default:
+                        if($this->isFillable($key)){
+                            if(is_array($value)){
+                                $data = $data->whereIn($key, $value);
+                            }else{
+                                $data = $data->where($key, $value);
+                            }
+                        }
+                }
+            }
+        }
+        return $data;
+    }
+
 }
