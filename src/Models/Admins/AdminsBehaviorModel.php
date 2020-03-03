@@ -57,4 +57,21 @@ class AdminsBehaviorModel extends Model
         return $this->belongsTo(app(AdminsModel::class), 'admin_id');
     }
 
+    /**
+     * 获取验证错误的自定义属性。
+     *
+     * @return array
+     */
+    public function attributes($key=null)
+    {
+        $attributes = array_merge(parent::attributes(), [
+            'title' => '行为名称',
+        ]);
+        if(is_null($key)){
+            return $attributes;
+        }else{
+            return $attributes[$key] ?? parent::attributes($key);
+        }
+    }
+
 }

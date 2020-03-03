@@ -46,7 +46,7 @@ class UsersBehaviorModel extends Model
      */
     public function getUsernameAttribute()
     {
-        return $this->attributes['admin_id'] > 0 ? $this->user->username : '';
+        return $this->attributes['user_id'] > 0 ? $this->user->username : '';
     }
 
     /**
@@ -57,4 +57,22 @@ class UsersBehaviorModel extends Model
     {
         return $this->belongsTo(app(UsersModel::class), 'user_id');
     }
+
+    /**
+     * 获取验证错误的自定义属性。
+     *
+     * @return array
+     */
+    public function attributes($key=null)
+    {
+        $attributes = array_merge(parent::attributes(), [
+            'title' => '行为名称',
+        ]);
+        if(is_null($key)){
+            return $attributes;
+        }else{
+            return $attributes[$key] ?? parent::attributes($key);
+        }
+    }
+
 }

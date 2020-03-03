@@ -130,11 +130,14 @@ class Model extends BaseModel
             'route_name' => '路由名称',
             'route_action' => '路由方法',
             'url' => '请求地址',
+            'params' => '请求参数',
             'method' => '请求类型',
             'ip' => '请求IP',
             'area' => 'IP区域',
             'platform' => '客户端平台',
             'model' => '设备型号',
+            'uuid' => '通用唯一识别码',
+            'access_token' => '访问令牌',
             'user_type' => '用户类型',
             'user_id' => '用户ID',
             'admin_id' => '管理员ID',
@@ -142,6 +145,7 @@ class Model extends BaseModel
             'remark' => '备注',
             'start_date' => '开始时间',
             'end_date' => '结束时间',
+            'runtime' => '运行时间',
         ];
         if(is_null($key)){
             return $attributes;

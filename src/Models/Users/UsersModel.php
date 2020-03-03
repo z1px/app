@@ -165,7 +165,7 @@ class UsersModel extends Model
                 ];
                 $rules['email'] = "nullable|email:rfc,dns|unique:{$this->getTable()},email";
                 $rules['file_id'] = "nullable|integer";
-                $rules['password'] = "required|between:6,20";
+                $rules['password'] = "nullable|between:6,20";
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
             case 'update':

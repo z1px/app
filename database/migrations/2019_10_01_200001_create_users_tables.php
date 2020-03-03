@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Z1px\App\Models\Users\UsersModel;
 use Z1px\App\Models\Users\UsersPassportsModel;
+use Z1px\App\Models\Users\UsersThirdModel;
 
 
 class CreateUsersTables extends Migration
@@ -12,6 +13,7 @@ class CreateUsersTables extends Migration
 
     private $users_model = UsersModel::class;
     private $users_passports_model = UsersPassportsModel::class;
+    private $users_third_model = UsersThirdModel::class;
 
     /**
      * Run the migrations.
@@ -77,6 +79,32 @@ class CreateUsersTables extends Migration
             $table->unique(['user_id', 'uuid']);
         });
         app('db')->statement("ALTER TABLE `" . app($this->users_passports_model)->getTable() . "` comment '用户认证表'"); // 表注释
+
+        /**
+         * 用户第三方账号关联表
+         * u_users_third
+         */
+        Schema::create(app($this->users_third_model)->getTable(), function (Blueprint $table) {
+
+            $table->engine = 'InnoDB'; // 指定表存储引擎 (MySQL).
+            $table->charset = 'utf8mb4'; // 指定表的默认字符编码 (MySQL).
+            $table->collation = 'utf8mb4_unicode_ci'; // 指定表的默认排序格式 (MySQL).
+
+            // 创建表字段
+            $table->bigIncrements('id')->comment('ID');
+            $table->string('openid', 100)->nullable()->comment('用户唯一标识');
+            $table->string('session_key', 100)->nullable()->comment('会话密钥');
+            $table->tinyInteger('type')->default(1)->comment('账号类型：1-微信');
+            $table->unsignedBigInteger('user_id')->index()->default(0)->comment('用户ID');
+            $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
+            $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
+            $table->timestamp('deleted_at')->nullable()->comment('软删除时间');
+
+            // 创建索引
+            $table->unique(['user_id', 'openid', 'type']);
+        });
+        app('db')->statement("ALTER TABLE `" . app($this->users_third_model)->getTable() . "` comment '用户第三方账号关联表'"); // 表注释
+
     }
 
     /**
@@ -89,6 +117,7 @@ class CreateUsersTables extends Migration
 //        Schema::disableForeignKeyConstraints(); // 关闭外键约束
         Schema::dropIfExists(app($this->users_passports_model)->getTable()); // 删除用户认证表
         Schema::dropIfExists(app($this->users_model)->getTable()); // 删除用户表
+        Schema::dropIfExists(app($this->users_third_model)->getTable()); // 删除用户第三方账号关联表
 //        Schema::enableForeignKeyConstraints(); // 开启外键约束
     }
 }
