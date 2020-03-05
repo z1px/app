@@ -92,7 +92,8 @@ class CreateUsersTables extends Migration
 
             // 创建表字段
             $table->bigIncrements('id')->comment('ID');
-            $table->string('openid', 100)->nullable()->comment('用户唯一标识');
+            $table->string('unionid', 100)->nullable()->comment('用户在开放平台的唯一标识符');
+            $table->string('openid', 100)->comment('用户唯一标识');
             $table->string('session_key', 100)->nullable()->comment('会话密钥');
             $table->tinyInteger('type')->default(1)->comment('账号类型：1-微信');
             $table->unsignedBigInteger('user_id')->index()->default(0)->comment('用户ID');

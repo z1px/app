@@ -30,7 +30,7 @@ class UsersThirdModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['openid', 'session_key', 'type', 'user_id'];
+    protected $fillable = ['unionid', 'openid', 'session_key', 'type', 'user_id'];
 
     /**
      * 追加到模型数组表单的访问器。
@@ -79,6 +79,7 @@ class UsersThirdModel extends Model
         $rules = parent::rules($scene);
         switch ($scene){
             case 'add':
+                $rules['unionid'] = "nullable|max:100";
                 $rules['openid'] = "required|between:2,100";
                 $rules['session_key'] = "required|between:2,100";
                 $rules['type'] = "in:" . implode(',', array_keys($this->list_type));
@@ -95,6 +96,7 @@ class UsersThirdModel extends Model
     public function attributes($key=null)
     {
         $attributes = array_merge(parent::attributes(), [
+            'unionid' => '用户在开放平台的唯一标识符',
             'openid' => '用户唯一标识',
             'session_key' => '会话密钥',
             'type' => '账号类型',
