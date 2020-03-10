@@ -21,7 +21,7 @@ class PermissionsModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'route_name', 'description', 'status', 'pid'];
+    protected $fillable = ['title', 'route_name', 'brief', 'status', 'pid'];
 
     /**
      * 追加到模型数组表单的访问器。
@@ -132,7 +132,7 @@ class PermissionsModel extends Model
         $attributes = array_merge(parent::attributes(), [
             'title' => '权限名称',
             'route_name' => '路由名称',
-            'description' => '角色描述',
+            'brief' => '角色简介',
         ]);
         if(is_null($key)){
             return $attributes;

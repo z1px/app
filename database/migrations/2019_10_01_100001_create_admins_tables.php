@@ -70,7 +70,7 @@ class CreateAdminsTables extends Migration
             $table->bigIncrements('id')->comment('ID');
             $table->string('title', 30)->unique()->comment('权限名称');
             $table->string('route_name', 50)->unique()->comment('路由名称');
-            $table->mediumText('description')->nullable()->comment('权限描述');
+            $table->text('brief')->nullable()->comment('权限简介');
             $table->tinyInteger('status')->default(1)->comment('状态：1-正常，2-禁用');
             $table->unsignedBigInteger('pid')->index()->default(0)->comment('父ID');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
@@ -90,7 +90,7 @@ class CreateAdminsTables extends Migration
 
             $table->bigIncrements('id')->comment('ID');
             $table->string('title', 30)->unique()->comment('角色名称');
-            $table->mediumText('description')->nullable()->comment('角色描述');
+            $table->text('brief')->nullable()->comment('角色简介');
             $table->tinyInteger('status')->default(1)->comment('状态：1-正常，2-禁用');
             $table->timestamp('created_at')->useCurrent()->nullable()->comment('创建时间');
             $table->timestamp('updated_at')->useCurrent()->nullable()->comment('更新时间');
