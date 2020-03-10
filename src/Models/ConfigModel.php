@@ -54,7 +54,9 @@ class ConfigModel extends Model
      * @var array
      */
     public $list_type = [
-        1 => '基本配置',
+        1 => '系统配置',
+        2 => '小程序配置',
+        3 => '产品配置',
     ];
 
     /**
