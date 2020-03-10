@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use Z1px\App\Models\ConfigModel;
 
-
 class ConfigTableSeeder extends Seeder
 {
 
