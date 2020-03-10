@@ -25,12 +25,13 @@ Route::middleware('admin.auth')->group(function () {
     Route::post('logout', "IndexController@logout")->name('logout'); // 退出
 
     // 配置设置
-    Route::post('config.list', "ConfigController@getList")->name('config.list'); // 权限列表
-    Route::post('config.all', "ConfigController@all")->name('config.all'); // 所有权限
-    Route::post('config.info', "ConfigController@info")->name('config.info'); // 权限信息
-    Route::post('config.add', "ConfigController@add")->name('config.add'); // 添加权限
-    Route::post('config.update', "ConfigController@update")->name('config.update'); // 修改权限
-    Route::post('config.delete', "ConfigController@delete")->name('config.delete'); // 删除权限
+    Route::post('config.list', "ConfigController@getList")->name('config.list'); // 配置列表
+    Route::post('config.all', "ConfigController@all")->name('config.all'); // 所有配置
+    Route::post('config.info', "ConfigController@info")->name('config.info'); // 配置信息
+    Route::post('config.config', "ConfigController@config")->name('config.config'); // 根据键值获取配置信息
+    Route::post('config.add', "ConfigController@add")->name('config.add'); // 添加配置
+    Route::post('config.update', "ConfigController@update")->name('config.update'); // 修改配置
+    Route::post('config.delete', "ConfigController@delete")->name('config.delete'); // 删除配置
 
     // 文件管理
     Route::post('upload', "FilesController@upload")->name('upload'); // 文件上传
