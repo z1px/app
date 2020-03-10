@@ -226,6 +226,11 @@ class PermissionsTableSeeder extends Seeder
                 'pid' => $data_config->id
             ],
             [
+                'title' => '获取配置',
+                'route_name' => 'admin.config.config',
+                'pid' => $data_config->id
+            ],
+            [
                 'title' => '添加配置',
                 'route_name' => 'admin.config.add',
                 'pid' => $data_config->id

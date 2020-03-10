@@ -45,6 +45,14 @@ class ConfigController extends Controller
     }
 
     /**
+     * 根据键值获取配置信息
+     */
+    public function config()
+    {
+        return $this->json(['data' => app($this->model)->toConfig()]);
+    }
+
+    /**
      * 添加配置
      */
     public function add()
