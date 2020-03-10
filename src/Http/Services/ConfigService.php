@@ -39,10 +39,7 @@ class ConfigService extends ConfigModel
         unset($validator);
 
         // 查询条件
-        $data = $this->toWhere($this, $params);
-        unset($params)
-
-        $data = $data->first();
+        $data = $this->toWhere($this, $params)->first();
         unset($params);
         if(empty($data)){
             throw new \Exception("数据不存在");
