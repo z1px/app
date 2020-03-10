@@ -131,6 +131,11 @@ class ConfigModel extends Model
                 $rules['type'] = "required|integer|in:" . implode(',', array_keys($this->list_type));
                 $rules['status'] = "in:" . implode(',', array_keys($this->list_status));
                 break;
+            case 'config':
+                $rules['key'] = "required";
+                $rules['type'] = "required|integer";
+                break;
+
         }
         return $rules;
     }
