@@ -113,6 +113,15 @@ class UsersModel extends Model
 
     /**
      * 模型关联，一对多
+     * 第三方账号关联
+     */
+    public function third()
+    {
+        return $this->hasMany(app(UsersThirdModel::class), 'user_id');
+    }
+
+    /**
+     * 模型关联，一对多
      * 用户认证
      */
     public function passports()
