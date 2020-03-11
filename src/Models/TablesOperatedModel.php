@@ -77,7 +77,7 @@ class TablesOperatedModel extends Model
     public function getTableCommentAttribute()
     {
         try{
-            $options = app('db')->getDoctrineSchemaManager()->listTableDetails($this->attributes['table'])->getOptions();
+            $options = app('db')->getDoctrineSchemaManager()->listTableDetails($this->table)->getOptions();
             $value = $options['comment'];
             unset($options);
         }catch (\Exception $exception){
@@ -88,23 +88,23 @@ class TablesOperatedModel extends Model
 
     public function getOperateNameAttribute()
     {
-        return $this->list_operate[$this->attributes['operate']] ?? '未知';
+        return $this->list_operate[$this->operate] ?? '未知';
     }
 
     public function getUserTypeNameAttribute()
     {
-        return $this->list_user_type[$this->attributes['user_type']] ?? '未知';
+        return $this->list_user_type[$this->user_type] ?? '未知';
     }
 
     public function getUserAttribute()
     {
-        if($this->attributes['user_id'] > 0){
-            switch ($this->attributes['user_type']){
+        if($this->user_id > 0){
+            switch ($this->user_type){
                 case 1:
-                    $value = app(AdminsService::class)->toInfo($this->attributes['user_id']);
+                    $value = app(AdminsService::class)->toInfo($this->user_id);
                     break;
                 case 2:
-                    $value = app(UsersService::class)->toInfo($this->attributes['user_id']);
+                    $value = app(UsersService::class)->toInfo($this->user_id);
                     break;
                 default:
                     $value = '';

@@ -47,12 +47,12 @@ class PermissionsModel extends Model
      */
     public function getStatusNameAttribute()
     {
-        return $this->list_status[$this->attributes['status']] ?? null;
+        return $this->list_status[$this->status] ?? null;
     }
 
     public function getPnameAttribute()
     {
-        return $this->attributes['pid'] > 0 ? $this->parent->title : '';
+        return $this->pid > 0 ? $this->parent->title : '';
     }
 
     /**

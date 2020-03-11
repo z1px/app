@@ -80,17 +80,17 @@ class FilesModel extends Model
      */
     public function getFileTypeNameAttribute()
     {
-        return $this->list_file_type[$this->attributes['file_type']] ?? '未知';
+        return $this->list_file_type[$this->file_type] ?? '未知';
     }
 
     public function getVisibilityNameAttribute()
     {
-        return $this->list_visibility[$this->attributes['visibility']] ?? '未知';
+        return $this->list_visibility[$this->visibility] ?? '未知';
     }
 
     public function getSizeFormatAttribute()
     {
-        $value = $this->attributes['size'];
+        $value = $this->size;
         $unit = 'B';
         if($value > 1024){
             $value /= 1024;
@@ -113,14 +113,14 @@ class FilesModel extends Model
 
     public function getUserTypeNameAttribute()
     {
-        return $this->list_user_type[$this->attributes['user_type']] ?? '未知';
+        return $this->list_user_type[$this->user_type] ?? '未知';
     }
 
     public function getBase64Attribute()
     {
-        if(Storage::disk($this->attributes['disk'])->exists($this->attributes['path_name'])
-            && 1 === ($this->attributes['file_type']) && !empty($this->attributes['extension'])){
-            $value = "data:image/{$this->attributes['extension']};base64," . chunk_split(base64_encode(Storage::disk($this->attributes['disk'])->get($this->attributes['path_name']))); // 合成图片的base64编码;
+        if(Storage::disk($this->disk)->exists($this->path_name)
+            && 1 === ($this->file_type) && !empty($this->extension)){
+            $value = "data:image/{$this->extension};base64," . chunk_split(base64_encode(Storage::disk($this->disk)->get($this->path_name))); // 合成图片的base64编码;
         }else{
             $value = '';
         }
@@ -129,9 +129,9 @@ class FilesModel extends Model
 
     public function getImageAttribute()
     {
-        switch ($this->attributes['file_type']){
+        switch ($this->file_type){
             case 1:
-                $value = $this->file_to_image($this->attributes['id']);
+                $value = $this->file_to_image($this->id);
                 break;
             default:
                 $value = '';
@@ -141,13 +141,13 @@ class FilesModel extends Model
 
     public function getUserAttribute()
     {
-        if($this->attributes['user_id'] > 0){
-            switch ($this->attributes['user_type']){
+        if($this->user_id > 0){
+            switch ($this->user_type){
                 case 1:
-                    $value = app(AdminsService::class)->toInfo($this->attributes['user_id']);
+                    $value = app(AdminsService::class)->toInfo($this->user_id);
                     break;
                 case 2:
-                    $value = app(UsersService::class)->toInfo($this->attributes['user_id']);
+                    $value = app(UsersService::class)->toInfo($this->user_id);
                     break;
                 default:
                     $value = '';
@@ -160,8 +160,8 @@ class FilesModel extends Model
 
     public function getAdminAttribute()
     {
-        if($this->attributes['admin_id'] > 0){
-            $value = app(AdminsService::class)->toInfo($this->attributes['admin_id']);
+        if($this->admin_id > 0){
+            $value = app(AdminsService::class)->toInfo($this->admin_id);
         }else{
             $value = '';
         }

@@ -47,7 +47,7 @@ class RolesModel extends Model
      */
     public function getStatusNameAttribute()
     {
-        return $this->list_status[$this->attributes['status']] ?? null;
+        return $this->list_status[$this->status] ?? null;
     }
 
     /**

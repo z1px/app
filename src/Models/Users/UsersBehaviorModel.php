@@ -46,7 +46,7 @@ class UsersBehaviorModel extends Model
      */
     public function getUsernameAttribute()
     {
-        return $this->attributes['user_id'] > 0 ? $this->user->username : '';
+        return $this->user_id > 0 ? $this->user->username : '';
     }
 
     /**

@@ -69,12 +69,12 @@ class AdminsModel extends Model
      */
     public function getStatusNameAttribute()
     {
-        return $this->list_status[$this->attributes['status']] ?? null;
+        return $this->list_status[$this->status] ?? null;
     }
 
     public function getAvatarAttribute()
     {
-        return $this->file_to_image($this->attributes['file_id'], ['width' => 200, 'height' => 200, 'type' => 'fit']);
+        return $this->file_to_image($this->file_id, ['width' => 200, 'height' => 200, 'type' => 'fit']);
     }
 
     /**
@@ -85,20 +85,20 @@ class AdminsModel extends Model
     public function setPasswordAttribute($value)
     {
         if(empty($value)){
-            if(isset($this->attributes['password'])){
-                unset($this->attributes['password']);
+            if(isset($this->password)){
+                unset($this->password);
             }
         }else{
-            $this->attributes['password'] = Hash::make($value);
+            $this->password = Hash::make($value);
         }
     }
 
     public function setEmailAttribute($value)
     {
         if(empty($value)){
-            $this->attributes['email'] = null;
+            $this->email = null;
         }else{
-            $this->attributes['email'] = Format::format_email($value);
+            $this->email = Format::format_email($value);
         }
     }
 

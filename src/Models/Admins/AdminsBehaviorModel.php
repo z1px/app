@@ -45,7 +45,7 @@ class AdminsBehaviorModel extends Model
      */
     public function getUsernameAttribute()
     {
-        return $this->attributes['admin_id'] > 0 ? $this->admin->username : '';
+        return $this->admin_id > 0 ? $this->admin->username : '';
     }
 
     /**

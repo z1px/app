@@ -67,7 +67,7 @@ class Model extends BaseModel
      */
     public function file_to_image($id = null, array $data = [])
     {
-        !is_null($id) || $id = $this->attributes['file_id'];
+        !is_null($id) || $id = $this->file_id;
         if(empty($id)){
             $value = '';
         }else{

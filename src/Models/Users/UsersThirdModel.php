@@ -55,7 +55,7 @@ class UsersThirdModel extends Model
      */
     public function getTypeNameAttribute()
     {
-        return $this->list_type[$this->attributes['type']] ?? null;
+        return $this->list_type[$this->type] ?? null;
     }
 
     /**

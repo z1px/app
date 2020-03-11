@@ -82,17 +82,17 @@ class ConfigModel extends Model
      */
     public function getInputNameAttribute()
     {
-        return $this->list_input[$this->attributes['input']] ?? null;
+        return $this->list_input[$this->input] ?? null;
     }
 
     public function getTypeNameAttribute()
     {
-        return $this->list_type[$this->attributes['type']] ?? null;
+        return $this->list_type[$this->type] ?? null;
     }
 
     public function getStatusNameAttribute()
     {
-        return $this->list_status[$this->attributes['status']] ?? null;
+        return $this->list_status[$this->status] ?? null;
     }
 
     /**
