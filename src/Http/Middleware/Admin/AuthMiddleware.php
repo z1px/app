@@ -39,6 +39,12 @@ class AuthMiddleware
                 'message' => '登录已过期或未登录'
             ]);
         }
+        if(1 !== $data->status){
+            return [
+                'code' => 0,
+                'message' => '该账号已被禁用',
+            ];
+        }
         request()->admin = $data;
 
         // 权限判断
