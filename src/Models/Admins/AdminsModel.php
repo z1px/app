@@ -89,7 +89,7 @@ class AdminsModel extends Model
                 unset($this->password);
             }
         }else{
-            $this->password = Hash::make($value);
+            $this->attributes['password'] = Hash::make($value);
         }
     }
 
@@ -98,7 +98,7 @@ class AdminsModel extends Model
         if(empty($value)){
             $this->email = null;
         }else{
-            $this->email = Format::format_email($value);
+            $this->attributes['email'] = Format::format_email($value);
         }
     }
 
