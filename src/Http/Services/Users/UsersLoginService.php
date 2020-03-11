@@ -35,6 +35,7 @@ class UsersLoginService extends UsersLoginModel
             'area' => IP::format(request()->getClientIp()), // IP区域
             'platform' => Server::getPlatform(), // 客户端平台
             'model' => Server::getModel(), // 设备型号
+            'uuid' => request()->header('uuid'), // 通用唯一识别码
         ], $data);
 
         return $params;
