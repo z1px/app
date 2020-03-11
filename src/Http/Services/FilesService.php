@@ -202,6 +202,14 @@ class FilesService extends FilesModel
      */
     public function uploadUrl($url)
     {
+        $content = $url ? file_get_contents($url) : '';
+        if(empty($content)){
+            return [
+                'code' => 0,
+                'message' => '文件不存在'
+            ];
+        }
+
         $filesystems = config('filesystems', []);
         $options = ['disk' => $filesystems['default'] ?? 'local'];
         if(!isset($filesystems['disks'][$options['disk']])){
