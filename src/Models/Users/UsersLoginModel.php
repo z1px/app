@@ -20,7 +20,7 @@ class UsersLoginModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['nickname', 'username', 'mobile', 'email', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'model', 'user_id'];
+    protected $fillable = ['nickname', 'username', 'mobile', 'email', 'route_name', 'url', 'params', 'ip', 'area', 'platform', 'model', 'uuid', 'user_id'];
 
     /**
      * 这个属性应该被转换为原生类型.
