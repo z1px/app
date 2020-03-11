@@ -191,6 +191,61 @@ class FilesService extends FilesModel
     }
 
     /**
+     * 远程文件存储
+     * @return array
+     */
+    public function uploadUrl($url)
+    {
+        $tmp = tempnam(sys_get_temp_dir(), 'img_');
+        file_put_contents($tmp, file_get_contents($url));
+        $file = new File($tmp);
+        $path = $this->list_file_path[$this->getFileType($file->extension())] ?? 'files'; // 存储路径
+        $visibility='public'; // 文件可见性，public可见，private不可见
+
+        $data = [
+            'original_name' => basename("{$tmp}.{$file->extension()}"), // 文件原始名称
+            'disk' => $options['disk'] ?? '', // 文件存储磁盘名称
+            'visibility' => $visibility, // 文件可见性，public可见，private不可见
+            'path_name' => Storage::putFile($path, $file, $options), // 文件路径
+            'size' => $file->getSize(), // 文件大小，单位字节b
+            'file_type' => $this->getFileType($file->extension()), // 文件类型：1-图片文件类型，2-音频文件类型，3-视频文件类型，4-文本文件类型，5-应用文件类型，6-归档文件类型
+            'extension' => strtolower($file->extension()), // 文件扩展名
+            'mime' => $file->getMimeType(), // 文件MIME类型
+            'md5' => '', // 文件MD5校验
+            'sha1' => '', // 文件SHA-1校验
+            'user_type' => 0, // 用户类型
+            'user_id' => 0, // 文件创建者用户ID
+            'admin_id' => 0, // 后台操作管理员ID
+        ];
+        if(request()->admin){
+            $data['user_type'] = 1;
+            $data['user_id'] = request()->admin->id;
+        }
+        if(Storage::disk($data['disk'])->exists($data['path_name'])){
+            if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
+                Storage::disk($data['disk'])->setVisibility($data['path_name'], $visibility);
+            }
+            $root = config("filesystems.disks.{$data['disk']}.root", '') . '/';
+            if(is_file($root . $data['path_name'])){
+                $data['md5'] = md5_file($root . $data['path_name']);
+                $data['sha1'] = sha1_file($root . $data['path_name']);
+            }
+            unset($root);
+        }
+        unset($match, $file);
+        unlink($tmp);
+
+        $result = $this->toAdd($data);
+        if(1 === $result['code']){
+            $result['message'] = '存储成功';
+        }else{
+            $result['message'] = '存储失败';
+        }
+
+        return $result;
+    }
+
+    /**
      * 删除数据后
      * @return $this
      */

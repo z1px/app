@@ -62,7 +62,7 @@ class UsersThirdModel extends Model
      * 模型关联，一对多（反向）
      * 用户
      */
-    public function users()
+    public function user()
     {
         return $this->belongsTo(app(UsersModel::class), 'user_id');
     }
