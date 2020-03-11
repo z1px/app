@@ -50,6 +50,9 @@ class TablesOperatedService extends TablesOperatedModel
         if(request()->admin){
             $params['user_type'] = 1;
             $params['user_id'] = request()->admin->id;
+        }else if(request()->user){
+            $data['user_type'] = 2;
+            $data['user_id'] = request()->user->id;
         }
 
         return $params;

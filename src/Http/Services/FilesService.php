@@ -89,6 +89,9 @@ class FilesService extends FilesModel
         if(request()->admin){
             $data['user_type'] = 1;
             $data['user_id'] = request()->admin->id;
+        }else if(request()->user){
+            $data['user_type'] = 2;
+            $data['user_id'] = request()->user->id;
         }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
@@ -165,6 +168,9 @@ class FilesService extends FilesModel
         if(request()->admin){
             $data['user_type'] = 1;
             $data['user_id'] = request()->admin->id;
+        }else if(request()->user){
+            $data['user_type'] = 2;
+            $data['user_id'] = request()->user->id;
         }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){
@@ -220,6 +226,9 @@ class FilesService extends FilesModel
         if(request()->admin){
             $data['user_type'] = 1;
             $data['user_id'] = request()->admin->id;
+        }else if(request()->user){
+            $data['user_type'] = 2;
+            $data['user_id'] = request()->user->id;
         }
         if(Storage::disk($data['disk'])->exists($data['path_name'])){
             if($visibility !== Storage::disk($data['disk'])->getVisibility($data['path_name'])){

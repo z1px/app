@@ -7,6 +7,11 @@ use Illuminate\Validation\Rule;
 
 class ConfigModel extends Model
 {
+    /**
+     * 是否开启数据库表增删改记录
+     * @var bool
+     */
+    protected $tables_operated = true;
 
     /**
      * 与模型关联的表名
