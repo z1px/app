@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 
 class ConfigModel extends Model
 {
+
     /**
      * 是否开启数据库表增删改记录
      * @var bool
