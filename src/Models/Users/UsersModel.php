@@ -150,14 +150,14 @@ class UsersModel extends Model
         switch ($scene){
             case 'add':
                 $rules['username'] = [
-                    "required",
+                    "nullable",
                     "between:4,20",
                     "alpha_dash",
                     new NotMobileRule(),
                     new NotEmailRule(),
                     Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
-                $rules['nickname'] = "nullable|between:2,30";
+                $rules['nickname'] = "nullable|between:1,30";
                 $rules['mobile'] = [
                     "nullable",
                     new MobileRule(),
@@ -176,7 +176,7 @@ class UsersModel extends Model
                     new NotEmailRule(),
                     Rule::unique($this->getTable())->ignore(request()->input('id'))
                 ];
-                $rules['nickname'] = "nullable|between:2,30";
+                $rules['nickname'] = "nullable|between:1,30";
                 $rules['mobile'] = [
                     "nullable",
                     new MobileRule(),
