@@ -202,6 +202,15 @@ class FilesService extends FilesModel
      */
     public function uploadUrl($url)
     {
+        $filesystems = config('filesystems', []);
+        $options = ['disk' => $filesystems['default'] ?? 'local'];
+        if(!isset($filesystems['disks'][$options['disk']])){
+            return [
+                'code' => 0,
+                'message' => '文件上传配置错误'
+            ];
+        }
+
         $tmp = tempnam(sys_get_temp_dir(), 'img_');
         file_put_contents($tmp, file_get_contents($url));
         $file = new File($tmp);
