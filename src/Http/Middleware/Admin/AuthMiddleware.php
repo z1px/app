@@ -25,11 +25,11 @@ class AuthMiddleware
             'accessToken' => "required"
         ]);
         if ($validator->fails()) {
-            return [
+            return result([
                 'code' => 0,
                 'message' => '未登录！', // $validator->errors()->first()
                 'data' => [] //$validator->errors()
-            ];
+            ]);
         }
         unset($validator);
 
