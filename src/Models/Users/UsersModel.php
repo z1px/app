@@ -179,6 +179,7 @@ class UsersModel extends Model
                 break;
             case 'update':
                 $rules['username'] = [
+                    "nullable",
                     "between:4,20",
                     "alpha_dash",
                     new NotMobileRule(),
