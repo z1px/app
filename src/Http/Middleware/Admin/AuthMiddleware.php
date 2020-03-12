@@ -22,7 +22,7 @@ class AuthMiddleware
 
         // 参数合法性验证
         $validator = validator(request()->input(), [
-            'access_token' => "required"
+            'accessToken' => "required"
         ]);
         if ($validator->fails()) {
             return [
@@ -35,7 +35,7 @@ class AuthMiddleware
 
         // 登录判断
         $data = app(AdminsModel::class)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
-            ->where('access_token', request()->input('access_token'))
+            ->where('access_token', request()->input('accessToken'))
             ->first();
 
         if(empty($data)){
