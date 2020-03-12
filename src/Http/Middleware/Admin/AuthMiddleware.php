@@ -20,17 +20,22 @@ class AuthMiddleware
         // 执行一些任务
 //        dump("AdminAuthMiddleware");
 
-        $access_token = request()->header('x-token');
-        if(empty($access_token)){
-            return result([
-                'code' => -1,
-                'message' => '未登录！',
-            ]);
+        // 参数合法性验证
+        $validator = validator(request()->input(), [
+            'access_token' => "required"
+        ]);
+        if ($validator->fails()) {
+            return [
+                'code' => 0,
+                'message' => '未登录！', // $validator->errors()->first()
+                'data' => [] //$validator->errors()
+            ];
         }
+        unset($validator);
 
         // 登录判断
         $data = app(AdminsModel::class)->select(['id', 'username', 'nickname', 'mobile', 'email', 'file_id', 'status', 'login_at', 'access_token'])
-            ->where('access_token', $access_token)
+            ->where('access_token', request()->input('access_token'))
             ->first();
 
         if(empty($data)){

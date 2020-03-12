@@ -33,9 +33,9 @@ class UsersLoginService extends UsersLoginModel
             'params' => request()->all() ?: null, // 请求参数
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
-            'platform' => request()->header('platform') ?: Server::getPlatform(), // 客户端平台
-            'model' => request()->header('model') ?: Server::getModel(), // 设备型号
-            'uuid' => request()->header('uuid'), // 通用唯一识别码
+            'platform' => request()->input('platform') ?: Server::getPlatform(), // 客户端平台
+            'model' => request()->input('model') ?: Server::getModel(), // 设备型号
+            'uuid' => request()->input('uuid'), // 通用唯一识别码
         ], $data);
 
         return $params;

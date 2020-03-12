@@ -30,8 +30,8 @@ class UsersBehaviorService extends UsersBehaviorModel
             'params' => request()->all() ?: null, // 请求参数
             'ip' => request()->getClientIp(), // 请求IP
             'area' => IP::format(request()->getClientIp()), // IP区域
-            'platform' => request()->header('platform') ?: Server::getPlatform(), // 客户端平台
-            'model' => request()->header('model') ?: Server::getModel(), // 设备型号
+            'platform' => request()->input('platform') ?: Server::getPlatform(), // 客户端平台
+            'model' => request()->input('model') ?: Server::getModel(), // 设备型号
             'runtime' => microtime(true) - request()->server('REQUEST_TIME_FLOAT'), // 运行时间，单位秒
         ], $data);
 
