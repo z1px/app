@@ -29,7 +29,7 @@ class ConfigController extends Controller
     }
 
     /**
-     * 所有权限
+     * 所有配置
      */
     public function all()
     {
