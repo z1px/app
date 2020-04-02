@@ -43,7 +43,7 @@ class Controller extends BaseController
         isset($result['code']) || $result['code'] = 1;
         isset($result['message']) || $result['message'] = 'data normal!';
 
-        return jump($view, $result, $status, $headers);
+        return jump($result, $status, $headers, $view);
     }
 
 }
